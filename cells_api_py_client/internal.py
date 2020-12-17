@@ -89,13 +89,6 @@ class InternalClient():
         # Returns the key to be used in future computations
         return results[0][HANDLE]
 
-    def set_count(
-            self, set_key: str, set_type: str) -> str:
-        request_url = self.base_url + "count/"
-        request_dict = {"key": set_key, "set_type": set_type}
-        results = requests.post(request_url, request_dict).json()['results']
-        return results[0]["count"]  # Returns the key to be used in future computations
-
     # These functions/API calls take a query set token and return an evaluated query_set
 
     def _check_detail_parameters(
@@ -104,6 +97,13 @@ class InternalClient():
             'organ', 'cluster'], 'cluster': ['gene'], 'organ': ['gene']}
         assert values_type in allowed_values_types[set_type]
         return
+
+    def set_count(
+            self, set_key: str, set_type: str) -> str:
+        request_url = self.base_url + "count/"
+        request_dict = {"key": set_key, "set_type": set_type}
+        results = requests.post(request_url, request_dict).json()['results']
+        return results[0]["count"]
 
     def set_list_evaluation(
             self, set_key: str, set_type: str, limit: int):
