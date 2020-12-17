@@ -2,6 +2,8 @@
 Python client for the [Cells API](https://github.com/hubmapconsortium/cross_modality_query);
 See also: [`cells-api-js-client`](https://github.com/hubmapconsortium/cells-api-js-client#readme).
 
+Contributors start [here](https://github.com/hubmapconsortium/cells-api-py-client/blob/main/README-contrib.md#readme).
+
 ```python
 >>> from cells_api_py_client.internal import *
 >>> output_type = 'cell'
