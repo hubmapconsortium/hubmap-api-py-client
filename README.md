@@ -20,14 +20,14 @@ and then:
 >>> in_client = InternalClient('https://cells.dev.hubmapconsortium.org/api/')
 
 >>> gene_cells = ex_client.query('gene', 'cell', ['VIM > 0.5'], genomic_modality='rna')
->>> assert gene_cells.get_count("cell") > 0
+>>> assert gene_cells.get_count() > 0
 
 # Show me cells from the datasets with the following UUIDs
 
 >>> input_set = ['68159e4bd6a2cea1cd66e8f3050cfcb7', 'e8d642084fc5ec8b5d348ebab96a4b22']
 
 >>> dataset_cells = ex_client.query('dataset', 'cell', input_set)
->>> assert dataset_cells.get_count("cell") > 0
+>>> assert dataset_cells.get_count() > 0
 
 >>> intersection_cells = in_client.set_intersection(dataset_cells.handle, gene_cells.handle, 'cell')
 
