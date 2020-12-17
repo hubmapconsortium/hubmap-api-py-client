@@ -20,7 +20,7 @@ class InternalClient():
         # 'https://cells.dev.hubmapconsortium.org/api/'
         self.base_url = base_url
 
-    def check_parameters(
+    def _check_parameters(
             self,
             input_type: str, output_type: str, input_set: List[str],
             genomic_modality: str, p_value: float = 0.05):
@@ -32,7 +32,7 @@ class InternalClient():
                 or input_type == 'gene' and output_type == 'organ'):
             assert p_value >= 0.0 and p_value <= 1.0
 
-    def fill_request_dict(
+    def _fill_request_dict(
             self,
             input_type: str, output_type: str, input_set: List[str],
             genomic_modality: str, p_value: float):
@@ -54,9 +54,9 @@ class InternalClient():
         '''
         This function takes query parameters and returns a query set token.
         '''
-        self.check_parameters(input_type, output_type, input_set, genomic_modality, p_value)
+        self._check_parameters(input_type, output_type, input_set, genomic_modality, p_value)
         request_url = self.base_url + output_type + "/"
-        request_dict = self.fill_request_dict(
+        request_dict = self._fill_request_dict(
             input_type, output_type, input_set, genomic_modality, p_value)
         response = requests.post(request_url, request_dict)
         results = response.json()['results']
@@ -98,7 +98,7 @@ class InternalClient():
 
     # These functions/API calls take a query set token and return an evaluated query_set
 
-    def check_detail_parameters(
+    def _check_detail_parameters(
             self, set_type, values_type):
         allowed_values_types = {'cell': ['gene', 'protein'], 'gene': [
             'organ', 'cluster'], 'cluster': ['gene'], 'organ': ['gene']}
@@ -126,7 +126,7 @@ class InternalClient():
         containing data specified in include_values
         It may be slow.
         '''
-        self.check_detail_parameters(set_type, values_type)
+        self._check_detail_parameters(set_type, values_type)
         request_url = self.base_url + set_type + "detailevaluation/"
         request_dict = {"key": set_key, "set_type": set_type, "limit": limit,
                         "values_included": values_included, "sort_by": sort_by,
