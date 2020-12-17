@@ -21,7 +21,7 @@ class ResultsSet():
         self.handle = handle
         self.set_type = set_type
 
-    def get_count(self):
+    def __len__(self):
         return self.client.set_count(self.handle, self.set_type)
 
     def get_list(self, limit):
