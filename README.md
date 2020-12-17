@@ -1,8 +1,16 @@
 # cells-api-py-client
-Python client for the [Cells API](https://github.com/hubmapconsortium/cross_modality_query);
+Python client for the [HuBMAP Cells API](https://github.com/hubmapconsortium/cross_modality_query);
 See also: [`cells-api-js-client`](https://github.com/hubmapconsortium/cells-api-js-client#readme).
 
 Contributors start [here](https://github.com/hubmapconsortium/cells-api-py-client/blob/main/README-contrib.md#readme).
+
+## Usage
+
+Install from pypi:
+```
+pip install cells-api-py-client
+```
+and then:
 
 ```python
 >>> from cells_api_py_client.internal import InternalClient
