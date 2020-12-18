@@ -8,7 +8,7 @@ class ExternalClient():
     def __init__(self, base_url):
         self.client = InternalClient(base_url)
 
-    def query(
+    def _query(
             self,
             input_type, output_type, input_set,
             genomic_modality=None, limit=None, p_value=None):
@@ -21,12 +21,20 @@ class ExternalClient():
             input_set=input_set)
 
 
-setattr(
-    ExternalClient, 'query_genes',
-    lambda self, output_type, input_set,
-    genomic_modality=None, limit=_default_limit, p_value=_default_p_value:
-    self.query('gene', output_type, input_set,
-               genomic_modality=genomic_modality, limit=limit, p_value=p_value))
+def _add_method(input_type):
+    method_name = f'query_{input_type}s'
+    method = (
+        lambda self, output_type, input_set,
+        genomic_modality=None, limit=_default_limit, p_value=_default_p_value:
+        self._query(
+            input_type, output_type, input_set,
+            genomic_modality=genomic_modality, limit=limit, p_value=p_value)
+    )
+    setattr(ExternalClient, method_name, method)
+
+
+for input_type in ['cell', 'organ', 'gene', 'cluster', 'protein', 'dataset']:
+    _add_method(input_type)
 
 
 class ResultsSet():
