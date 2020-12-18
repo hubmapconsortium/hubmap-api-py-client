@@ -16,39 +16,39 @@ class ExternalClient():
 
 
 class ResultsSet():
-    def __init__(self, client, handle, set_type):
+    def __init__(self, client, handle, output_type=None):
         self.client = client
         self.handle = handle
-        self.set_type = set_type
+        self.output_type = output_type
 
     def __len__(self):
-        return self.client.set_count(self.handle, self.set_type)
+        return self.client.set_count(self.handle, self.output_type)
 
     # TODO: There may be bugs with union and intersection, perhaps on the server side?
 
     def __or__(self, other_set):
-        new_handle = self.client.set_union(self.handle, other_set.handle, self.set_type)
-        return ResultsSet(self.client, new_handle, self.set_type)
+        new_handle = self.client.set_union(self.handle, other_set.handle, self.output_type)
+        return ResultsSet(self.client, new_handle, self.output_type)
 
     def __and__(self, other_set):
-        new_handle = self.client.set_intersection(self.handle, other_set.handle, self.set_type)
-        return ResultsSet(self.client, new_handle, self.set_type)
+        new_handle = self.client.set_intersection(self.handle, other_set.handle, self.output_type)
+        return ResultsSet(self.client, new_handle, self.output_type)
 
     def __invert__(self):
-        new_handle = self.client.set_negation(self.handle, self.set_type)
-        return ResultsSet(self.client, new_handle, self.set_type)
+        new_handle = self.client.set_negation(self.handle, self.output_type)
+        return ResultsSet(self.client, new_handle, self.output_type)
 
     def __sub__(self, other_set):
         return self & ~ other_set
 
     def get_list(self, limit):
-        return self.client.set_list_evaluation(self.handle, self.set_type, limit)
+        return self.client.set_list_evaluation(self.handle, self.output_type, limit)
 
     def get_details(
             self, limit,
             values_included=[], sort_by=None, values_type=None):
         return self.client.set_detail_evaluation(
-            self.handle, self.set_type, limit,
+            self.handle, self.output_type, limit,
             values_included=values_included,
             sort_by=sort_by,
             values_type=values_type)
