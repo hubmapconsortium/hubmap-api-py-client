@@ -34,12 +34,12 @@ class ResultsSet():
         new_handle = self.client.set_intersection(self.handle, other_set.handle, self.set_type)
         return ResultsSet(self.client, new_handle, self.set_type)
 
-    def __not__(self):
+    def __invert__(self):
         new_handle = self.client.set_negation(self.handle, self.set_type)
         return ResultsSet(self.client, new_handle, self.set_type)
 
     def __sub__(self, other_set):
-        return self & ! other_set
+        return self & ~ other_set
 
     def get_list(self, limit):
         return self.client.set_list_evaluation(self.handle, self.set_type, limit)
