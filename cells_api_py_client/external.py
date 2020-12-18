@@ -27,10 +27,10 @@ class ExternalClient():
 def _add_method(input_type):
     method_name = f'query_{input_type}s'
     method = (
-        lambda self, output_type, query,
+        lambda self, output=None, q=None,
         genomic_modality=None, limit=_default_limit, p_value=_default_p_value:
         self._query(
-            input_type, output_type, query,
+            input_type, output, q,
             genomic_modality=genomic_modality, limit=limit, p_value=p_value)
     )
     setattr(ExternalClient, method_name, method)
