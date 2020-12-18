@@ -12,14 +12,22 @@ class ExternalClient():
         handle = self.client.hubmap_query(
             input_type, output_type, input_set,
             genomic_modality, limit, p_value)
-        return ResultsSet(self.client, handle, output_type)
+        return ResultsSet(
+            self.client, handle,
+            input_type=input_type, output_type=output_type,
+            input_set=input_set)
 
 
 class ResultsSet():
-    def __init__(self, client, handle, output_type=None):
+    def __init__(
+            self, client, handle,
+            input_type=None, output_type=None,
+            input_set=None):
         self.client = client
         self.handle = handle
+        self.input_type = input_type
         self.output_type = output_type
+        self.input_set = input_set
 
     def __len__(self):
         return self.client.set_count(self.handle, self.output_type)
@@ -28,15 +36,24 @@ class ResultsSet():
 
     def __or__(self, other_set):
         new_handle = self.client.set_union(self.handle, other_set.handle, self.output_type)
-        return ResultsSet(self.client, new_handle, self.output_type)
+        return ResultsSet(
+            self.client, new_handle,
+            input_type=self.input_type, output_type=self.output_type,
+            input_set=self.input_set)
 
     def __and__(self, other_set):
         new_handle = self.client.set_intersection(self.handle, other_set.handle, self.output_type)
-        return ResultsSet(self.client, new_handle, self.output_type)
+        return ResultsSet(
+            self.client, new_handle,
+            input_type=self.input_type, output_type=self.output_type,
+            input_set=self.input_set)
 
     def __invert__(self):
         new_handle = self.client.set_negation(self.handle, self.output_type)
-        return ResultsSet(self.client, new_handle, self.output_type)
+        return ResultsSet(
+            self.client, new_handle,
+            input_type=self.input_type, output_type=self.output_type,
+            input_set=self.input_set)
 
     def __sub__(self, other_set):
         return self & ~ other_set
