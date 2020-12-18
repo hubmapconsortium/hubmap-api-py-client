@@ -24,6 +24,14 @@ class ResultsSet():
     def __len__(self):
         return self.client.set_count(self.handle, self.set_type)
 
+    def __or__(self, other_set):
+        new_handle = self.client.set_union(self.handle, other_set.handle, self.set_type)
+        return ResultsSet(self.client, new_handle, self.set_type)
+
+    def __and__(self, other_set):
+        new_handle = self.client.set_intersection(self.handle, other_set.handle, self.set_type)
+        return ResultsSet(self.client, new_handle, self.set_type)
+
     def get_list(self, limit):
         return self.client.set_list_evaluation(self.handle, self.set_type, limit)
 

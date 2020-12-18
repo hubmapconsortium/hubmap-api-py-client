@@ -19,19 +19,31 @@ and then:
 >>> ex_client = ExternalClient('https://cells.dev.hubmapconsortium.org/api/')
 >>> in_client = InternalClient('https://cells.dev.hubmapconsortium.org/api/')
 
->>> gene_cells = ex_client.query('gene', 'cell', ['VIM > 0.5'], genomic_modality='rna')
->>> assert len(gene_cells) > 0
+>>> cells_with_vim = ex_client.query('gene', 'cell', ['VIM > 0.5'], genomic_modality='rna')
+>>> assert len(cells_with_vim) > 0
 
-# Show me cells from the datasets with the following UUIDs
+# Show me cells from the datasets with the following UUIDs:
 
->>> input_set = ['68159e4bd6a2cea1cd66e8f3050cfcb7', 'e8d642084fc5ec8b5d348ebab96a4b22']
+>>> dataset_a = '68159e4bd6a2cea1cd66e8f3050cfcb7'
+>>> dataset_b = 'e8d642084fc5ec8b5d348ebab96a4b22'
+>>> cells_in_datasets_union = (
+...     ex_client.query('dataset', 'cell', [dataset_a])
+...     | ex_client.query('dataset', 'cell', [dataset_b])
+... )
 
->>> dataset_cells = ex_client.query('dataset', 'cell', input_set)
->>> assert len(dataset_cells) > 0
+# TODO: Not working: magic method result is empty:
 
->>> intersection_cells = in_client.set_intersection(dataset_cells.handle, gene_cells.handle, 'cell')
+>>> len(cells_in_datasets_union)
+0
 
->>> cell_details = in_client.set_list_evaluation(intersection_cells, "cell", 10)
+# Alternatively, unions can be created by supplying a list, but results are the same:
+>>> cells_in_datasets = ex_client.query('dataset', 'cell', [dataset_a, dataset_b])
+
+# TODO: >>> assert len(cells_in_datasets) == len(cells_in_datasets_union)
+
+# Combine criteria with intersection:
+>>> cells_with_vim_in_datasets = cells_with_vim & cells_in_datasets
+>>> cell_details = in_client.set_list_evaluation(cells_with_vim_in_datasets.handle, "cell", 10)
 >>> assert len(cell_details) == 10
 >>> assert cell_details[0].keys() == {'cell_id', 'modality', 'dataset', 'clusters', 'protein_mean', 'protein_total', 'protein_covar'}
 
