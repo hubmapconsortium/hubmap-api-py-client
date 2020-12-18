@@ -43,7 +43,7 @@ and then:
 
 # Combine criteria with intersection:
 >>> cells_with_vim_in_datasets = cells_with_vim & cells_in_datasets
->>> cell_details = in_client.set_list_evaluation(cells_with_vim_in_datasets.handle, "cell", 10)
+>>> cell_details = cells_with_vim_in_datasets.get_list(10)
 >>> assert len(cell_details) == 10
 >>> assert cell_details[0].keys() == {'cell_id', 'modality', 'dataset', 'clusters', 'protein_mean', 'protein_total', 'protein_covar'}
 
