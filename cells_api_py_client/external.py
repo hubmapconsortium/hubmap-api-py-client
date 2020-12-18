@@ -66,6 +66,6 @@ class ResultsSet():
             values_included=[], sort_by=None):
         return self.client.set_detail_evaluation(
             self.handle, self.output_type, limit,
-            values_included=values_included,
             sort_by=sort_by,
-            values_type=self.input_type)
+            values_type=self.input_type,
+            values_included=self.input_set)
