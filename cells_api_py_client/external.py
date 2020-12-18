@@ -1,5 +1,8 @@
 from cells_api_py_client.internal import InternalClient
 
+_default_limit = 1000
+_default_p_value = -1
+
 
 class ExternalClient():
     def __init__(self, base_url):
@@ -8,7 +11,7 @@ class ExternalClient():
     def query(
             self,
             input_type, output_type, input_set,
-            genomic_modality=None, limit=1000, p_value=-1.0):
+            genomic_modality=None, limit=None, p_value=None):
         handle = self.client.hubmap_query(
             input_type, output_type, input_set,
             genomic_modality, limit, p_value)
@@ -16,6 +19,14 @@ class ExternalClient():
             self.client, handle,
             input_type=input_type, output_type=output_type,
             input_set=input_set)
+
+
+setattr(
+    ExternalClient, 'query_genes',
+    lambda self, output_type, input_set,
+    genomic_modality=None, limit=_default_limit, p_value=_default_p_value:
+    self.query('gene', output_type, input_set,
+               genomic_modality=genomic_modality, limit=limit, p_value=p_value))
 
 
 class ResultsSet():

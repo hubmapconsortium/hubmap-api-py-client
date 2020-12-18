@@ -16,24 +16,16 @@ Find cells with different criteria, and intersect resulting sets:
 >>> from cells_api_py_client import Client
 >>> client = Client('https://cells.dev.hubmapconsortium.org/api/')
 
->>> cells_with_vim = client.query('gene', 'cell', ['VIM > 0.5'], genomic_modality='rna')
+>>> cells_with_vim = client.query_genes('cell', ['VIM > 0.5'], genomic_modality='rna')
 >>> assert len(cells_with_vim) > 0
 
 # Select cells from the datasets with the following UUIDs:
 >>> dataset_a = '68159e4bd6a2cea1cd66e8f3050cfcb7'
 >>> dataset_b = 'e8d642084fc5ec8b5d348ebab96a4b22'
->>> cells_in_datasets = client.query('dataset', 'cell', [dataset_a, dataset_b])
->>> assert len(cells_in_datasets) > 0
-
-# Alternatively, use an operator to create union:
->>> cells_in_datasets_union = (
-...     client.query('dataset', 'cell', [dataset_a])
+>>> cells_in_datasets = \
+...     client.query('dataset', 'cell', [dataset_a]) \
 ...     | client.query('dataset', 'cell', [dataset_b])
-... )
->>> assert len(cells_in_datasets_union) > 0
-
-# TODO:
-#>>> assert len(cells_in_datasets) == len(cells_in_datasets_union)
+>>> assert len(cells_in_datasets) > 0
 
 # Combine criteria with intersection:
 >>> cells_with_vim_in_datasets = cells_with_vim & cells_in_datasets
