@@ -1,33 +1,55 @@
 from cells_api_py_client.internal import InternalClient
 
+_default_limit = 1000
+_default_p_value = -1
+
 
 class ExternalClient():
     def __init__(self, base_url):
         self.client = InternalClient(base_url)
 
-    def query(
+    def _query(
             self,
-            input_type, output_type, input_set,
-            genomic_modality=None, limit=1000, p_value=-1.0):
+            input_type, output_type, query,
+            genomic_modality=None, limit=None, p_value=None):
         handle = self.client.hubmap_query(
-            input_type, output_type, input_set,
+            input_type, output_type, [query],
+            # TODO: input_set is currently reading only the last in the list.
+            # https://github.com/hubmapconsortium/cells-api-py-client/issues/4
             genomic_modality, limit, p_value)
         return ResultsSet(
             self.client, handle,
             input_type=input_type, output_type=output_type,
-            input_set=input_set)
+            query=query
+        )
+
+
+def _add_method(input_type):
+    method_name = f'query_{input_type}s'
+    method = (
+        lambda self, output=None, q=None,
+        genomic_modality=None, limit=_default_limit, p_value=_default_p_value:
+        self._query(
+            input_type, output, q,
+            genomic_modality=genomic_modality, limit=limit, p_value=p_value)
+    )
+    setattr(ExternalClient, method_name, method)
+
+
+for input_type in ['cell', 'organ', 'gene', 'cluster', 'protein', 'dataset']:
+    _add_method(input_type)
 
 
 class ResultsSet():
     def __init__(
             self, client, handle,
             input_type=None, output_type=None,
-            input_set=None):
+            query=None):
         self.client = client
         self.handle = handle
         self.input_type = input_type
         self.output_type = output_type
-        self.input_set = input_set
+        self.query = query
 
     def __len__(self):
         return self.client.set_count(self.handle, self.output_type)
@@ -39,21 +61,21 @@ class ResultsSet():
         return ResultsSet(
             self.client, new_handle,
             input_type=self.input_type, output_type=self.output_type,
-            input_set=self.input_set)
+            query=self.query)
 
     def __and__(self, other_set):
         new_handle = self.client.set_intersection(self.handle, other_set.handle, self.output_type)
         return ResultsSet(
             self.client, new_handle,
             input_type=self.input_type, output_type=self.output_type,
-            input_set=self.input_set)
+            query=self.query)
 
     def __invert__(self):
         new_handle = self.client.set_negation(self.handle, self.output_type)
         return ResultsSet(
             self.client, new_handle,
             input_type=self.input_type, output_type=self.output_type,
-            input_set=self.input_set)
+            query=self.query)
 
     def __sub__(self, other_set):
         return self & ~ other_set
@@ -68,4 +90,4 @@ class ResultsSet():
             self.handle, self.output_type, limit,
             sort_by=sort_by,
             values_type=self.input_type,
-            values_included=self.input_set)
+            values_included=[self.query])

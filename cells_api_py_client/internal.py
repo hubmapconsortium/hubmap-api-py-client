@@ -2,17 +2,12 @@ from typing import List
 
 import requests
 
-output_types = ['cell', 'organ', 'gene', 'cluster']
-input_types = {
-    # Allowed input types vary depending on output type
-    'cell': ['gene', 'organ', 'protein', 'dataset'],
-    'organ': ['cell', 'gene'],
-    'gene': ['organ', 'cluster'],
-    'cluster': ['gene']
-}
-genomic_modalities = ['rna', 'atac']  # Used for quantitative gene->cell queries
 
 HANDLE = 'query_pickle_hash'
+
+
+class ClientException(Exception):
+    pass
 
 
 class InternalClient():
@@ -24,13 +19,29 @@ class InternalClient():
             self,
             input_type: str, output_type: str, input_set: List[str],
             genomic_modality: str, p_value: float = 0.05):
-        assert output_type in output_types
-        assert input_type in input_types[output_type]
+        output_types = ['cell', 'organ', 'gene', 'cluster']
+        if output_type not in output_types:
+            raise ClientException(f'{output_type} not in {output_types}')
+
+        input_types = {
+            # Allowed input types vary depending on output type
+            'cell': ['gene', 'organ', 'protein', 'dataset'],
+            'organ': ['cell', 'gene'],
+            'gene': ['organ', 'cluster'],
+            'cluster': ['gene']
+        }
+        if input_type not in input_types[output_type]:
+            raise ClientException(f'{input_type} not in {input_types[output_type]}')
+
+        genomic_modalities = ['rna', 'atac']  # Used for quantitative gene->cell queries
         if input_type == 'gene' and output_type == 'cell':
-            assert genomic_modality in genomic_modalities
+            if genomic_modality not in genomic_modalities:
+                raise ClientException(f'{genomic_modality} not in {genomic_modalities}')
+
         if (input_type == 'organ' and output_type == 'gene'
                 or input_type == 'gene' and output_type == 'organ'):
-            assert p_value >= 0.0 and p_value <= 1.0
+            if p_value < 0 or p_value > 1:
+                raise ClientException(f'p_value {p_value} should be in [0,1]')
 
     def _fill_request_dict(
             self,
@@ -39,8 +50,7 @@ class InternalClient():
         request_dict = {'input_type': input_type, 'input_set': input_set}
         if input_type == 'gene' and output_type == 'cell':
             request_dict['genomic_modality'] = genomic_modality
-        if (input_type == 'organ' and output_type == 'gene'
-                or input_type == 'gene' and output_type == 'organ'):
+        if input_type in ['organ', 'gene'] and output_type == 'gene':
             request_dict['p_value'] = p_value
         if genomic_modality is not None:
             request_dict['genomic_modality'] = genomic_modality
@@ -97,7 +107,8 @@ class InternalClient():
             'organ', 'cluster'], 'cluster': ['gene'], 'organ': ['gene']}
         allowed_types = type_map[set_type]
         if values_type not in allowed_types:
-            raise Exception(f'For "{set_type}", only {allowed_types} allowed, not "{values_type}"')
+            raise ClientException(
+                f'For "{set_type}", only {allowed_types} allowed, not "{values_type}"')
 
     def set_count(
             self, set_key: str, set_type: str) -> str:
