@@ -13,8 +13,8 @@ pip install cells-api-py-client
 
 Find cells with different criteria, and intersect resulting sets:
 ```python
->>> from cells_api_py_client.external import ExternalClient
->>> ex_client = ExternalClient('https://cells.dev.hubmapconsortium.org/api/')
+>>> from cells_api_py_client import Client
+>>> ex_client = Client('https://cells.dev.hubmapconsortium.org/api/')
 
 >>> cells_with_vim = ex_client.query('gene', 'cell', ['VIM > 0.5'], genomic_modality='rna')
 >>> assert len(cells_with_vim) > 0
@@ -48,8 +48,8 @@ Find cells with different criteria, and intersect resulting sets:
 
 Find genes differentially expressed by the kidney at significance level 0.05:
 ```python
->>> from cells_api_py_client.external import ExternalClient
->>> ex_client = ExternalClient('https://cells.dev.hubmapconsortium.org/api/')
+>>> from cells_api_py_client import Client
+>>> ex_client = Client('https://cells.dev.hubmapconsortium.org/api/')
 
 >>> kidney_genes = ex_client.query('organ', 'gene', ['Kidney'], genomic_modality='rna', p_value=0.05)
 >>> kidney_genes_details = kidney_genes.get_details(10, values_included=['Kidney'], values_type='organ')
@@ -59,8 +59,8 @@ Find genes differentially expressed by the kidney at significance level 0.05:
 
 Find organs that differentially express the gene VIM at the 0.01 significance level
 ```python
->>> from cells_api_py_client.external import ExternalClient
->>> ex_client = ExternalClient('https://cells.dev.hubmapconsortium.org/api/')
+>>> from cells_api_py_client import Client
+>>> ex_client = Client('https://cells.dev.hubmapconsortium.org/api/')
 
 >>> organs_with_vim = ex_client.query('gene', 'organ', ['VIM'], genomic_modality='rna', p_value=0.01)
 >>> organs_with_vim_details = organs_with_vim.get_details(10, values_included=['VIM'], values_type='gene')
