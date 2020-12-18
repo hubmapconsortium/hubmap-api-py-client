@@ -26,15 +26,14 @@ Find cells with different criteria, and intersect resulting sets:
 >>> assert len(cells_in_datasets) > 0
 
 # Alternatively, use an operator to create union:
-# TODO: Not working: magic method result is empty!
 >>> cells_in_datasets_union = (
 ...     ex_client.query('dataset', 'cell', [dataset_a])
 ...     | ex_client.query('dataset', 'cell', [dataset_b])
 ... )
->>> len(cells_in_datasets_union)
-0
+>>> assert len(cells_in_datasets_union) > 0
 
-# TODO: >>> assert len(cells_in_datasets) == len(cells_in_datasets_union)
+# TODO:
+#>>> assert len(cells_in_datasets) == len(cells_in_datasets_union)
 
 # Combine criteria with intersection:
 >>> cells_with_vim_in_datasets = cells_with_vim & cells_in_datasets

@@ -39,8 +39,7 @@ class InternalClient():
         request_dict = {'input_type': input_type, 'input_set': input_set}
         if input_type == 'gene' and output_type == 'cell':
             request_dict['genomic_modality'] = genomic_modality
-        if (input_type == 'organ' and output_type == 'gene'
-                or input_type == 'gene' and output_type == 'organ'):
+        if input_type in ['organ', 'gene'] and output_type == 'gene':
             request_dict['p_value'] = p_value
         if genomic_modality is not None:
             request_dict['genomic_modality'] = genomic_modality
