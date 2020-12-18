@@ -10,65 +10,60 @@ Install from pypi:
 ```
 pip install cells-api-py-client
 ```
-and then:
 
+Find cells with different criteria, and intersect resulting sets:
 ```python
 >>> from cells_api_py_client.external import ExternalClient
->>> from cells_api_py_client.internal import InternalClient
-
 >>> ex_client = ExternalClient('https://cells.dev.hubmapconsortium.org/api/')
->>> in_client = InternalClient('https://cells.dev.hubmapconsortium.org/api/')
 
 >>> cells_with_vim = ex_client.query('gene', 'cell', ['VIM > 0.5'], genomic_modality='rna')
 >>> assert len(cells_with_vim) > 0
 
-# Show me cells from the datasets with the following UUIDs:
-
+# Select cells from the datasets with the following UUIDs:
 >>> dataset_a = '68159e4bd6a2cea1cd66e8f3050cfcb7'
 >>> dataset_b = 'e8d642084fc5ec8b5d348ebab96a4b22'
+>>> cells_in_datasets = ex_client.query('dataset', 'cell', [dataset_a, dataset_b])
+>>> assert len(cells_in_datasets) > 0
+
+# Alternatively, use an operator to create union:
+# TODO: Not working: magic method result is empty!
 >>> cells_in_datasets_union = (
 ...     ex_client.query('dataset', 'cell', [dataset_a])
 ...     | ex_client.query('dataset', 'cell', [dataset_b])
 ... )
-
-# TODO: Not working: magic method result is empty:
-
 >>> len(cells_in_datasets_union)
 0
-
-# Alternatively, unions can be created by supplying a list, but results are the same:
->>> cells_in_datasets = ex_client.query('dataset', 'cell', [dataset_a, dataset_b])
 
 # TODO: >>> assert len(cells_in_datasets) == len(cells_in_datasets_union)
 
 # Combine criteria with intersection:
 >>> cells_with_vim_in_datasets = cells_with_vim & cells_in_datasets
->>> cell_details = cells_with_vim_in_datasets.get_list(10)
->>> assert len(cell_details) == 10
->>> assert cell_details[0].keys() == {'cell_id', 'modality', 'dataset', 'clusters', 'protein_mean', 'protein_total', 'protein_covar'}
 
-# Show me genes differentially expressed by the kidney at significance level 0.05
+# Get a list; should run quickly:
+>>> cell_list = cells_with_vim_in_datasets.get_list(10)
+>>> assert len(cell_list) == 10
+>>> assert cell_list[0].keys() == {'cell_id', 'modality', 'dataset', 'clusters', 'protein_mean', 'protein_total', 'protein_covar'}
 
->>> output_type = 'gene'
->>> input_type = 'organ'
->>> input_set = ['Kidney']
->>> p_value = 0.05
->>> genomic_modality = 'rna'
+```
 
->>> gene_set = in_client.hubmap_query(input_type, output_type, input_set, genomic_modality, p_value=p_value)
->>> gene_set_details = in_client.set_detail_evaluation(gene_set, "gene", 10, values_included=['Kidney'], values_type='organ')
->>> assert gene_set_details[0].keys() == {'gene_symbol', 'go_terms', 'values'}
+Find genes differentially expressed by the kidney at significance level 0.05:
+```python
+>>> from cells_api_py_client.external import ExternalClient
+>>> ex_client = ExternalClient('https://cells.dev.hubmapconsortium.org/api/')
 
-# Show me organs that differentially express the gene VIM at the 0.01 significance level
+>>> kidney_genes = ex_client.query('organ', 'gene', ['Kidney'], genomic_modality='rna', p_value=0.05)
+>>> kidney_genes_details = kidney_genes.get_details(10, values_included=['Kidney'], values_type='organ')
+>>> assert kidney_genes_details[0].keys() == {'gene_symbol', 'go_terms', 'values'}
 
->>> output_type = 'organ'
->>> input_type = 'gene'
->>> input_set = ['VIM']
->>> p_value = 0.01
->>> genomic_modality = 'rna'
+```
 
->>> organ_set = in_client.hubmap_query(input_type, output_type, input_set, genomic_modality, p_value=p_value)
->>> organ_set_details = in_client.set_detail_evaluation(organ_set, "organ", 10, values_included=['VIM'], values_type='gene')
->>> assert organ_set_details[0].keys() == {'grouping_name', 'values'}
+Find organs that differentially express the gene VIM at the 0.01 significance level
+```python
+>>> from cells_api_py_client.external import ExternalClient
+>>> ex_client = ExternalClient('https://cells.dev.hubmapconsortium.org/api/')
+
+>>> organs_with_vim = ex_client.query('gene', 'organ', ['VIM'], genomic_modality='rna', p_value=0.01)
+>>> organs_with_vim_details = organs_with_vim.get_details(10, values_included=['VIM'], values_type='gene')
+>>> assert organs_with_vim_details[0].keys() == {'grouping_name', 'values'}
 
 ```

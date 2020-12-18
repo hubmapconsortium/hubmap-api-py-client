@@ -93,10 +93,11 @@ class InternalClient():
 
     def _check_detail_parameters(
             self, set_type, values_type):
-        allowed_values_types = {'cell': ['gene', 'protein'], 'gene': [
+        type_map = {'cell': ['gene', 'protein'], 'gene': [
             'organ', 'cluster'], 'cluster': ['gene'], 'organ': ['gene']}
-        assert values_type in allowed_values_types[set_type]
-        return
+        allowed_types = type_map[set_type]
+        if values_type not in allowed_types:
+            raise Exception(f'For "{set_type}", only {allowed_types} allowed, not "{values_type}"')
 
     def set_count(
             self, set_key: str, set_type: str) -> str:
