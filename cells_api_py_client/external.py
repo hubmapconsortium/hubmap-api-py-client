@@ -10,10 +10,10 @@ class ExternalClient():
 
     def _query(
             self,
-            input_type, output_type, query,
+            input_type=None, output_type=None, query=None,
             genomic_modality=None, limit=None, p_value=None):
         handle = self.client.hubmap_query(
-            input_type, output_type, [query],
+            input_type, output_type, query,
             # TODO: input_set is currently reading only the last in the list.
             # https://github.com/hubmapconsortium/cells-api-py-client/issues/4
             genomic_modality, limit, p_value)
@@ -24,20 +24,20 @@ class ExternalClient():
         )
 
 
-def _add_method(input_type):
-    method_name = f'query_{input_type}s'
+def _add_method(output_type):
+    method_name = f'select_{output_type}s'
     method = (
-        lambda self, output=None, q=None,
+        lambda self, where=None, has=None,
         genomic_modality=None, limit=_default_limit, p_value=_default_p_value:
         self._query(
-            input_type, output, q,
+            input_type=where, output_type=output_type, query=has,
             genomic_modality=genomic_modality, limit=limit, p_value=p_value)
     )
     setattr(ExternalClient, method_name, method)
 
 
-for input_type in ['cell', 'organ', 'gene', 'cluster', 'protein', 'dataset']:
-    _add_method(input_type)
+for output_type in ['cell', 'organ', 'gene', 'cluster']:
+    _add_method(output_type)
 
 
 class ResultsSet():
