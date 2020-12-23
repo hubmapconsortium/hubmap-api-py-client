@@ -16,6 +16,9 @@ Find cells with different criteria, and intersect resulting sets:
 >>> from cells_api_py_client import Client
 >>> client = Client('https://cells.dev.hubmapconsortium.org/api/')
 
+>>> [m for m in dir(client) if m.startswith('select_')]
+['select_cells', 'select_clusters', 'select_genes', 'select_organs']
+
 >>> cells_with_vim = client.select_cells(where='gene', has='VIM > 0.5', genomic_modality='rna')
 >>> assert len(cells_with_vim) > 0
 
