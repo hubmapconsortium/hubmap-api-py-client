@@ -38,3 +38,12 @@ Find cells with different criteria, and intersect resulting sets:
 ```
 
 [More examples](https://github.com/hubmapconsortium/cells-api-py-client/blob/main/examples/)
+
+Only some types of objects can be retrieved from other types of objects:
+
+| `where=...`       | `'gene'` | `'organ'` | `'protein'` | `'dataset'` | `'cell'` | `'cluster'` |
+| ----------------- | --- | --- | --- | --- | --- | --- |
+| `select_cells()`  | ✓   | ✓   | ✓   | ✓   |     |     |
+| `select_organs()` | ✓   |     |     |     | ✓   |     |
+| `select_genes()`  |     | ✓   |     |     |     | ✓   |
+| `select_clusters()` | ✓ |     |     |     |     |     |
