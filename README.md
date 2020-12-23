@@ -44,9 +44,11 @@ Find cells with different criteria, and intersect resulting sets:
 
 Only some types of objects can be retrieved from other types of objects:
 
-| `where=...`       | `'gene'` | `'organ'` | `'protein'` | `'dataset'` | `'cell'` | `'cluster'` |
-| ----------------- | --- | --- | --- | --- | --- | --- |
-| [`select_cells()`](https://github.com/hubmapconsortium/cells-api-py-client/blob/main/examples/select_cells.md)  | ✓   | ✓   | ✓   | ✓   |     |     |
-| [`select_organs()`](https://github.com/hubmapconsortium/cells-api-py-client/blob/main/examples/select_organs.md) | ✓   |     |     |     | ✓   |     |
-| [`select_genes()`](https://github.com/hubmapconsortium/cells-api-py-client/blob/main/examples/select_genes.md)  |     | ✓   |     |     |     | ✓   |
-| [`select_clusters()`](https://github.com/hubmapconsortium/cells-api-py-client/blob/main/examples/select_clusters.md) | ✓ |     |     |     |     |     |
+| `where=...`       | `cell`    | `cluster` | `dataset` | `gene`    | `organ`   | `protein` |
+| ----------------- | --------- | --------- | --------- | --------- | --------- | --------- |
+| [`select_cells()`](https://github.com/hubmapconsortium/cells-api-py-client/blob/main/examples/select_cells.md)    |           |           | ✓         | ✓         | ✓         | ✓         |
+| [`select_clusters()`](https://github.com/hubmapconsortium/cells-api-py-client/blob/main/examples/select_clusters.md) |           |           |           | ✓         |           |           |
+| ~~`select_datasets()`~~ |           |           |           |           |           |           |
+| [`select_genes()`](https://github.com/hubmapconsortium/cells-api-py-client/blob/main/examples/select_genes.md)    |           | ✓         |           |           | ✓         |           |
+| [`select_organs()`](https://github.com/hubmapconsortium/cells-api-py-client/blob/main/examples/select_organs.md)   | ✓         |           |           | ✓         |           |           |
+| ~~`select_proteins()`~~ |           |           |           |           |           |           |
