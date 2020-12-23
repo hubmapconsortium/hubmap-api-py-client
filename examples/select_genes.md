@@ -20,3 +20,4 @@ dict_keys(['Kidney'])
 ```python
 TODO
 ```
+Not sure what `has` value would work. [Filed issue](https://github.com/hubmapconsortium/cells-api-py-client/issues/16)

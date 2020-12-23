@@ -20,6 +20,7 @@
 TODO
 
 ```
+[Filed issue](https://github.com/hubmapconsortium/cells-api-py-client/issues/17)
 
 `client.select_cells(where='dataset', ...)`:
 ```python
