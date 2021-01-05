@@ -15,7 +15,9 @@ flake8 || die "Try: autopep8 --in-place --aggressive -r ."
 end flake8
 
 start pytest
-PYTHONPATH="${PYTHONPATH}:cells_api_py_client" pytest -vv --doctest-glob="*.md"
+CMD='PYTHONPATH="${PYTHONPATH}:cells_api_py_client" pytest -vv --doctest-glob="*.md"'
+echo $CMD
+eval $CMD
 end pytest
 
 # start changelog
