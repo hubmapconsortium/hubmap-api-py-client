@@ -91,10 +91,10 @@ class InternalClient():
         # Returns the key to be used in future computations
         return results[0][HANDLE]
 
-    def set_negation(
-            self, set_key: str, set_type: str) -> str:
-        request_url = self.base_url + "negation/"
-        request_dict = {"key": set_key, "set_type": set_type}
+    def set_difference(
+            self, set_key_one: str, set_key_two: str, set_type: str) -> str:
+        request_url = self.base_url + "difference/"
+        request_dict = {"key_one": set_key_one, "key_two": set_key_two, "set_type": set_type}
         results = requests.post(request_url, request_dict).json()['results']
         # Returns the key to be used in future computations
         return results[0][HANDLE]
