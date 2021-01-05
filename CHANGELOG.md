@@ -1,4 +1,7 @@
-0.0.3 - in progress
+0.0.4 - in progress
+- Remove complement magic method, and add difference.
+
+0.0.3
 - Change to more fluent SDK: `select_TARGET(where='SOURCE', has='CRITERIA', ...)`
 
 0.0.2

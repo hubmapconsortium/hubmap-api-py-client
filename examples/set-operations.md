@@ -27,16 +27,11 @@ Providing a list to `has` is the same as using `|` for the union:
 
 ```
 
-TODO: Not working; [Issue filed](https://github.com/hubmapconsortium/cells-api-py-client/issues/20)
+Intersection and difference are also available:
 ```python
 >>> vim_cells = client.select_cells(where='gene', has='VIM > 0.5', genomic_modality='rna')
 >>> a_b_vim_cells = a_b_cells & vim_cells
 >>> a_b_no_vim_cells = a_b_cells - vim_cells
-
-# Should be:
-#>>> assert len(a_b_vim_cells) + len(a_b_no_vim_cells) == len_a_b_cells
-# instead of:
-
->>> assert len(a_b_vim_cells) + len(a_b_no_vim_cells) > len_a_b_cells
+>>> assert len(a_b_vim_cells) + len(a_b_no_vim_cells) == len_a_b_cells
 
 ```

@@ -54,31 +54,21 @@ class ResultsSet():
     def __len__(self):
         return self.client.set_count(self.handle, self.output_type)
 
-    # TODO: There may be bugs with union and intersection, perhaps on the server side?
-
     def __or__(self, other_set):
-        new_handle = self.client.set_union(self.handle, other_set.handle, self.output_type)
-        return ResultsSet(
-            self.client, new_handle,
-            input_type=self.input_type, output_type=self.output_type,
-            query=self.query)
+        return self._operation(other_set, self.client.set_union)
 
     def __and__(self, other_set):
-        new_handle = self.client.set_intersection(self.handle, other_set.handle, self.output_type)
-        return ResultsSet(
-            self.client, new_handle,
-            input_type=self.input_type, output_type=self.output_type,
-            query=self.query)
-
-    def __invert__(self):
-        new_handle = self.client.set_negation(self.handle, self.output_type)
-        return ResultsSet(
-            self.client, new_handle,
-            input_type=self.input_type, output_type=self.output_type,
-            query=self.query)
+        return self._operation(other_set, self.client.set_intersection)
 
     def __sub__(self, other_set):
-        return self & ~ other_set
+        return self._operation(other_set, self.client.set_difference)
+
+    def _operation(self, other_set, method):
+        new_handle = method(self.handle, other_set.handle, self.output_type)
+        return ResultsSet(
+            self.client, new_handle,
+            input_type=self.input_type, output_type=self.output_type,
+            query=self.query)
 
     def get_list(self, limit):
         return self.client.set_list_evaluation(self.handle, self.output_type, limit)

@@ -11,11 +11,9 @@ dict_keys(['cluster_method', 'cluster_data', 'grouping_name', 'dataset'])
 
 ```
 
-[Issue filed](https://github.com/hubmapconsortium/cells-api-py-client/issues/15):
-```
+Expecting more keys here. [Filed issue](https://github.com/hubmapconsortium/cells-api-py-client/issues/22).
+```python
 >>> clusters_with_gene.get_details(1)[0].keys()
-Traceback (most recent call last):
-...
-json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+dict_keys(['grouping_name', 'dataset', 'values'])
 
 ```
