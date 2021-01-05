@@ -73,33 +73,29 @@ class InternalClient():
         # Returns the key to be used in future computations
         return results[0][HANDLE]
 
-    # These functions take one or two query set tokens and return an API token
+    # These functions take two query set tokens and return an API token:
 
     def set_intersection(
             self, set_key_one: str, set_key_two: str, set_type: str) -> str:
-        request_url = self.base_url + "intersection/"
-        request_dict = {"key_one": set_key_one, "key_two": set_key_two, "set_type": set_type}
-        results = requests.post(request_url, request_dict).json()['results']
-        # Returns the key to be used in future computations
-        return results[0][HANDLE]
+        return self._operation(set_key_one, set_key_two, set_type, 'intersection/')
 
     def set_union(
             self, set_key_one: str, set_key_two: str, set_type: str) -> str:
-        request_url = self.base_url + "union/"
-        request_dict = {"key_one": set_key_one, "key_two": set_key_two, "set_type": set_type}
-        results = requests.post(request_url, request_dict).json()['results']
-        # Returns the key to be used in future computations
-        return results[0][HANDLE]
+        return self._operation(set_key_one, set_key_two, set_type, 'union/')
 
     def set_difference(
             self, set_key_one: str, set_key_two: str, set_type: str) -> str:
-        request_url = self.base_url + "difference/"
+        return self._operation(set_key_one, set_key_two, set_type, 'difference/')
+
+    def _operation(
+            self, set_key_one: str, set_key_two: str, set_type: str, path: str) -> str:
+        request_url = self.base_url + path
         request_dict = {"key_one": set_key_one, "key_two": set_key_two, "set_type": set_type}
         results = requests.post(request_url, request_dict).json()['results']
         # Returns the key to be used in future computations
         return results[0][HANDLE]
 
-    # These functions/API calls take a query set token and return an evaluated query_set
+    # These functions take a query set token and return an evaluated query_set:
 
     def _check_detail_parameters(
             self, set_type, values_type):
