@@ -20,9 +20,9 @@ echo $CMD
 eval $CMD
 end pytest
 
-# start changelog
-# if [ "$TRAVIS_BRANCH" != 'main' ]; then
-#   diff CHANGELOG.md <(curl -s https://raw.githubusercontent.com/hubmapconsortium/cells-api-py-client/main/CHANGELOG.md) \
-#     && die 'Update CHANGELOG.md'
-# fi
-# end changelog
+start changelog
+if [ "$TRAVIS_BRANCH" != 'main' ]; then
+  diff CHANGELOG.md <(curl -s https://raw.githubusercontent.com/hubmapconsortium/cells-api-py-client/main/CHANGELOG.md) \
+    && die 'Update CHANGELOG.md'
+fi
+end changelog
