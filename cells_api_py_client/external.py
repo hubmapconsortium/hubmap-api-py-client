@@ -8,6 +8,9 @@ class ExternalClient():
     def __init__(self, base_url):
         self.client = InternalClient(base_url)
 
+    def __repr__(self):
+        return f'<Client base_url={self.client.base_url}>'
+
     def _query(
             self,
             input_type=None, output_type=None, has=None,
@@ -49,6 +52,9 @@ class ResultsSet():
         self.output_type = output_type
         self.query = query
 
+    def __repr__(self):
+        return f'<{class_name(self.output_type)} base_url={self.client.base_url} handle={self.handle}>'
+
     def __len__(self):
         return self.client.set_count(self.handle, self.output_type)
 
@@ -81,6 +87,14 @@ class ResultsSet():
             values_included=[self.query])
 
 
+def class_name(output_type):
+    return f'{output_type.capitalize()}ResultsSet'
+
+
+def _create_subclass(output_type):
+    return type(class_name(output_type), (ResultsSet,), {})
+
+
 for output_type in ['cell', 'organ', 'gene', 'cluster']:
-    ResultsSetSubclass = type(f'{output_type.capitalize()}ResultsSet', (ResultsSet,), {})
+    ResultsSetSubclass = _create_subclass(output_type)
     _add_method(output_type, ResultsSetSubclass)
