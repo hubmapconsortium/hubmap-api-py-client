@@ -25,10 +25,12 @@ Find cells with different criteria, and intersect resulting sets:
 # Select cells from the datasets with the following UUIDs:
 >>> dataset_a_uuid = '68159e4bd6a2cea1cd66e8f3050cfcb7'
 >>> dataset_b_uuid = 'e8d642084fc5ec8b5d348ebab96a4b22'
->>> cells_in_datasets = client.select_cells(
-...         where='dataset',
-...         has=[dataset_a_uuid, dataset_b_uuid])
->>> assert len(cells_in_datasets) > 0
+>>> cells_in_a_len = len(client.select_cells(where='dataset', has=[dataset_a_uuid]))
+>>> cells_in_b_len = len(client.select_cells(where='dataset', has=[dataset_b_uuid]))
+>>> cells_in_datasets = client.select_cells(where='dataset', has=[dataset_a_uuid, dataset_b_uuid])
+>>> cells_in_datasets_len = len(cells_in_datasets)
+>>> assert cells_in_datasets_len > 0
+>>> assert cells_in_datasets_len == cells_in_a_len + cells_in_b_len
 
 # Combine criteria with intersection:
 >>> cells_with_vim_in_datasets = cells_with_vim & cells_in_datasets

@@ -1,5 +1,6 @@
 0.0.4 - in progress
 - Remove complement magic method, and add difference.
+- Doctest to show that list-queries works.
 
 0.0.3
 - Change to more fluent SDK: `select_TARGET(where='SOURCE', has='CRITERIA', ...)`
