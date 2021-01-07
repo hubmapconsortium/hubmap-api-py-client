@@ -8,38 +8,37 @@ class ExternalClient():
     def __init__(self, base_url):
         self.client = InternalClient(base_url)
 
+    def __repr__(self):
+        return f'<Client base_url={self.client.base_url}>'
+
     def _query(
             self,
             input_type=None, output_type=None, has=None,
-            genomic_modality=None, limit=None, p_value=None):
+            genomic_modality=None, limit=None, p_value=None,
+            ResultsSetSubclass=None):
         if not isinstance(has, list):
-            raise TypeError('"has" parameter must be a list')
+            raise TypeError(f'"has" parameter must be a list, not {has}')
         handle = self.client.hubmap_query(
             input_type, output_type, has,
-            # TODO: input_set is currently reading only the last in the list.
-            # https://github.com/hubmapconsortium/cells-api-py-client/issues/4
             genomic_modality, limit, p_value)
-        return ResultsSet(
+        return ResultsSetSubclass(
             self.client, handle,
             input_type=input_type, output_type=output_type,
             query=has
         )
 
 
-def _add_method(output_type):
+def _add_method(output_type, ResultsSetSubclass):
     method_name = f'select_{output_type}s'
     method = (
         lambda self, where=None, has=None,
         genomic_modality=None, limit=_default_limit, p_value=_default_p_value:
         self._query(
             input_type=where, output_type=output_type, has=has,
-            genomic_modality=genomic_modality, limit=limit, p_value=p_value)
+            genomic_modality=genomic_modality, limit=limit, p_value=p_value,
+            ResultsSetSubclass=ResultsSetSubclass)
     )
     setattr(ExternalClient, method_name, method)
-
-
-for output_type in ['cell', 'organ', 'gene', 'cluster']:
-    _add_method(output_type)
 
 
 class ResultsSet():
@@ -52,6 +51,11 @@ class ResultsSet():
         self.input_type = input_type
         self.output_type = output_type
         self.query = query
+
+    def __repr__(self):
+        return (
+            f'<{class_name(self.output_type)} '
+            f'base_url={self.client.base_url} handle={self.handle}>')
 
     def __len__(self):
         return self.client.set_count(self.handle, self.output_type)
@@ -66,6 +70,10 @@ class ResultsSet():
         return self._operation(other_set, self.client.set_difference)
 
     def _operation(self, other_set, method):
+        if self.output_type != other_set.output_type:
+            raise ValueError(
+                'Operand output types do not match: '
+                f'{self.output_type} != {other_set.output_type}')
         new_handle = method(self.handle, other_set.handle, self.output_type)
         return ResultsSet(
             self.client, new_handle,
@@ -83,3 +91,16 @@ class ResultsSet():
             sort_by=sort_by,
             values_type=self.input_type,
             values_included=[self.query])
+
+
+def class_name(output_type):
+    return f'{output_type.capitalize()}ResultsSet'
+
+
+def _create_subclass(output_type):
+    return type(class_name(output_type), (ResultsSet,), {})
+
+
+for output_type in ['cell', 'organ', 'gene', 'cluster']:
+    ResultsSetSubclass = _create_subclass(output_type)
+    _add_method(output_type, ResultsSetSubclass)

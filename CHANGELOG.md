@@ -1,7 +1,7 @@
 0.0.4 - in progress
 - Remove complement magic method, and add difference.
-- Require "has" param to be list.
-- Doctest to show that list-queries works.
+- Require "has" param to be list, and update examples.
+- Add subtypes of ResultsSet, and check that operands on set operations match.
 
 0.0.3
 - Change to more fluent SDK: `select_TARGET(where='SOURCE', has='CRITERIA', ...)`
