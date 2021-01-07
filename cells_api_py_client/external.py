@@ -68,6 +68,9 @@ class ResultsSet():
         return self._operation(other_set, self.client.set_difference)
 
     def _operation(self, other_set, method):
+        if self.output_type != other_set.output_type:
+            raise ValueError(
+                f'Operand output types do not match: {self.output_type} != {other_set.output_type}')
         new_handle = method(self.handle, other_set.handle, self.output_type)
         return ResultsSet(
             self.client, new_handle,
