@@ -53,7 +53,9 @@ class ResultsSet():
         self.query = query
 
     def __repr__(self):
-        return f'<{class_name(self.output_type)} base_url={self.client.base_url} handle={self.handle}>'
+        return (
+            f'<{class_name(self.output_type)} '
+            f'base_url={self.client.base_url} handle={self.handle}>')
 
     def __len__(self):
         return self.client.set_count(self.handle, self.output_type)
@@ -70,7 +72,8 @@ class ResultsSet():
     def _operation(self, other_set, method):
         if self.output_type != other_set.output_type:
             raise ValueError(
-                f'Operand output types do not match: {self.output_type} != {other_set.output_type}')
+                'Operand output types do not match: '
+                f'{self.output_type} != {other_set.output_type}')
         new_handle = method(self.handle, other_set.handle, self.output_type)
         return ResultsSet(
             self.client, new_handle,
