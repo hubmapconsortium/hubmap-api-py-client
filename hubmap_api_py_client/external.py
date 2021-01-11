@@ -1,4 +1,4 @@
-from cells_api_py_client.internal import InternalClient
+from hubmap_api_py_client.internal import InternalClient
 
 _default_limit = 1000
 _default_p_value = -1

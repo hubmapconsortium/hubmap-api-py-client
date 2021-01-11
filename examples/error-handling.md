@@ -1,5 +1,5 @@
 ```python
->>> from cells_api_py_client import Client
+>>> from hubmap_api_py_client import Client
 >>> client = Client('https://cells.dev.hubmapconsortium.org/api/')
 
 >>> kidney_genes = client.select_genes(where='organ', has=['Kidney'], genomic_modality='rna', p_value=0.05)
@@ -12,16 +12,16 @@ ValueError: Operand output types do not match: gene != cell
 >>> client.select_cells(where='fake', has=['VIM>1'], genomic_modality='rna')
 Traceback (most recent call last):
 ...
-cells_api_py_client.internal.ClientException: fake not in ['gene', 'organ', 'protein', 'dataset']
+hubmap_api_py_client.internal.ClientException: fake not in ['gene', 'organ', 'protein', 'dataset']
 
 >>> client.select_cells(where='gene', has=['VIM>1'], genomic_modality='fake')
 Traceback (most recent call last):
 ...
-cells_api_py_client.internal.ClientException: fake not in ['rna', 'atac']
+hubmap_api_py_client.internal.ClientException: fake not in ['rna', 'atac']
 
 ```
 
-Not clear why `atac` can't be used; [issue filed](https://github.com/hubmapconsortium/cells-api-py-client/issues/8).
+Not clear why `atac` can't be used; [issue filed](https://github.com/hubmapconsortium/hubmap-api-py-client/issues/8).
 ```python
 >>> client.select_cells(where='gene', has=['VIM>1'], genomic_modality='atac')
 Traceback (most recent call last):

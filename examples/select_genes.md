@@ -1,6 +1,6 @@
 `client.select_genes(where='organ', ...)`:
 ```python
->>> from cells_api_py_client import Client
+>>> from hubmap_api_py_client import Client
 >>> client = Client('https://cells.dev.hubmapconsortium.org/api/')
 
 >>> kidney_genes = client.select_genes(where='organ', has=['Kidney'], genomic_modality='rna', p_value=0.05)
@@ -20,4 +20,4 @@ dict_keys(['Kidney'])
 ```python
 TODO
 ```
-Not sure what `has` value would work. [Filed issue](https://github.com/hubmapconsortium/cells-api-py-client/issues/16)
+Not sure what `has` value would work. [Filed issue](https://github.com/hubmapconsortium/hubmap-api-py-client/issues/16)
