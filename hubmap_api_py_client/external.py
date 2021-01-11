@@ -1,7 +1,6 @@
 from hubmap_api_py_client.internal import InternalClient
 
 _default_limit = 1000
-_default_p_value = -1
 
 
 class ExternalClient():
@@ -32,7 +31,7 @@ def _add_method(output_type, ResultsSetSubclass):
     method_name = f'select_{output_type}s'
     method = (
         lambda self, where=None, has=None,
-        genomic_modality=None, limit=_default_limit, p_value=_default_p_value:
+        genomic_modality=None, limit=_default_limit, p_value=None:
         self._query(
             input_type=where, output_type=output_type, has=has,
             genomic_modality=genomic_modality, limit=limit, p_value=p_value,
@@ -80,14 +79,32 @@ class ResultsSet():
             input_type=self.input_type, output_type=self.output_type,
             query=self.query)
 
-    def get_list(self, limit):
-        return self.client.set_list_evaluation(self.handle, self.output_type, limit)
+    def __getitem__(self, key):
+        if isinstance(key, int):
+            if key < 0:
+                raise ValueError('Negative index not supported')
+            return self._get_list(1, offset=key)[0]
+        if isinstance(key, slice):
+            if key.step is not None:
+                raise ValueError('Step is not supported')
+            if key.start is None or key.stop is None:
+                raise ValueError('Start and stop are required')
+            if key.start < 0 or key.stop < 0:
+                raise ValueError('Start and stop must be >= 0')
+            if key.stop < key.start:
+                raise ValueError('Stop must be > start')
+            return self._get_list(key.stop - key.start, offset=key.start)
+        raise TypeError()
+
+    def _get_list(self, limit, offset=0):
+        return self.client.set_list_evaluation(self.handle, self.output_type, limit, offset=offset)
 
     def get_details(
-            self, limit,
+            self, limit, offset=0,
             values_included=[], sort_by=None):
         return self.client.set_detail_evaluation(
             self.handle, self.output_type, limit,
+            offset=offset,
             sort_by=sort_by,
             values_type=self.input_type,
             values_included=[self.query])

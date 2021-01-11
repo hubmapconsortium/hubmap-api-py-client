@@ -112,7 +112,7 @@ class InternalClient():
         return results[0]["count"]
 
     def set_list_evaluation(
-            self, set_key: str, set_type: str, limit: int):
+            self, set_key: str, set_type: str, limit: int, offset: int = 0):
         '''
         This function/API call returns a minimal version of the set,
         containing a list of cells/genes/etc w/o
@@ -126,7 +126,8 @@ class InternalClient():
 
     def set_detail_evaluation(
             self, set_key: str, set_type: str, limit: int,
-            values_included: List = [], sort_by: str = None, values_type: str = None):
+            values_included: List = [], sort_by: str = None, values_type: str = None,
+            offset: int = 0):
         '''
         This function/API call returns a more detailed version of the set,
         containing data specified in include_values
