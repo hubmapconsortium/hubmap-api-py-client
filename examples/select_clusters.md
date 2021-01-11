@@ -9,11 +9,7 @@
 >>> clusters_with_gene.get_list(1)[0].keys()
 dict_keys(['cluster_method', 'cluster_data', 'grouping_name', 'dataset'])
 
-```
-
-Expecting more keys here. [Filed issue](https://github.com/hubmapconsortium/cells-api-py-client/issues/22).
-```python
 >>> clusters_with_gene.get_details(1)[0].keys()
-dict_keys(['grouping_name', 'dataset', 'values'])
+dict_keys(['cluster_method', 'cluster_data', 'grouping_name', 'dataset', 'values'])
 
 ```
