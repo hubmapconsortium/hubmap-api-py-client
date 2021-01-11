@@ -1,6 +1,8 @@
 # hubmap-api-py-client
+[![PyPI version](https://badge.fury.io/py/hubmap-api-py-client.svg)](https://badge.fury.io/py/hubmap-api-py-client)
+
 Python client for the [HuBMAP Cells API](https://github.com/hubmapconsortium/cross_modality_query);
-See also: [`cells-api-js-client`](https://github.com/hubmapconsortium/cells-api-js-client#readme).
+See also: [`hubmap-api-js-client`](https://github.com/hubmapconsortium/hubmap-api-js-client#readme).
 
 Contributors start [here](https://github.com/hubmapconsortium/hubmap-api-py-client/blob/main/README-contrib.md#readme).
 
