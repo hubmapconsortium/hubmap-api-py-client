@@ -6,8 +6,8 @@ red=`tput setaf 1`
 green=`tput setaf 2`
 reset=`tput sgr0`
 
-start() { [[ -z $CI ]] || echo travis_fold':'start:$1; echo ${green}$1${reset}; }
-end() { [[ -z $CI ]] || echo travis_fold':'end:$1; }
+start() { echo "${green}START $1${reset}"; }
+end() { echo "${green}END $1${reset}"; }
 die() { set +v; echo "${red}$*${reset}" 1>&2 ; sleep 1; exit 1; }
 
 start flake8
