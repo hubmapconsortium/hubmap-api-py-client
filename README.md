@@ -49,11 +49,12 @@ Only some types of objects can be retrieved from other types of objects:
 | `where=...`       | `cell`    | `cluster` | `dataset` | `gene`    | `organ`   | `protein` |
 | ----------------- | --------- | --------- | --------- | --------- | --------- | --------- |
 | [`select_cells()`](https://github.com/hubmapconsortium/hubmap-api-py-client/blob/main/examples/select_cells.md)                                                                                                              |           |           | ✓         | ✓         | ✓         | ✓         |
-| [`select_clusters()`](https://github.com/hubmapconsortium/hubmap-api-py-client/blob/main/examples/select_clusters.md)                                                                                                              |           |           |           | ✓         |           |           |
+| [`select_clusters()`](https://github.com/hubmapconsortium/hubmap-api-py-client/blob/main/examples/select_clusters.md)                                                                                                              |           |           |           | ✓ ✩       | ✩         | ✩         |
 | ~~`select_datasets()`~~                                                                                                              |           |           |           |           | ✱         |           |
-| [`select_genes()`](https://github.com/hubmapconsortium/hubmap-api-py-client/blob/main/examples/select_genes.md)                                                                                                              |           | ✓         |           |           | ✓         |           |
-| [`select_organs()`](https://github.com/hubmapconsortium/hubmap-api-py-client/blob/main/examples/select_organs.md)                                                                                                              | ✓         |           | ✱         | ✓         |           |           |
-| ~~`select_proteins()`~~                                                                                                              |           |           |           |           |           |           |
+| [`select_genes()`](https://github.com/hubmapconsortium/hubmap-api-py-client/blob/main/examples/select_genes.md)                                                                                                              |           | ✓ ✩       |           |           | ✓ ✩       | ✩         |
+| [`select_organs()`](https://github.com/hubmapconsortium/hubmap-api-py-client/blob/main/examples/select_organs.md)                                                                                                              | ✓         | ✩         | ✱         | ✓ ✩       |           | ✩         |
+| ~~`select_proteins()`~~                                                                                                              |           | ✩         |           | ✩         | ✩         |           |
 
 "✓" = Supported by Cells API, and this client.
 "✱" = Supported by Entities API; support in this client is [on the roadmap](https://github.com/hubmapconsortium/hubmap-api-py-client/issues/25).
+"✩" = Possible connection to [ASCT-B](https://hubmapconsortium.github.io/ccf-asct-reporter/vis?sheet=all&dataVersion=latest) (Anatomical Structures / Cell Types / Biomarkers)
