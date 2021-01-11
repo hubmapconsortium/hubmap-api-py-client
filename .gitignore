@@ -4,7 +4,7 @@
 # Packaging:
 build/
 dist/
-cells_api_py_client.egg-info/
+hubmap_api_py_client.egg-info/
 
 **/__pycache__
 .vscode/

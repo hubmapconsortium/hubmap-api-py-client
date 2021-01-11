@@ -15,14 +15,14 @@ flake8 || die "Try: autopep8 --in-place --aggressive -r ."
 end flake8
 
 start pytest
-CMD='PYTHONPATH="${PYTHONPATH}:cells_api_py_client" pytest -vv --doctest-glob="*.md"'
+CMD='PYTHONPATH="${PYTHONPATH}:hubmap_api_py_client" pytest -vv --doctest-glob="*.md"'
 echo $CMD
 eval $CMD
 end pytest
 
 start changelog
 if [ "$TRAVIS_BRANCH" != 'main' ]; then
-  diff CHANGELOG.md <(curl -s https://raw.githubusercontent.com/hubmapconsortium/cells-api-py-client/main/CHANGELOG.md) \
+  diff CHANGELOG.md <(curl -s https://raw.githubusercontent.com/hubmapconsortium/hubmap-api-py-client/main/CHANGELOG.md) \
     && die 'Update CHANGELOG.md'
 fi
 end changelog

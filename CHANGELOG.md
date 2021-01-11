@@ -3,6 +3,7 @@
 - Require "has" param to be list, and update examples.
 - Add subtypes of ResultsSet, and check that operands on set operations match.
 - Issue templates
+- Rename repo and package.
 
 0.0.3
 - Change to more fluent SDK: `select_TARGET(where='SOURCE', has='CRITERIA', ...)`

@@ -7,7 +7,7 @@ with open("VERSION", "r") as fh:
     version = fh.read()
 
 setuptools.setup(
-    name="cells-api-py-client",
+    name="hubmap-api-py-client",
     version=version,
     install_requires=[
         # Keep in sync with requirements-lower-bound.txt:
@@ -19,7 +19,7 @@ setuptools.setup(
     description="Client for the HuBMAP Cells API",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/hubmapconsortium/cells-api-py-client",
+    url="https://github.com/hubmapconsortium/hubmap-api-py-client",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",

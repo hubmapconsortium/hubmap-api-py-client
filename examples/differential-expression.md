@@ -1,6 +1,6 @@
 Find genes differentially expressed by the kidney at significance level 0.05:
 ```python
->>> from cells_api_py_client import Client
+>>> from hubmap_api_py_client import Client
 >>> client = Client('https://cells.dev.hubmapconsortium.org/api/')
 
 >>> kidney_genes = client.select_genes(where='organ', has=['Kidney'], genomic_modality='rna', p_value=0.05)
@@ -11,7 +11,7 @@ Find genes differentially expressed by the kidney at significance level 0.05:
 
 Find organs that differentially express the gene VIM at the 0.01 significance level
 ```python
->>> from cells_api_py_client import Client
+>>> from hubmap_api_py_client import Client
 >>> client = Client('https://cells.dev.hubmapconsortium.org/api/')
 
 >>> organs_with_vim = client.select_organs(where='gene', has=['VIM'], genomic_modality='rna', p_value=0.01)
