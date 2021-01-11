@@ -6,10 +6,6 @@ import requests
 HANDLE = 'query_pickle_hash'
 
 
-class ClientException(Exception):
-    pass
-
-
 class InternalClient():
     def __init__(self, base_url):
         # 'https://cells.dev.hubmapconsortium.org/api/'
@@ -18,10 +14,10 @@ class InternalClient():
     def _check_parameters(
             self,
             input_type: str, output_type: str, input_set: List[str],
-            genomic_modality: str, p_value: float = 0.05):
+            genomic_modality: str, p_value: float):
         output_types = ['cell', 'organ', 'gene', 'cluster']
         if output_type not in output_types:
-            raise ClientException(f'{output_type} not in {output_types}')
+            raise ValueError(f'{output_type} not in {output_types}')
 
         input_types = {
             # Allowed input types vary depending on output type
@@ -31,17 +27,17 @@ class InternalClient():
             'cluster': ['gene']
         }
         if input_type not in input_types[output_type]:
-            raise ClientException(f'{input_type} not in {input_types[output_type]}')
+            raise ValueError(f'{input_type} not in {input_types[output_type]}')
 
         genomic_modalities = ['rna', 'atac']  # Used for quantitative gene->cell queries
         if input_type == 'gene' and output_type == 'cell':
             if genomic_modality not in genomic_modalities:
-                raise ClientException(f'{genomic_modality} not in {genomic_modalities}')
+                raise ValueError(f'{genomic_modality} not in {genomic_modalities}')
 
         if (input_type == 'organ' and output_type == 'gene'
                 or input_type == 'gene' and output_type == 'organ'):
-            if p_value < 0 or p_value > 1:
-                raise ClientException(f'p_value {p_value} should be in [0,1]')
+            if p_value is None or p_value < 0 or p_value > 1:
+                raise ValueError(f'p_value {p_value} should be in [0,1]')
 
     def _fill_request_dict(
             self,
@@ -60,11 +56,13 @@ class InternalClient():
     def hubmap_query(
             self,
             input_type: str, output_type: str, input_set: List[str],
-            genomic_modality: str = None, limit: int = 1000, p_value: float = -1.0):
+            genomic_modality: str = None, limit: int = 1000, p_value: float = None):
         '''
         This function takes query parameters and returns a query set token.
         '''
-        self._check_parameters(input_type, output_type, input_set, genomic_modality, p_value)
+        self._check_parameters(
+            input_type=input_type, output_type=output_type,
+            input_set=input_set, genomic_modality=genomic_modality, p_value=p_value)
         request_url = self.base_url + output_type + "/"
         request_dict = self._fill_request_dict(
             input_type, output_type, input_set, genomic_modality, p_value)
@@ -103,7 +101,7 @@ class InternalClient():
             'organ', 'cluster'], 'cluster': ['gene'], 'organ': ['gene']}
         allowed_types = type_map[set_type]
         if values_type not in allowed_types:
-            raise ClientException(
+            raise ValueError(
                 f'For "{set_type}", only {allowed_types} allowed, not "{values_type}"')
 
     def set_count(

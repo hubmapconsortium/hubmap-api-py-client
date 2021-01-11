@@ -5,6 +5,8 @@
 - Issue templates
 - Rename repo and package.
 - Move to github CI
+- Add ASCT-B to matrix in README
+- Improve input validation logic
 
 0.0.3
 - Change to more fluent SDK: `select_TARGET(where='SOURCE', has='CRITERIA', ...)`
