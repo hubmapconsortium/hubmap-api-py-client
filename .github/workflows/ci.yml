@@ -1,0 +1,27 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.6, 3.8] # Keep in sync with setup.py
+        requirements: [requirements.txt, requirements-lower-bound.txt]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+   
+    - name: Install ${{ matrix.requirements }}
+      run: |
+        pip install -r ${{ matrix.requirements }}
+        pip install -r requirements-dev.txt
+
+    - name: Run tests
+      run: ./test.sh

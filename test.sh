@@ -2,12 +2,11 @@
 set -o errexit
 set -o pipefail
 
-red=`tput setaf 1`
-green=`tput setaf 2`
-reset=`tput sgr0`
+red=`tput setaf 1 || true`
+reset=`tput sgr0 || true`
 
-start() { [[ -z $CI ]] || echo travis_fold':'start:$1; echo ${green}$1${reset}; }
-end() { [[ -z $CI ]] || echo travis_fold':'end:$1; }
+start() { echo "::group::$1"; }
+end() { echo "::endgroup::"; }
 die() { set +v; echo "${red}$*${reset}" 1>&2 ; sleep 1; exit 1; }
 
 start flake8

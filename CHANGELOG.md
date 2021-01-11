@@ -4,6 +4,7 @@
 - Add subtypes of ResultsSet, and check that operands on set operations match.
 - Issue templates
 - Rename repo and package.
+- Move to github CI
 
 0.0.3
 - Change to more fluent SDK: `select_TARGET(where='SOURCE', has='CRITERIA', ...)`
