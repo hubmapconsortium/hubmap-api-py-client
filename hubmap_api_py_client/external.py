@@ -118,6 +118,6 @@ def _create_subclass(output_type):
     return type(class_name(output_type), (ResultsSet,), {})
 
 
-for output_type in ['cell', 'organ', 'gene', 'cluster']:
+for output_type in ['cell', 'organ', 'gene', 'cluster', 'dataset']:
     ResultsSetSubclass = _create_subclass(output_type)
     _add_method(output_type, ResultsSetSubclass)

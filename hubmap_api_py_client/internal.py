@@ -15,27 +15,28 @@ class InternalClient():
             self,
             input_type: str, output_type: str, input_set: List[str],
             genomic_modality: str, p_value: float):
-        output_types = ['cell', 'organ', 'gene', 'cluster']
+        output_types = ['cell', 'organ', 'gene', 'cluster', 'dataset']
         if output_type not in output_types:
             raise ValueError(f'{output_type} not in {output_types}')
 
         input_types = {
             # Allowed input types vary depending on output type
-            'cell': ['gene', 'organ', 'protein', 'dataset'],
-            'organ': ['cell', 'gene'],
-            'gene': ['organ', 'cluster'],
-            'cluster': ['gene']
+            'cell': ['cell', 'gene', 'organ', 'protein', 'dataset', 'cluster'],
+            'organ': ['organ', 'cell', 'gene'],
+            'gene': ['gene', 'organ', 'cluster'],
+            'cluster': ['cluster', 'gene', 'cell'],
+            'dataset': ['dataset', 'cell', 'cluster']
         }
         if input_type not in input_types[output_type]:
             raise ValueError(f'{input_type} not in {input_types[output_type]}')
 
         genomic_modalities = ['rna', 'atac']  # Used for quantitative gene->cell queries
-        if input_type == 'gene' and output_type == 'cell':
+        if input_type == 'gene' and output_type in ['cell', 'cluster', 'organ'] or input_type in ['cluster', 'organ'] and output_type == 'cell':
             if genomic_modality not in genomic_modalities:
                 raise ValueError(f'{genomic_modality} not in {genomic_modalities}')
 
-        if (input_type == 'organ' and output_type == 'gene'
-                or input_type == 'gene' and output_type == 'organ'):
+        if (input_type in ['organ', 'cluster'] and output_type == 'gene'
+                or input_type == 'gene' and output_type in ['organ', 'cluster']):
             if p_value is None or p_value < 0 or p_value > 1:
                 raise ValueError(f'p_value {p_value} should be in [0,1]')
 
@@ -44,19 +45,18 @@ class InternalClient():
             input_type: str, output_type: str, input_set: List[str],
             genomic_modality: str, p_value: float):
         request_dict = {'input_type': input_type, 'input_set': input_set}
-        if input_type == 'gene' and output_type == 'cell':
+        if input_type == 'gene' and output_type in ['cell', 'cluster', 'organ'] or input_type in ['cluster', 'organ'] and output_type == 'cell':
             request_dict['genomic_modality'] = genomic_modality
-        if input_type in ['organ', 'gene'] and output_type == 'gene':
+        if (input_type in ['organ', 'cluster'] and output_type == 'gene'
+                or input_type == 'gene' and output_type in ['organ', 'cluster']):
             request_dict['p_value'] = p_value
-        if genomic_modality is not None:
-            request_dict['genomic_modality'] = genomic_modality
         request_dict['logical_operator'] = "and"
         return request_dict
 
     def hubmap_query(
             self,
             input_type: str, output_type: str, input_set: List[str],
-            genomic_modality: str = None, limit: int = 1000, p_value: float = None):
+            genomic_modality: str = None, p_value: float = None):
         '''
         This function takes query parameters and returns a query set token.
         '''
