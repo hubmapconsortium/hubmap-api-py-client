@@ -17,10 +17,10 @@
 
 `client.select_cells(where='protein', ...)`:
 ```python
-TODO
+>>> ki67_cells = client.select_cells(where='protein', has=['Ki67>5000'])
+>>> assert len(ki67_cells) > 0
 
 ```
-[Filed issue](https://github.com/hubmapconsortium/hubmap-api-py-client/issues/17)
 
 `client.select_cells(where='dataset', ...)`:
 ```python

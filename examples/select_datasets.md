@@ -10,8 +10,6 @@
 
 `client.select_datasets(where='cluster', ...)`:
 ```python
->>> from hubmap_api_py_client import Client
->>> client = Client('https://cells.dev.hubmapconsortium.org/api/')
 
 >>> cluster_datasets = client.select_datasets(where='cluster', has=['d4493657cde29702c5ed73932da5317c-19'])
 >>> assert len(cell_datasets) > 0

@@ -20,10 +20,10 @@ class InternalClient():
 
         input_types = {
             # Allowed input types vary depending on output type
-            'cell': ['cell', 'gene', 'organ', 'protein', 'dataset', 'cluster'],
+            'cell': ['cell', 'gene', 'organ', 'protein', 'dataset'],
             'organ': ['organ', 'cell', 'gene'],
             'gene': ['gene', 'organ', 'cluster'],
-            'cluster': ['cluster', 'gene', 'cell'],
+            'cluster': ['cluster', 'gene', 'dataset'],
             'dataset': ['dataset', 'cell', 'cluster']
         }
         if input_type not in input_types[output_type]:
