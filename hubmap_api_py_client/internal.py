@@ -2,7 +2,6 @@ from typing import List
 
 import requests
 
-
 HANDLE = 'query_pickle_hash'
 
 
@@ -31,7 +30,8 @@ class InternalClient():
             raise ValueError(f'{input_type} not in {input_types[output_type]}')
 
         genomic_modalities = ['rna', 'atac']  # Used for quantitative gene->cell queries
-        if input_type == 'gene' and output_type in ['cell', 'cluster', 'organ'] or input_type in ['cluster', 'organ'] and output_type == 'cell':
+        if input_type == 'gene' and output_type in ['cell', 'cluster', 'organ'] or input_type in\
+                ['cluster', 'organ'] and output_type == 'gene':
             if genomic_modality not in genomic_modalities:
                 raise ValueError(f'{genomic_modality} not in {genomic_modalities}')
 
@@ -45,12 +45,13 @@ class InternalClient():
             input_type: str, output_type: str, input_set: List[str],
             genomic_modality: str, p_value: float):
         request_dict = {'input_type': input_type, 'input_set': input_set}
-        if input_type == 'gene' and output_type in ['cell', 'cluster', 'organ'] or input_type in ['cluster', 'organ'] and output_type == 'cell':
+        if input_type == 'gene' and output_type in ['cell', 'cluster', 'organ'] or input_type in \
+                ['cluster', 'organ'] and output_type == 'gene':
             request_dict['genomic_modality'] = genomic_modality
+            request_dict['logical_operator'] = "and"
         if (input_type in ['organ', 'cluster'] and output_type == 'gene'
                 or input_type == 'gene' and output_type in ['organ', 'cluster']):
             request_dict['p_value'] = p_value
-        request_dict['logical_operator'] = "and"
         return request_dict
 
     def hubmap_query(
@@ -66,6 +67,7 @@ class InternalClient():
         request_url = self.base_url + output_type + "/"
         request_dict = self._fill_request_dict(
             input_type, output_type, input_set, genomic_modality, p_value)
+
         response = requests.post(request_url, request_dict)
         results = response.json()['results']
         # Returns the key to be used in future computations
@@ -108,7 +110,8 @@ class InternalClient():
             self, set_key: str, set_type: str) -> str:
         request_url = self.base_url + "count/"
         request_dict = {"key": set_key, "set_type": set_type}
-        results = requests.post(request_url, request_dict).json()['results']
+        response = requests.post(request_url, request_dict)
+        results = response.json()['results']
         return results[0]["count"]
 
     def set_list_evaluation(
@@ -119,7 +122,7 @@ class InternalClient():
         associated quantitative values.  It should be reasonably fast.
         '''
         request_url = self.base_url + set_type + "evaluation/"
-        request_dict = {"key": set_key, "set_type": set_type, "limit": limit}
+        request_dict = {"key": set_key, "set_type": set_type, "limit": limit, "offset": offset}
         response = requests.post(request_url, request_dict)
         results = response.json()['results']
         return results  # Returns the key to be used in future computations
@@ -135,7 +138,7 @@ class InternalClient():
         '''
         self._check_detail_parameters(set_type, values_type)
         request_url = self.base_url + set_type + "detailevaluation/"
-        request_dict = {"key": set_key, "set_type": set_type, "limit": limit,
+        request_dict = {"key": set_key, "set_type": set_type, "limit": limit, "offset": offset,
                         "values_included": values_included, "sort_by": sort_by,
                         "values_type": values_type}
         response = requests.post(request_url, request_dict)

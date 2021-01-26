@@ -19,7 +19,7 @@ Find cells with different criteria, and intersect resulting sets:
 >>> client = Client('https://cells.dev.hubmapconsortium.org/api/')
 
 >>> [m for m in dir(client) if m.startswith('select_')]
-['select_cells', 'select_clusters', 'select_genes', 'select_organs']
+['select_cells', 'select_clusters', 'select_datasets', 'select_genes', 'select_organs']
 
 >>> cells_with_vim = client.select_cells(where='gene', has=['VIM > 0.5'], genomic_modality='rna')
 >>> assert len(cells_with_vim) > 0
@@ -40,7 +40,7 @@ Find cells with different criteria, and intersect resulting sets:
 # Get a list; should run quickly:
 >>> cell_list = cells_with_vim_in_datasets[0:10]
 >>> assert len(cell_list) == 10
->>> assert cell_list[0].keys() == {'cell_id', 'modality', 'dataset', 'clusters', 'protein_mean', 'protein_total', 'protein_covar'}
+>>> assert cell_list[0].keys() == {'cell_id', 'modality', 'dataset', 'organ', 'clusters', 'protein_mean', 'protein_total', 'protein_covar'}
 
 ```
 
