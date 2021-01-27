@@ -1,3 +1,9 @@
+0.0.5
+- Support queries for and by dataset
+- Support queries for all entities by identifier
+- Examples of query by cluster
+- Example of query for cell by protein
+
 0.0.4 - in progress
 - Remove complement magic method, and add difference.
 - Require "has" param to be list, and update examples.
