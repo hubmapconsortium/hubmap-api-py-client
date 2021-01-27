@@ -10,7 +10,6 @@
 
 `client.select_datasets(where='cluster', ...)`:
 ```python
-
 >>> cluster_datasets = client.select_datasets(where='cluster', has=['d4493657cde29702c5ed73932da5317c-19'])
 >>> assert len(cell_datasets) > 0
 
