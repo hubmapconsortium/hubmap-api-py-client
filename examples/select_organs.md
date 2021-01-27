@@ -1,4 +1,4 @@
-`client.select_organs(where='gene')`:
+`client.select_organs(where='gene', ...)`:
 ```python
 >>> from hubmap_api_py_client import Client
 >>> client = Client('https://cells.dev.hubmapconsortium.org/api/')
