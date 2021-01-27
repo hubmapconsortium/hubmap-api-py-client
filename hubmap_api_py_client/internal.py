@@ -2,7 +2,7 @@ from typing import List
 
 import requests
 
-HANDLE = 'query_pickle_hash'
+HANDLE = 'query_handle'
 
 
 class InternalClient():
