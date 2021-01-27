@@ -4,7 +4,7 @@
 >>> client
 <Client base_url=https://cells.dev.hubmapconsortium.org/api/>
 
->>> cells_with_vim = client.select_cells(where='gene', has=['VIM > 0.5'], genomic_modality='rna')
+>>> cells_with_vim = client.select_cells(where='gene', has=['VIM > 0.5'], genomic_modality='rna', logical_operator='and')
 >>> type(cells_with_vim)
 <class 'hubmap_api_py_client.external.CellResultsSet'>
 

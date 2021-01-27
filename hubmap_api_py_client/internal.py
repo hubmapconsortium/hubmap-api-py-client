@@ -42,22 +42,22 @@ class InternalClient():
 
     def _fill_request_dict(
             self,
-            input_type: str, output_type: str, input_set: List[str],
-            genomic_modality: str, p_value: float):
-        request_dict = {'input_type': input_type, 'input_set': input_set}
-        if input_type == 'gene' and output_type in ['cell', 'cluster', 'organ'] or input_type in \
-                ['cluster', 'organ'] and output_type == 'gene':
-            request_dict['genomic_modality'] = genomic_modality
-            request_dict['logical_operator'] = "and"
-        if (input_type in ['organ', 'cluster'] and output_type == 'gene'
-                or input_type == 'gene' and output_type in ['organ', 'cluster']):
-            request_dict['p_value'] = p_value
+            input_type: str, input_set: List[str],
+            genomic_modality: str, p_value: float, logical_operator: str):
+
+        params = {'genomic_modality': genomic_modality, 'p_value': p_value,
+                  'logical_operator': logical_operator}
+        request_dict = {param_name: params[param_name] for param_name in params
+                        if params[param_name] is not None}
+        request_dict['input_type'] = input_type
+        request_dict['input_set'] = input_set
+
         return request_dict
 
     def hubmap_query(
             self,
             input_type: str, output_type: str, input_set: List[str],
-            genomic_modality: str = None, p_value: float = None):
+            genomic_modality: str = None, p_value: float = None, logical_operator: str = None):
         '''
         This function takes query parameters and returns a query set token.
         '''
@@ -66,7 +66,7 @@ class InternalClient():
             input_set=input_set, genomic_modality=genomic_modality, p_value=p_value)
         request_url = self.base_url + output_type + "/"
         request_dict = self._fill_request_dict(
-            input_type, output_type, input_set, genomic_modality, p_value)
+            input_type, input_set, genomic_modality, p_value, logical_operator)
 
         response = requests.post(request_url, request_dict)
         results = response.json()['results']

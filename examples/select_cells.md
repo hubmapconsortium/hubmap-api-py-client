@@ -3,7 +3,7 @@
 >>> from hubmap_api_py_client import Client
 >>> client = Client('https://cells.dev.hubmapconsortium.org/api/')
 
->>> cells_with_gene = client.select_cells(where='gene', has=['CASTOR2 > 1'], genomic_modality='rna')
+>>> cells_with_gene = client.select_cells(where='gene', has=['CASTOR2 > 1'], genomic_modality='rna', logical_operator='and')
 >>> assert len(cells_with_gene) > 0
 
 ```
@@ -17,7 +17,7 @@
 
 `client.select_cells(where='protein', ...)`:
 ```python
->>> ki67_cells = client.select_cells(where='protein', has=['Ki67>5000'])
+>>> ki67_cells = client.select_cells(where='protein', has=['Ki67>5000'], logical_operator='and')
 >>> assert len(ki67_cells) > 0
 
 ```
