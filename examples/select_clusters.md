@@ -16,7 +16,6 @@ dict_keys(['cluster_method', 'cluster_data', 'grouping_name', 'dataset', 'values
 
 `client.select_clusters(where='dataset', ...)`:
 ```python
-
 >>> clusters_in_dataset = client.select_clusters(where='dataset', has=['d4493657cde29702c5ed73932da5317c'])
 >>> assert len(clusters_in_dataset) > 0
 
