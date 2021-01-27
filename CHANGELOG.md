@@ -3,6 +3,7 @@
 - Support queries for all entities by identifier
 - Examples of query by cluster
 - Example of query for cell by protein
+- Reworking client-side parameter validation
 
 0.0.4 - in progress
 - Remove complement magic method, and add difference.
