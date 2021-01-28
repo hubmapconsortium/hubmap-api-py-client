@@ -3,7 +3,7 @@
 >>> from hubmap_api_py_client import Client
 >>> client = Client('https://cells.dev.hubmapconsortium.org/api/')
 
->>> clusters_with_gene = client.select_clusters(where='gene', has=['CASTOR2'], genomic_modality='atac', p_value=0.05, logical_operator='and')
+>>> clusters_with_gene = client.select_clusters(where='gene', has=['CASTOR2'], genomic_modality='atac', p_value=0.05)
 >>> assert len(clusters_with_gene) > 0
 
 >>> clusters_with_gene[0].keys()

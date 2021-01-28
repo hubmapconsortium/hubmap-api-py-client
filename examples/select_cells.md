@@ -20,7 +20,7 @@
 
 `client.select_cells(where='protein', ...)`:
 ```python
->>> ki67_cells = client.select_cells(where='protein', has=['Ki67>5000'], logical_operator='and')
+>>> ki67_cells = client.select_cells(where='protein', has=['Ki67>5000'])
 >>> assert len(ki67_cells) > 0
 
 ```

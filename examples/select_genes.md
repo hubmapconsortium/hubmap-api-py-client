@@ -3,7 +3,7 @@
 >>> from hubmap_api_py_client import Client
 >>> client = Client('https://cells.dev.hubmapconsortium.org/api/')
 
->>> kidney_genes = client.select_genes(where='organ', has=['Kidney'], genomic_modality='rna', p_value=0.05, logical_operator='and')
+>>> kidney_genes = client.select_genes(where='organ', has=['Kidney'], genomic_modality='rna', p_value=0.05)
 >>> kidney_genes[0].keys()
 dict_keys(['gene_symbol', 'go_terms'])
 
