@@ -10,7 +10,9 @@
 
 `client.select_organs(where='cell', ...)`:
 ```python
->>> organs_with_gene = client.select_organs(where='cell', has=['210d118a14c8624b6bb9610a9062656e-AAACAACGAAACGTGG'])
->>> assert len(organs_with_gene) > 0
+>>> from hubmap_cell_id_gen_py import get_sequencing_cell_id
+>>> sequencing_cell_id = get_sequencing_cell_id('210d118a14c8624b6bb9610a9062656e','AAACAACGAAACGTGG')
+>>> organs_with_cell = client.select_organs(where='cell', has=[sequencing_cell_id])
+>>> assert len(organs_with_cell) > 0
 
 ```
