@@ -6,6 +6,9 @@
 >>> cells_with_gene = client.select_cells(where='gene', has=['CASTOR2 > 1'], genomic_modality='rna', logical_operator='and')
 >>> assert len(cells_with_gene) > 0
 
+>>> cells_with_gene_atac = client.select_cells(where='gene', has=['CHN2'], genomic_modality='atac', logical_operator='and')
+>>> assert len(cells_with_gene_atac) > 0
+
 ```
 
 `client.select_cells(where='organ', ...)`:
