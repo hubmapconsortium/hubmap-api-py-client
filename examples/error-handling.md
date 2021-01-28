@@ -9,23 +9,15 @@ Traceback (most recent call last):
 ...
 ValueError: Operand output types do not match: gene != cell
 
->>> client.select_cells(where='fake', has=['VIM>1'], genomic_modality='rna')
+>>> client.select_cells(where='fake', has=['VIM>1'], genomic_modality='rna', logical_operator='and')
 Traceback (most recent call last):
 ...
-ValueError: fake not in ['gene', 'organ', 'protein', 'dataset']
+ValueError: fake not in ['cell', 'gene', 'organ', 'protein', 'dataset']
 
->>> client.select_cells(where='gene', has=['VIM>1'], genomic_modality='fake')
+>>> client.select_cells(where='gene', has=['VIM>1'], genomic_modality='fake', logical_operator='and')
 Traceback (most recent call last):
 ...
 ValueError: fake not in ['rna', 'atac']
 
 ```
 
-Not clear why `atac` can't be used; [issue filed](https://github.com/hubmapconsortium/hubmap-api-py-client/issues/8).
-```python
->>> client.select_cells(where='gene', has=['VIM>1'], genomic_modality='atac')
-Traceback (most recent call last):
-...
-json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
-
-```

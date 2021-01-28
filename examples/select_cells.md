@@ -3,8 +3,11 @@
 >>> from hubmap_api_py_client import Client
 >>> client = Client('https://cells.dev.hubmapconsortium.org/api/')
 
->>> cells_with_gene = client.select_cells(where='gene', has=['CASTOR2 > 1'], genomic_modality='rna')
+>>> cells_with_gene = client.select_cells(where='gene', has=['CASTOR2 > 1'], genomic_modality='rna', logical_operator='and')
 >>> assert len(cells_with_gene) > 0
+
+>>> cells_with_gene_atac = client.select_cells(where='gene', has=['CHN2'], genomic_modality='atac', logical_operator='and')
+>>> assert len(cells_with_gene_atac) > 0
 
 ```
 
@@ -17,10 +20,10 @@
 
 `client.select_cells(where='protein', ...)`:
 ```python
-TODO
+>>> ki67_cells = client.select_cells(where='protein', has=['Ki67>5000'])
+>>> assert len(ki67_cells) > 0
 
 ```
-[Filed issue](https://github.com/hubmapconsortium/hubmap-api-py-client/issues/17)
 
 `client.select_cells(where='dataset', ...)`:
 ```python

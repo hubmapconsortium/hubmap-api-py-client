@@ -13,13 +13,12 @@ class ExternalClient():
     def _query(
             self,
             input_type=None, output_type=None, has=None,
-            genomic_modality=None, limit=None, p_value=None,
+            genomic_modality=None, p_value=None, logical_operator=None,
             ResultsSetSubclass=None):
         if not isinstance(has, list):
             raise TypeError(f'"has" parameter must be a list, not {has}')
-        handle = self.client.hubmap_query(
-            input_type, output_type, has,
-            genomic_modality, limit, p_value)
+        handle = self.client.hubmap_query(input_type, output_type, has, genomic_modality,
+                                          p_value, logical_operator)
         return ResultsSetSubclass(
             self.client, handle,
             input_type=input_type, output_type=output_type,
@@ -31,10 +30,12 @@ def _add_method(output_type, ResultsSetSubclass):
     method_name = f'select_{output_type}s'
     method = (
         lambda self, where=None, has=None,
-        genomic_modality=None, limit=_default_limit, p_value=None:
+        genomic_modality=None, p_value=None,
+        logical_operator=None:
         self._query(
             input_type=where, output_type=output_type, has=has,
-            genomic_modality=genomic_modality, limit=limit, p_value=p_value,
+            genomic_modality=genomic_modality, p_value=p_value,
+            logical_operator=logical_operator,
             ResultsSetSubclass=ResultsSetSubclass)
     )
     setattr(ExternalClient, method_name, method)
@@ -118,6 +119,6 @@ def _create_subclass(output_type):
     return type(class_name(output_type), (ResultsSet,), {})
 
 
-for output_type in ['cell', 'organ', 'gene', 'cluster']:
+for output_type in ['cell', 'organ', 'gene', 'cluster', 'dataset']:
     ResultsSetSubclass = _create_subclass(output_type)
     _add_method(output_type, ResultsSetSubclass)

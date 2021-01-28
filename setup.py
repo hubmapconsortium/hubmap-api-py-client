@@ -11,7 +11,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         # Keep in sync with requirements-lower-bound.txt:
-        'requests>=2.0.0'
+        'requests>=2.0.0',
     ],
     # scripts=[],
     author="Chuck McCallum",
