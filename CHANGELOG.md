@@ -4,6 +4,7 @@
 - Examples of query by cluster
 - Example of query for cell by protein
 - Reworking client-side parameter validation
+- Integrating hubmap_cell_id_gen_py into examples
 
 0.0.4 - in progress
 - Remove complement magic method, and add difference.
