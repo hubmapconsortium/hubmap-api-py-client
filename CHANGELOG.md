@@ -14,6 +14,8 @@
 - Example of query for cell by protein
 - Reworking client-side parameter validation
 - Integrating hubmap_cell_id_gen_py into examples
+- Supporting queries for all entities of a particular type, including proteins
+- Expanding table in readme
 
 0.0.3
 - Change to more fluent SDK: `select_TARGET(where='SOURCE', has='CRITERIA', ...)`
