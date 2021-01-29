@@ -9,12 +9,12 @@ Traceback (most recent call last):
 ...
 ValueError: Operand output types do not match: gene != cell
 
->>> client.select_cells(where='fake', has=['VIM>1'], genomic_modality='rna', logical_operator='and')
+>>> client.select_cells(where='fake', has=['VIM>1'], genomic_modality='rna')
 Traceback (most recent call last):
 ...
 ValueError: fake not in ['cell', 'gene', 'organ', 'protein', 'dataset']
 
->>> client.select_cells(where='gene', has=['VIM>1'], genomic_modality='fake', logical_operator='and')
+>>> client.select_cells(where='gene', has=['VIM>1'], genomic_modality='fake')
 Traceback (most recent call last):
 ...
 ValueError: fake not in ['rna', 'atac']
