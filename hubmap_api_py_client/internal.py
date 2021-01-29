@@ -62,16 +62,15 @@ class InternalClient():
         '''
         This function takes query parameters and returns a query set token.
         '''
+        request_url = self.base_url + output_type + "/"
         if input_type is None:
-            response = requests.get(self.base_url + output_type + "/")
+            response = requests.get(request_url)
         else:
             self._check_parameters(
                 input_type=input_type, output_type=output_type,
                 input_set=input_set, genomic_modality=genomic_modality, p_value=p_value)
-            request_url = self.base_url + output_type + "/"
             request_dict = self._fill_request_dict(
                 input_type, input_set, genomic_modality, p_value, logical_operator)
-
             response = requests.post(request_url, request_dict)
         results = response.json()['results']
         # Returns the key to be used in future computations
