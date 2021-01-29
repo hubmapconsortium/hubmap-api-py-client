@@ -1,8 +1,15 @@
-`client.select_clusters(where='gene', ...)`:
+`client.select_clusters()`:
 ```python
 >>> from hubmap_api_py_client import Client
 >>> client = Client('https://cells.dev.hubmapconsortium.org/api/')
 
+>>> all_clusters = client.select_clusters()
+>>> assert len(all_clusters) > 0
+
+```
+
+`client.select_clusters(where='gene', ...)`:
+```python
 >>> clusters_with_gene = client.select_clusters(where='gene', has=['CASTOR2'], genomic_modality='atac', p_value=0.05)
 >>> assert len(clusters_with_gene) > 0
 
