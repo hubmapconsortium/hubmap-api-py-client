@@ -8,3 +8,4 @@
 
 ```
 
+No other protein queries currently supported.
