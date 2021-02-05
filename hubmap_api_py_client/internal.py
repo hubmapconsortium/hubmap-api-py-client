@@ -98,15 +98,6 @@ class InternalClient():
 
     # These functions take a query set token and return an evaluated query_set:
 
-    def _check_detail_parameters(
-            self, set_type, values_type):
-        type_map = {'cell': ['gene', 'protein'], 'gene': [
-            'organ', 'cluster'], 'cluster': ['gene'], 'organ': ['gene']}
-        allowed_types = type_map[set_type]
-        if values_type not in allowed_types:
-            raise ValueError(
-                f'For "{set_type}", only {allowed_types} allowed, not "{values_type}"')
-
     def set_count(
             self, set_key: str, set_type: str) -> str:
         request_url = self.base_url + "count/"
@@ -137,7 +128,6 @@ class InternalClient():
         containing data specified in include_values
         It may be slow.
         '''
-        self._check_detail_parameters(set_type, values_type)
         request_url = self.base_url + set_type + "detailevaluation/"
         request_dict = {"key": set_key, "set_type": set_type, "limit": limit, "offset": offset,
                         "values_included": values_included, "sort_by": sort_by,
