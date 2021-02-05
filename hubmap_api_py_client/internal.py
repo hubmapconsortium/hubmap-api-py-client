@@ -2,37 +2,15 @@ from typing import List
 
 import requests
 
+from hubmap_api_py_client.errors import ClientError
+
 HANDLE = 'query_handle'
-
-
-class ApiError(Exception):
-    pass
 
 
 class InternalClient():
     def __init__(self, base_url):
         # 'https://cells.dev.hubmapconsortium.org/api/'
         self.base_url = base_url
-
-    def _check_parameters(
-            self,
-            input_type: str, output_type: str, input_set: List[str],
-            genomic_modality: str, p_value: float):
-        output_types = ['cell', 'organ', 'gene', 'cluster', 'dataset', 'protein']
-        if output_type not in output_types:
-            raise ValueError(f'{output_type} not in {output_types}')
-
-        input_types = {
-            # Allowed input types vary depending on output type
-            'cell': ['cell', 'gene', 'organ', 'protein', 'dataset'],
-            'organ': ['organ', 'cell', 'gene'],
-            'gene': ['gene', 'organ', 'cluster'],
-            'cluster': ['cluster', 'gene', 'dataset'],
-            'dataset': ['dataset', 'cell', 'cluster'],
-            'protein': [],  # Only allow queries for all proteins
-        }
-        if input_type not in input_types[output_type]:
-            raise ValueError(f'{input_type} not in {input_types[output_type]}')
 
     def _fill_request_dict(
             self,
@@ -60,9 +38,6 @@ class InternalClient():
             # TODO: Is this really needed? Could we just send an empty POST?
             response = requests.get(request_url)
         else:
-            self._check_parameters(
-                input_type=input_type, output_type=output_type,
-                input_set=input_set, genomic_modality=genomic_modality, p_value=p_value)
             request_dict = self._fill_request_dict(
                 input_type, input_set, genomic_modality, p_value, logical_operator)
             response = requests.post(request_url, request_dict)
@@ -71,7 +46,9 @@ class InternalClient():
     def _handle_from_response(self, response):
         response_json = response.json()
         if 'results' not in response_json:
-            raise ApiError() # TODO: Return human readable message, not stack trace
+            raise ClientError()
+            # TODO: Return human readable message:
+            # Right now error response only includes stack trace.
         # Returns the key to be used in future computations
         return response_json['results'][0][HANDLE]
 

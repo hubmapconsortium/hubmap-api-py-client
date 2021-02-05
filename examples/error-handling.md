@@ -12,12 +12,12 @@ ValueError: Operand output types do not match: gene != cell
 >>> client.select_cells(where='fake', has=['VIM>1'], genomic_modality='rna')
 Traceback (most recent call last):
 ...
-ValueError: fake not in ['cell', 'gene', 'organ', 'protein', 'dataset']
+hubmap_api_py_client.errors.ClientError
 
 >>> client.select_cells(where='gene', has=['VIM>1'], genomic_modality='fake')
 Traceback (most recent call last):
 ...
-hubmap_api_py_client.internal.ApiError
+hubmap_api_py_client.errors.ClientError
 
 ```
 
