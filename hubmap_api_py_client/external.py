@@ -84,20 +84,10 @@ class ResultsSet():
         if isinstance(key, int):
             if key < 0:
                 raise ValueError('Negative index not supported')
-            return self._get_list(1, offset=key)[0]
-        if isinstance(key, slice):
-            if key.step is not None:
-                raise ValueError('Step is not supported')
-            if key.start is None or key.stop is None:
-                raise ValueError('Start and stop are required')
-            if key.start < 0 or key.stop < 0:
-                raise ValueError('Start and stop must be >= 0')
-            if key.stop < key.start:
-                raise ValueError('Stop must be > start')
-            return self._get_list(key.stop - key.start, offset=key.start)
-        raise TypeError()
+            return self.get_list(1, offset=key)[0]
+        raise TypeError('Use get_list for multiple values')
 
-    def _get_list(self, limit, offset=0):
+    def get_list(self, limit, offset=0):
         return self.client.set_list_evaluation(self.handle, self.output_type, limit, offset=offset)
 
     def get_details(
