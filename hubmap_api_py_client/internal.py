@@ -41,16 +41,7 @@ class InternalClient():
             request_dict = self._fill_request_dict(
                 input_type, input_set, genomic_modality, p_value, logical_operator)
             response = requests.post(request_url, request_dict)
-        return self._handle_from_response(response)
-
-    def _handle_from_response(self, response):
-        response_json = response.json()
-        if 'results' not in response_json:
-            raise ClientError()
-            # TODO: Return human readable message:
-            # Right now error response only includes stack trace.
-        # Returns the key to be used in future computations
-        return response_json['results'][0][HANDLE]
+        return self._get_handle_from_response(response)
 
     # These functions take two query set tokens and return an API token:
 
@@ -71,7 +62,7 @@ class InternalClient():
         request_url = self.base_url + path
         request_dict = {"key_one": set_key_one, "key_two": set_key_two, "set_type": set_type}
         response = requests.post(request_url, request_dict)
-        return self._handle_from_response(response)
+        return self._get_handle_from_response(response)
 
     # These functions take a query set token and return an evaluated query_set:
 
@@ -92,9 +83,7 @@ class InternalClient():
         '''
         request_url = self.base_url + set_type + "evaluation/"
         request_dict = {"key": set_key, "set_type": set_type, "limit": limit, "offset": offset}
-        response = requests.post(request_url, request_dict)
-        results = response.json()['results']
-        return results  # Returns the key to be used in future computations
+        return self._post_and_get_results(request_url, request_dict)
 
     def set_detail_evaluation(
             self, set_key: str, set_type: str, limit: int,
@@ -109,6 +98,18 @@ class InternalClient():
         request_dict = {"key": set_key, "set_type": set_type, "limit": limit, "offset": offset,
                         "values_included": values_included, "sort_by": sort_by,
                         "values_type": values_type}
-        response = requests.post(request_url, request_dict)
-        results = response.json()['results']
-        return results  # Returns the key to be used in future computations
+        return self._post_and_get_results(request_url, request_dict)
+
+    def _get_handle_from_response(self, response):
+        # It might be a GET that produced the response, so not ready to combine these.
+        response_json = response.json()
+        if 'results' not in response_json:
+            raise ClientError()
+        return response_json['results'][0][HANDLE]
+
+    def _post_and_get_results(self, url, request_dict):
+        response = requests.post(url, request_dict)
+        response_json = response.json()
+        if 'results' not in response_json:
+            raise ClientError()
+        return response_json['results']
