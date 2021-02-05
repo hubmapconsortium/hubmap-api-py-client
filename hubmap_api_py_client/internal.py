@@ -5,6 +5,10 @@ import requests
 HANDLE = 'query_handle'
 
 
+class ApiError(Exception):
+    pass
+
+
 class InternalClient():
     def __init__(self, base_url):
         # 'https://cells.dev.hubmapconsortium.org/api/'
@@ -30,17 +34,6 @@ class InternalClient():
         if input_type not in input_types[output_type]:
             raise ValueError(f'{input_type} not in {input_types[output_type]}')
 
-        genomic_modalities = ['rna', 'atac']  # Used for quantitative gene->cell queries
-        if input_type == 'gene' and output_type in ['cell', 'cluster', 'organ'] or input_type in\
-                ['cluster', 'organ'] and output_type == 'gene':
-            if genomic_modality not in genomic_modalities:
-                raise ValueError(f'{genomic_modality} not in {genomic_modalities}')
-
-        if (input_type in ['organ', 'cluster'] and output_type == 'gene'
-                or input_type == 'gene' and output_type in ['organ', 'cluster']):
-            if p_value is None or p_value < 0 or p_value > 1:
-                raise ValueError(f'p_value {p_value} should be in [0,1]')
-
     def _fill_request_dict(
             self,
             input_type: str, input_set: List[str],
@@ -64,6 +57,7 @@ class InternalClient():
         '''
         request_url = self.base_url + output_type + "/"
         if input_type is None:
+            # TODO: Is this really needed? Could we just send an empty POST?
             response = requests.get(request_url)
         else:
             self._check_parameters(
@@ -72,9 +66,14 @@ class InternalClient():
             request_dict = self._fill_request_dict(
                 input_type, input_set, genomic_modality, p_value, logical_operator)
             response = requests.post(request_url, request_dict)
-        results = response.json()['results']
+        return self._handle_from_response(response)
+
+    def _handle_from_response(self, response):
+        response_json = response.json()
+        if 'results' not in response_json:
+            raise ApiError() # TODO: Return human readable message, not stack trace
         # Returns the key to be used in future computations
-        return results[0][HANDLE]
+        return response_json['results'][0][HANDLE]
 
     # These functions take two query set tokens and return an API token:
 
@@ -94,9 +93,8 @@ class InternalClient():
             self, set_key_one: str, set_key_two: str, set_type: str, path: str) -> str:
         request_url = self.base_url + path
         request_dict = {"key_one": set_key_one, "key_two": set_key_two, "set_type": set_type}
-        results = requests.post(request_url, request_dict).json()['results']
-        # Returns the key to be used in future computations
-        return results[0][HANDLE]
+        response = requests.post(request_url, request_dict)
+        return self._handle_from_response(response)
 
     # These functions take a query set token and return an evaluated query_set:
 
