@@ -104,12 +104,12 @@ class InternalClient():
         # It might be a GET that produced the response, so not ready to combine these.
         response_json = response.json()
         if 'results' not in response_json:
-            raise ClientError()
+            raise ClientError(response_json['message'])
         return response_json['results'][0][HANDLE]
 
     def _post_and_get_results(self, url, request_dict):
         response = requests.post(url, request_dict)
         response_json = response.json()
         if 'results' not in response_json:
-            raise ClientError()
+            raise ClientError(response_json['message'])
         return response_json['results']
