@@ -14,7 +14,7 @@ class InternalClient():
             self,
             input_type: str, output_type: str, input_set: List[str],
             genomic_modality: str, p_value: float):
-        output_types = ['cell', 'organ', 'gene', 'cluster', 'dataset', 'protein']
+        output_types = ['cell', 'organ', 'gene', 'cluster', 'dataset']
         if output_type not in output_types:
             raise ValueError(f'{output_type} not in {output_types}')
 
@@ -24,8 +24,7 @@ class InternalClient():
             'organ': ['organ', 'cell', 'gene'],
             'gene': ['gene', 'organ', 'cluster'],
             'cluster': ['cluster', 'gene', 'dataset'],
-            'dataset': ['dataset', 'cell', 'cluster'],
-            'protein': [],  # Only allow queries for all proteins
+            'dataset': ['dataset', 'cell', 'cluster']
         }
         if input_type not in input_types[output_type]:
             raise ValueError(f'{input_type} not in {input_types[output_type]}')
@@ -62,17 +61,14 @@ class InternalClient():
         '''
         This function takes query parameters and returns a query set token.
         '''
-        if input_type is None:
-            response = requests.get(self.base_url + output_type + "/")
-        else:
-            self._check_parameters(
-                input_type=input_type, output_type=output_type,
-                input_set=input_set, genomic_modality=genomic_modality, p_value=p_value)
-            request_url = self.base_url + output_type + "/"
-            request_dict = self._fill_request_dict(
-                input_type, input_set, genomic_modality, p_value, logical_operator)
+        self._check_parameters(
+            input_type=input_type, output_type=output_type,
+            input_set=input_set, genomic_modality=genomic_modality, p_value=p_value)
+        request_url = self.base_url + output_type + "/"
+        request_dict = self._fill_request_dict(
+            input_type, input_set, genomic_modality, p_value, logical_operator)
 
-            response = requests.post(request_url, request_dict)
+        response = requests.post(request_url, request_dict)
         results = response.json()['results']
         # Returns the key to be used in future computations
         return results[0][HANDLE]

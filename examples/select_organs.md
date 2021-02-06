@@ -1,15 +1,8 @@
-`client.select_organs()`:
+`client.select_organs(where='gene', ...)`:
 ```python
 >>> from hubmap_api_py_client import Client
 >>> client = Client('https://cells.dev.hubmapconsortium.org/api/')
 
->>> all_organs = client.select_organs()
->>> assert len(all_organs) > 0
-
-```
-
-`client.select_organs(where='gene', ...)`:
-```python
 >>> organs_with_gene = client.select_organs(where='gene', has=['CHN2'], genomic_modality='atac', p_value=0.05)
 >>> assert len(organs_with_gene) > 0
 
