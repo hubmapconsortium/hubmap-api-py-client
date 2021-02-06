@@ -15,7 +15,7 @@ class ExternalClient():
             input_type=None, output_type=None, has=None,
             genomic_modality=None, p_value=None, logical_operator=None,
             ResultsSetSubclass=None):
-        if not isinstance(has, list):
+        if not isinstance(has, list) and input_type is not None:
             raise TypeError(f'"has" parameter must be a list, not {has}')
         handle = self.client.hubmap_query(input_type, output_type, has, genomic_modality,
                                           p_value, logical_operator)
@@ -70,10 +70,6 @@ class ResultsSet():
         return self._operation(other_set, self.client.set_difference)
 
     def _operation(self, other_set, method):
-        if self.output_type != other_set.output_type:
-            raise ValueError(
-                'Operand output types do not match: '
-                f'{self.output_type} != {other_set.output_type}')
         new_handle = method(self.handle, other_set.handle, self.output_type)
         return ResultsSet(
             self.client, new_handle,
@@ -84,20 +80,10 @@ class ResultsSet():
         if isinstance(key, int):
             if key < 0:
                 raise ValueError('Negative index not supported')
-            return self._get_list(1, offset=key)[0]
-        if isinstance(key, slice):
-            if key.step is not None:
-                raise ValueError('Step is not supported')
-            if key.start is None or key.stop is None:
-                raise ValueError('Start and stop are required')
-            if key.start < 0 or key.stop < 0:
-                raise ValueError('Start and stop must be >= 0')
-            if key.stop < key.start:
-                raise ValueError('Stop must be > start')
-            return self._get_list(key.stop - key.start, offset=key.start)
-        raise TypeError()
+            return self.get_list(1, offset=key)[0]
+        raise TypeError('Use get_list for multiple values')
 
-    def _get_list(self, limit, offset=0):
+    def get_list(self, limit, offset=0):
         return self.client.set_list_evaluation(self.handle, self.output_type, limit, offset=offset)
 
     def get_details(
@@ -119,6 +105,6 @@ def _create_subclass(output_type):
     return type(class_name(output_type), (ResultsSet,), {})
 
 
-for output_type in ['cell', 'organ', 'gene', 'cluster', 'dataset']:
+for output_type in ['cell', 'organ', 'gene', 'cluster', 'dataset', 'protein']:
     ResultsSetSubclass = _create_subclass(output_type)
     _add_method(output_type, ResultsSetSubclass)

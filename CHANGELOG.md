@@ -1,4 +1,17 @@
-0.0.4 - in progress
+0.0.6 - in progress
+
+0.0.5 - 2021-02-06
+- Support queries for and by dataset
+- Support queries for all entities by identifier
+- Examples of query by cluster
+- Example of query for cell by protein
+- Reworking client-side parameter validation
+- Integrating hubmap_cell_id_gen_py into examples
+- Supporting queries for all entities of a particular type, including proteins
+- Expanding table in readme
+- Fewer preflight checks on requests: These are a maintenance burden.
+
+0.0.4 - 2021-01-11
 - Remove complement magic method, and add difference.
 - Require "has" param to be list, and update examples.
 - Add subtypes of ResultsSet, and check that operands on set operations match.
@@ -8,12 +21,6 @@
 - Add ASCT-B to matrix in README
 - Improve input validation logic
 - Use slice syntax to get list
-- Support queries for and by dataset
-- Support queries for all entities by identifier
-- Examples of query by cluster
-- Example of query for cell by protein
-- Reworking client-side parameter validation
-- Integrating hubmap_cell_id_gen_py into examples
 
 0.0.3
 - Change to more fluent SDK: `select_TARGET(where='SOURCE', has='CRITERIA', ...)`

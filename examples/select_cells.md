@@ -1,12 +1,20 @@
-`client.select_cells(where='gene', ...)`:
+`client.select_cells()`:
 ```python
 >>> from hubmap_api_py_client import Client
 >>> client = Client('https://cells.dev.hubmapconsortium.org/api/')
 
->>> cells_with_gene = client.select_cells(where='gene', has=['CASTOR2 > 1'], genomic_modality='rna', logical_operator='and')
+>>> all_cells = client.select_cells()
+>>> assert len(all_cells) > 0
+
+```
+
+
+`client.select_cells(where='gene', ...)`:
+```python
+>>> cells_with_gene = client.select_cells(where='gene', has=['CASTOR2 > 1'], genomic_modality='rna')
 >>> assert len(cells_with_gene) > 0
 
->>> cells_with_gene_atac = client.select_cells(where='gene', has=['CHN2'], genomic_modality='atac', logical_operator='and')
+>>> cells_with_gene_atac = client.select_cells(where='gene', has=['CHN2'], genomic_modality='atac')
 >>> assert len(cells_with_gene_atac) > 0
 
 ```

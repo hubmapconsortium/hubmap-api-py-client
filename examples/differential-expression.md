@@ -11,9 +11,6 @@ Find genes differentially expressed by the kidney at significance level 0.05:
 
 Find organs that differentially express the gene VIM at the 0.01 significance level
 ```python
->>> from hubmap_api_py_client import Client
->>> client = Client('https://cells.dev.hubmapconsortium.org/api/')
-
 >>> organs_with_vim = client.select_organs(where='gene', has=['VIM'], genomic_modality='rna', p_value=0.01)
 >>> organs_with_vim_details = organs_with_vim.get_details(10)
 >>> assert organs_with_vim_details[0].keys() == {'grouping_name', 'values'}
