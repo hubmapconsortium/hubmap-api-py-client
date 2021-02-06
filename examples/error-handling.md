@@ -7,7 +7,7 @@
 >>> kidney_genes & kidney_cells
 Traceback (most recent call last):
 ...
-ValueError: Operand output types do not match: gene != cell
+hubmap_api_py_client.errors.ClientError: Cannot combine queries on two different base models.
 
 >>> client.select_cells(where='fake', has=['VIM>1'], genomic_modality='rna')
 Traceback (most recent call last):
