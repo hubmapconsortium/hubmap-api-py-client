@@ -11,20 +11,6 @@ class InternalClient():
     def __init__(self, base_url):
         self.base_url = base_url
 
-    def _fill_request_dict(
-            self,
-            input_type: str, input_set: List[str],
-            genomic_modality: str, p_value: float, logical_operator: str):
-
-        params = {'genomic_modality': genomic_modality, 'p_value': p_value,
-                  'logical_operator': logical_operator}
-        request_dict = {param_name: params[param_name] for param_name in params
-                        if params[param_name] is not None}
-        request_dict['input_type'] = input_type
-        request_dict['input_set'] = input_set
-
-        return request_dict
-
     def hubmap_query(
             self,
             input_type: str, output_type: str, input_set: List[str],
@@ -63,8 +49,7 @@ class InternalClient():
             self, set_key: str, set_type: str) -> str:
         request_url = self.base_url + "count/"
         request_dict = {"key": set_key, "set_type": set_type}
-        response = requests.post(request_url, request_dict)
-        results = response.json()['results']
+        results = self._post_and_get_results(request_url, request_dict)
         return results[0]["count"]
 
     def set_list_evaluation(
@@ -92,6 +77,19 @@ class InternalClient():
                         "values_included": values_included, "sort_by": sort_by,
                         "values_type": values_type}
         return self._post_and_get_results(request_url, request_dict)
+
+    def _fill_request_dict(
+            self,
+            input_type: str, input_set: List[str],
+            genomic_modality: str, p_value: float, logical_operator: str):
+
+        params = {'genomic_modality': genomic_modality, 'p_value': p_value,
+                  'logical_operator': logical_operator}
+        request_dict = {param_name: params[param_name] for param_name in params
+                        if params[param_name] is not None}
+        request_dict['input_type'] = input_type
+        request_dict['input_set'] = input_set
+        return request_dict
 
     def _post_and_get_results(self, url, request_dict):
         response = requests.post(url, request_dict)
