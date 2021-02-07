@@ -11,17 +11,6 @@ class InternalClient():
     def __init__(self, base_url):
         self.base_url = base_url
 
-    def _fill_request_dict(
-            self,
-            input_type: str, input_set: List[str],
-            genomic_modality: str, p_value: float, logical_operator: str):
-
-        request_dict = {'genomic_modality': genomic_modality, 'p_value': p_value,
-                        'logical_operator': logical_operator}
-        request_dict['input_type'] = input_type
-        request_dict['input_set'] = input_set
-        return request_dict
-
     def hubmap_query(
             self,
             input_type: str, output_type: str, input_set: List[str],
@@ -30,8 +19,13 @@ class InternalClient():
         This function takes query parameters and returns a query set token.
         '''
         request_url = self.base_url + output_type + "/"
-        request_dict = self._fill_request_dict(
-            input_type, input_set, genomic_modality, p_value, logical_operator)
+        request_dict = {
+            'input_type': input_type,
+            'input_set': input_set,
+            'genomic_modality': genomic_modality,
+            'p_value': p_value,
+            'logical_operator': logical_operator
+        }
         return self._post_and_get_handle(request_url, request_dict)
 
     # These functions take two query set tokens and return an API token:
@@ -51,7 +45,11 @@ class InternalClient():
     def _operation(
             self, set_key_one: str, set_key_two: str, set_type: str, path: str) -> str:
         request_url = self.base_url + path
-        request_dict = {"key_one": set_key_one, "key_two": set_key_two, "set_type": set_type}
+        request_dict = {
+            "key_one": set_key_one,
+            "key_two": set_key_two,
+            "set_type": set_type
+        }
         return self._post_and_get_handle(request_url, request_dict)
 
     # These functions take a query set token and return an evaluated query_set:
@@ -71,7 +69,12 @@ class InternalClient():
         associated quantitative values.  It should be reasonably fast.
         '''
         request_url = self.base_url + set_type + "evaluation/"
-        request_dict = {"key": set_key, "set_type": set_type, "limit": limit, "offset": offset}
+        request_dict = {
+            "key": set_key,
+            "set_type": set_type,
+            "limit": limit,
+            "offset": offset
+        }
         return self._post_and_get_results(request_url, request_dict)
 
     def set_detail_evaluation(
@@ -84,9 +87,15 @@ class InternalClient():
         It may be slow.
         '''
         request_url = self.base_url + set_type + "detailevaluation/"
-        request_dict = {"key": set_key, "set_type": set_type, "limit": limit, "offset": offset,
-                        "values_included": values_included, "sort_by": sort_by,
-                        "values_type": values_type}
+        request_dict = {
+            "key": set_key,
+            "set_type": set_type,
+            "limit": limit,
+            "offset": offset,
+            "values_included": values_included,
+            "sort_by": sort_by,
+            "values_type": values_type
+        }
         return self._post_and_get_results(request_url, request_dict)
 
     def _post_and_get_results(self, url, request_dict):
