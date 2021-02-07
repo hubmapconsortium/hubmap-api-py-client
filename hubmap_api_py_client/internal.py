@@ -33,14 +33,9 @@ class InternalClient():
         This function takes query parameters and returns a query set token.
         '''
         request_url = self.base_url + output_type + "/"
-        if input_type is None:
-            # TODO: Is this really needed? Could we just send an empty POST?
-            response = requests.get(request_url)
-        else:
-            request_dict = self._fill_request_dict(
-                input_type, input_set, genomic_modality, p_value, logical_operator)
-            response = requests.post(request_url, request_dict)
-        return self._get_handle_from_response(response)
+        request_dict = self._fill_request_dict(
+            input_type, input_set, genomic_modality, p_value, logical_operator)
+        return self._post_and_get_handle(request_url, request_dict)
 
     # These functions take two query set tokens and return an API token:
 
@@ -60,8 +55,7 @@ class InternalClient():
             self, set_key_one: str, set_key_two: str, set_type: str, path: str) -> str:
         request_url = self.base_url + path
         request_dict = {"key_one": set_key_one, "key_two": set_key_two, "set_type": set_type}
-        response = requests.post(request_url, request_dict)
-        return self._get_handle_from_response(response)
+        return self._post_and_get_handle(request_url, request_dict)
 
     # These functions take a query set token and return an evaluated query_set:
 
@@ -99,16 +93,13 @@ class InternalClient():
                         "values_type": values_type}
         return self._post_and_get_results(request_url, request_dict)
 
-    def _get_handle_from_response(self, response):
-        # It might be a GET that produced the response, so not ready to combine these.
-        response_json = response.json()
-        if 'results' not in response_json:
-            raise ClientError(response_json['message'])
-        return response_json['results'][0][HANDLE]
-
     def _post_and_get_results(self, url, request_dict):
         response = requests.post(url, request_dict)
         response_json = response.json()
         if 'results' not in response_json:
             raise ClientError(response_json['message'])
         return response_json['results']
+
+    def _post_and_get_handle(self, url, request_dict):
+        response = self._post_and_get_results(url, request_dict)
+        return response[0][HANDLE]
