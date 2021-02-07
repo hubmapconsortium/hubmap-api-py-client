@@ -1,7 +1,7 @@
 Providing a list to `has` is the same as using `|` for the union:
 ```python
->>> from hubmap_api_py_client import Client
->>> client = Client('https://cells.dev.hubmapconsortium.org/api/')
+>>> from hubmap_api_py_client import Client, test_url
+>>> client = Client(test_url)
 
 >>> a_uuid = '68159e4bd6a2cea1cd66e8f3050cfcb7'
 >>> b_uuid = 'e8d642084fc5ec8b5d348ebab96a4b22'

@@ -1,7 +1,7 @@
 `client.select_clusters()`:
 ```python
->>> from hubmap_api_py_client import Client
->>> client = Client('https://cells.dev.hubmapconsortium.org/api/')
+>>> from hubmap_api_py_client import Client, test_url
+>>> client = Client(test_url)
 
 >>> all_clusters = client.select_clusters()
 >>> assert len(all_clusters) > 0

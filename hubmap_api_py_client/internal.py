@@ -9,7 +9,6 @@ HANDLE = 'query_handle'
 
 class InternalClient():
     def __init__(self, base_url):
-        # 'https://cells.dev.hubmapconsortium.org/api/'
         self.base_url = base_url
 
     def _fill_request_dict(
