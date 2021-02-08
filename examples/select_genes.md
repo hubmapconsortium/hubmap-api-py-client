@@ -19,7 +19,7 @@ dict_keys(['gene_symbol', 'go_terms'])
 dict_keys(['gene_symbol', 'go_terms', 'values'])
 
 >>> kidney_genes_details[0]['values'].keys()
-dict_keys(['Kidney'])
+dict_keys([])
 
 ```
 

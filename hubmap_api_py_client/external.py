@@ -94,7 +94,7 @@ class ResultsSet():
             offset=offset,
             sort_by=sort_by,
             values_type=self.input_type,
-            values_included=[self.query])
+            values_included=values_included)
 
 
 def class_name(output_type):
