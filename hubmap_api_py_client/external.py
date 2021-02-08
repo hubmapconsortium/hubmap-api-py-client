@@ -86,9 +86,7 @@ class ResultsSet():
     def get_list(self, limit, offset=0):
         return self.client.set_list_evaluation(self.handle, self.output_type, limit, offset=offset)
 
-    def get_details(
-            self, limit, offset=0,
-            values_included=[], sort_by=None):
+    def get_details(self, limit, offset=0, sort_by=None):
         return self.client.set_detail_evaluation(
             self.handle, self.output_type, limit,
             offset=offset,
