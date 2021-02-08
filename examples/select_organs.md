@@ -13,6 +13,9 @@
 >>> organs_with_gene = client.select_organs(where='gene', has=['CHN2'], genomic_modality='atac', p_value=0.05)
 >>> assert len(organs_with_gene) > 0
 
+>>> organs_with_gene.get_details(1, values_included=['CASTOR2'])[0]['values'].keys()
+dict_keys(['CASTOR2'])
+
 ```
 
 `client.select_organs(where='cell', ...)`:
