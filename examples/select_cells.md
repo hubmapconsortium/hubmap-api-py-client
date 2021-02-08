@@ -20,8 +20,13 @@ dict_keys([])
 
 >>> cells_with_gene_details_with_values = cells_with_gene.get_details(10, values_included=['CASTOR2'])
 >>> cells_with_gene_details_with_values[0]['values'].keys()
-dict_keys(['CASTOR2'])
+dict_keys([]) 
 
+```
+
+That isn't right: It should get `'CASTOR2'`.
+
+```
 >>> cells_with_gene_atac = client.select_cells(where='gene', has=['CHN2'], genomic_modality='atac')
 >>> assert len(cells_with_gene_atac) > 0
 
