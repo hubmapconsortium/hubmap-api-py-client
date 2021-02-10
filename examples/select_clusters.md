@@ -17,7 +17,7 @@
 dict_keys(['cluster_method', 'cluster_data', 'grouping_name', 'dataset'])
 
 >>> clusters_with_gene.get_details(1)[0].keys()
-dict_keys(['cluster_method', 'cluster_data', 'grouping_name', 'dataset', 'values'])
+dict_keys(['cluster_method', 'cluster_data', 'grouping_name', 'dataset'])
 
 >>> clusters_with_gene.get_details(1, values_included=['CASTOR2'])[0]['values'].keys()
 dict_keys(['CASTOR2'])

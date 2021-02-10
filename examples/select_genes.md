@@ -16,10 +16,7 @@ dict_keys(['gene_symbol', 'go_terms'])
 
 >>> kidney_genes_details = kidney_genes.get_details(10)
 >>> kidney_genes_details[0].keys()
-dict_keys(['gene_symbol', 'go_terms', 'values'])
-
->>> kidney_genes_details[0]['values'].keys()
-dict_keys([])
+dict_keys(['gene_symbol', 'go_terms'])
 
 >>> kidney_genes_details_with_values = kidney_genes.get_details(10, values_included=['Kidney'])
 >>> kidney_genes_details_with_values[0].keys()

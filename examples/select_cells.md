@@ -14,10 +14,6 @@
 >>> cells_with_gene = client.select_cells(where='gene', has=['CASTOR2 > 1'], genomic_modality='rna')
 >>> assert len(cells_with_gene) > 0
 
->>> cells_with_gene_details = cells_with_gene.get_details(10)
->>> cells_with_gene_details[0]['values'].keys()
-dict_keys([])
-
 >>> cells_with_gene_details_with_values = cells_with_gene.get_details(10, values_included=['CASTOR2'])
 >>> cells_with_gene_details_with_values[0]['values'].keys()
 dict_keys(['CASTOR2'])
@@ -38,10 +34,6 @@ dict_keys(['CASTOR2'])
 ```python
 >>> ki67_cells = client.select_cells(where='protein', has=['Ki67>5000'])
 >>> assert len(ki67_cells) > 0
-
->>> ki67_cells_details = ki67_cells.get_details(10)
->>> ki67_cells_details[0]['values'].keys()
-dict_keys([])
 
 >>> ki67_cells_details_with_values = ki67_cells.get_details(10, values_included=['Ki67', 'CD20'])
 >>> ki67_cells_details_with_values[0]['values'].keys()
