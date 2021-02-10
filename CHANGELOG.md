@@ -3,6 +3,7 @@
 - Only use POST, for simplicity.
 - Use values_included appropriately.
 - Values in error are sorted.
+- Remove `get_list` from external interface.
 
 0.0.5 - 2021-02-06
 - Support queries for and by dataset

@@ -83,12 +83,13 @@ class ResultsSet():
             return self.get_list(1, offset=key)[0]
         raise TypeError('Use get_list for multiple values')
 
-    def get_list(self, limit, offset=0):
-        return self.client.set_list_evaluation(self.handle, self.output_type, limit, offset=offset)
-
-    def get_details(
+    def get_list(
             self, limit, offset=0,
             values_included=[], sort_by=None):
+        if not values_included and not sort_by:
+            return self.client.set_list_evaluation(
+                self.handle, self.output_type, limit,
+                offset=offset)
         return self.client.set_detail_evaluation(
             self.handle, self.output_type, limit,
             offset=offset,
