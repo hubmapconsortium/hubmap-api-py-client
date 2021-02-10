@@ -80,10 +80,10 @@ class ResultsSet():
         if isinstance(key, int):
             if key < 0:
                 raise ValueError('Negative index not supported')
-            return self.get_details(1, offset=key)[0]
-        raise TypeError('Use get_details for multiple values')
+            return self.get_list(1, offset=key)[0]
+        raise TypeError('Use get_list for multiple values')
 
-    def get_details(
+    def get_list(
             self, limit, offset=0,
             values_included=[], sort_by=None):
         if not values_included and not sort_by:

@@ -38,7 +38,7 @@ Find cells with different criteria, and intersect resulting sets:
 >>> cells_with_vim_in_datasets = cells_with_vim & cells_in_datasets
 
 # Get a list; should run quickly:
->>> cell_list = cells_with_vim_in_datasets.get_details(10)
+>>> cell_list = cells_with_vim_in_datasets.get_list(10)
 >>> assert len(cell_list) == 10
 >>> assert cell_list[0].keys() == {'cell_id', 'modality', 'dataset', 'organ', 'clusters', 'protein_mean', 'protein_total', 'protein_covar'}
 
