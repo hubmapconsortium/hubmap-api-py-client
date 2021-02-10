@@ -14,7 +14,6 @@ Traceback (most recent call last):
 ...
 hubmap_api_py_client.errors.ClientError: fake not in ['cluster', 'dataset', 'gene', 'organ', 'protein']
 
-
 >>> client.select_cells(where='gene', has=['VIM>1'], genomic_modality='fake')
 Traceback (most recent call last):
 ...
