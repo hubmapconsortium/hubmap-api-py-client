@@ -2,6 +2,7 @@
 - Move the test endpoint URL into the package, to simplify testing against other endpoints.
 - Only use POST, for simplicity.
 - Use values_included appropriately.
+- Values in error are sorted.
 
 0.0.5 - 2021-02-06
 - Support queries for and by dataset
