@@ -4,6 +4,7 @@
 - Use values_included appropriately.
 - Values in error are sorted.
 - Run tests in parallel.
+- Remove `get_list` from external interface.
 
 0.0.5 - 2021-02-06
 - Support queries for and by dataset
