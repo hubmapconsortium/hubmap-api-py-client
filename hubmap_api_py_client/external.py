@@ -54,7 +54,7 @@ class ResultsSet():
 
     def __repr__(self):
         return (
-            f'<{class_name(self.output_type)} '
+            f'<{_class_name(self.output_type)} '
             f'base_url={self.client.base_url} handle={self.handle}>')
 
     def __len__(self):
@@ -76,36 +76,56 @@ class ResultsSet():
             input_type=self.input_type, output_type=self.output_type,
             query=self.query)
 
-    def __getitem__(self, key):
-        if isinstance(key, int):
-            if key < 0:
-                raise ValueError('Negative index not supported')
-            return self.get_list(1, offset=key)[0]
-        raise TypeError('Use get_list for multiple values')
+    def get_list(self, values_included=[], sort_by=None):
+        return ResultsList(
+            client=self.client,
+            handle=self.handle,
+            input_type=self.input_type,
+            output_type=self.output_type,
+            values_included=values_included,
+            sort_by=sort_by)
 
-    def get_list(
-            self, limit, offset=0,
+
+def _class_name(output_type):
+    return f'{output_type.capitalize()}ResultsSet'
+
+
+def _create_subclass(output_type):
+    return type(_class_name(output_type), (ResultsSet,), {})
+
+
+for output_type in ['cell', 'organ', 'gene', 'cluster', 'dataset', 'protein']:
+    ResultsSetSubclass = _create_subclass(output_type)
+    _add_method(output_type, ResultsSetSubclass)
+
+
+class ResultsList():
+    def __init__(
+            self, client, handle,
+            input_type=None, output_type=None,
             values_included=[], sort_by=None):
-        if not values_included and not sort_by:
+        self.client = client
+        self.handle = handle
+        self.input_type = input_type
+        self.output_type = output_type
+        self.values_included = values_included
+        self.sort_by = sort_by
+
+    def __repr__(self):
+        return (
+            f'<ResultsList '
+            f'base_url={self.client.base_url} handle={self.handle} '
+            f'values_included={self.values_included} sort_by={self.sort_by}>')
+
+    def get(self, limit=10, offset=0):
+        # TODO: This will be replaced with a magic method.
+        if not self.values_included and not self.sort_by:
             return self.client.set_list_evaluation(
                 self.handle, self.output_type, limit,
                 offset=offset)
         return self.client.set_detail_evaluation(
             self.handle, self.output_type, limit,
             offset=offset,
-            sort_by=sort_by,
+            sort_by=self.sort_by,
             values_type=self.input_type,
-            values_included=values_included)
-
-
-def class_name(output_type):
-    return f'{output_type.capitalize()}ResultsSet'
-
-
-def _create_subclass(output_type):
-    return type(class_name(output_type), (ResultsSet,), {})
-
-
-for output_type in ['cell', 'organ', 'gene', 'cluster', 'dataset', 'protein']:
-    ResultsSetSubclass = _create_subclass(output_type)
-    _add_method(output_type, ResultsSetSubclass)
+            values_included=self.values_included)

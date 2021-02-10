@@ -11,18 +11,16 @@
 `client.select_genes(where='organ', ...)`:
 ```python
 >>> kidney_genes = client.select_genes(where='organ', has=['Kidney'], genomic_modality='rna', p_value=0.05)
->>> kidney_genes[0].keys()
+
+>>> kidney_genes_details = kidney_genes.get_list()
+>>> kidney_genes_details.get()[0].keys()
 dict_keys(['gene_symbol', 'go_terms'])
 
->>> kidney_genes_details = kidney_genes.get_list(10)
->>> kidney_genes_details[0].keys()
-dict_keys(['gene_symbol', 'go_terms'])
-
->>> kidney_genes_details_with_values = kidney_genes.get_list(10, values_included=['Kidney'])
->>> kidney_genes_details_with_values[0].keys()
+>>> kidney_genes_details_with_values = kidney_genes.get_list(values_included=['Kidney'])
+>>> kidney_genes_details_with_values.get()[0].keys()
 dict_keys(['gene_symbol', 'go_terms', 'values'])
 
->>> kidney_genes_details_with_values[0]['values'].keys()
+>>> kidney_genes_details_with_values.get()[0]['values'].keys()
 dict_keys(['Kidney'])
 
 ```
