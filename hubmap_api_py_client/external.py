@@ -26,21 +26,6 @@ class ExternalClient():
         )
 
 
-def _add_method(output_type, ResultsSetSubclass):
-    method_name = f'select_{output_type}s'
-    method = (
-        lambda self, where=None, has=None,
-        genomic_modality=None, p_value=None,
-        logical_operator=None:
-        self._query(
-            input_type=where, output_type=output_type, has=has,
-            genomic_modality=genomic_modality, p_value=p_value,
-            logical_operator=logical_operator,
-            ResultsSetSubclass=ResultsSetSubclass)
-    )
-    setattr(ExternalClient, method_name, method)
-
-
 class ResultsSet():
     def __init__(
             self, client, handle,
@@ -89,6 +74,21 @@ def _class_name(output_type):
 
 def _create_subclass(output_type):
     return type(_class_name(output_type), (ResultsSet,), {})
+
+
+def _add_method(output_type, ResultsSetSubclass):
+    method_name = f'select_{output_type}s'
+    method = (
+        lambda self, where=None, has=None,
+        genomic_modality=None, p_value=None,
+        logical_operator=None:
+        self._query(
+            input_type=where, output_type=output_type, has=has,
+            genomic_modality=genomic_modality, p_value=p_value,
+            logical_operator=logical_operator,
+            ResultsSetSubclass=ResultsSetSubclass)
+    )
+    setattr(ExternalClient, method_name, method)
 
 
 for output_type in ['cell', 'organ', 'gene', 'cluster', 'dataset', 'protein']:
