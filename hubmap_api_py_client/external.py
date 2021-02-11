@@ -68,6 +68,53 @@ class ResultsSet():
             sort_by=sort_by)
 
 
+class ResultsList():
+    def __init__(
+            self, results_set,
+            values_included=[], sort_by=None):
+        self.results_set = results_set
+        self.values_included = values_included
+        self.sort_by = sort_by
+
+    def __repr__(self):
+        return (
+            f'<ResultsList results_set={self.results_set} '
+            f'values_included={self.values_included} sort_by={self.sort_by}>')
+
+    def __len__(self):
+        return len(self.results_set)
+
+    def __getitem__(self, key):
+        if isinstance(key, int):
+            if key < 0:
+                raise NotImplementedError('Negative indexes not implemented')
+            limit = 1
+            offset = key
+            return self._get(limit, offset)[0]
+        if isinstance(key, slice):
+            if key.step:
+                raise NotImplementedError('step not implemented')
+            if key.start < 0:
+                raise NotImplementedError('Negative indexes not implemented')
+            limit = key.stop - key.start
+            offset = key.start
+            return self._get(limit, offset)
+        raise TypeError()
+
+    def _get(self, limit, offset):
+        if not self.values_included and not self.sort_by:
+            return self.results_set.client.set_list_evaluation(
+                self.results_set.handle,
+                self.results_set.output_type,
+                limit=limit, offset=offset)
+        return self.results_set.client.set_detail_evaluation(
+            self.results_set.handle,
+            self.results_set.output_type,
+            limit=limit, offset=offset,
+            sort_by=self.sort_by,
+            values_included=self.values_included)
+
+
 def _class_name(output_type):
     return f'{output_type.capitalize()}ResultsSet'
 
@@ -94,34 +141,3 @@ def _add_method(output_type, ResultsSetSubclass):
 for output_type in ['cell', 'organ', 'gene', 'cluster', 'dataset', 'protein']:
     ResultsSetSubclass = _create_subclass(output_type)
     _add_method(output_type, ResultsSetSubclass)
-
-
-class ResultsList():
-    def __init__(
-            self, results_set,
-            values_included=[], sort_by=None):
-        self.results_set = results_set
-        self.values_included = values_included
-        self.sort_by = sort_by
-
-    def __repr__(self):
-        return (
-            f'<ResultsList results_set={self.results_set} '
-            f'values_included={self.values_included} sort_by={self.sort_by}>')
-
-    def __len__(self):
-        return len(self.results_set)
-
-    def get(self, limit=10, offset=0):
-        # TODO: This will be replaced with a magic method.
-        if not self.values_included and not self.sort_by:
-            return self.results_set.client.set_list_evaluation(
-                self.results_set.handle,
-                self.results_set.output_type,
-                limit=limit, offset=offset)
-        return self.results_set.client.set_detail_evaluation(
-            self.results_set.handle,
-            self.results_set.output_type,
-            limit=limit, offset=offset,
-            sort_by=self.sort_by,
-            values_included=self.values_included)
