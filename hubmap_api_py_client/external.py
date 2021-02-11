@@ -78,10 +78,7 @@ class ResultsSet():
 
     def get_list(self, values_included=[], sort_by=None):
         return ResultsList(
-            client=self.client,
-            handle=self.handle,
-            input_type=self.input_type,
-            output_type=self.output_type,
+            results_set=self,
             values_included=values_included,
             sort_by=sort_by)
 
@@ -101,30 +98,30 @@ for output_type in ['cell', 'organ', 'gene', 'cluster', 'dataset', 'protein']:
 
 class ResultsList():
     def __init__(
-            self, client, handle,
-            input_type=None, output_type=None,
+            self, results_set,
             values_included=[], sort_by=None):
-        self.client = client
-        self.handle = handle
-        self.input_type = input_type
-        self.output_type = output_type
+        self.results_set = results_set
         self.values_included = values_included
         self.sort_by = sort_by
 
     def __repr__(self):
         return (
-            f'<ResultsList '
-            f'base_url={self.client.base_url} handle={self.handle} '
+            f'<ResultsList results_set={self.results_set} '
             f'values_included={self.values_included} sort_by={self.sort_by}>')
+
+    def __len__(self):
+        return len(self.results_set)
 
     def get(self, limit=10, offset=0):
         # TODO: This will be replaced with a magic method.
         if not self.values_included and not self.sort_by:
-            return self.client.set_list_evaluation(
-                self.handle, self.output_type, limit,
-                offset=offset)
-        return self.client.set_detail_evaluation(
-            self.handle, self.output_type, limit,
-            offset=offset,
+            return self.results_set.client.set_list_evaluation(
+                self.results_set.handle,
+                self.results_set.output_type,
+                limit=limit, offset=offset)
+        return self.results_set.client.set_detail_evaluation(
+            self.results_set.handle,
+            self.results_set.output_type,
+            limit=limit, offset=offset,
             sort_by=self.sort_by,
             values_included=self.values_included)

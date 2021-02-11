@@ -1,7 +1,7 @@
 ```python
 >>> import re
 >>> def abbreviate(s):
-...     return re.sub(r'=[^ >]+', '=...', str(s))
+...     return re.sub(r'=[^ <>]+', r'=...', str(s))
 
 >>> from hubmap_api_py_client import Client, test_url
 >>> client = Client(test_url)
@@ -20,6 +20,6 @@
 <class 'hubmap_api_py_client.external.ResultsList'>
 
 >>> abbreviate(cells_list)
-'<ResultsList base_url=... handle=... values_included=... sort_by=...>'
+'<ResultsList results_set=<CellResultsSet base_url=... handle=...> values_included=... sort_by=...>'
 
 ```
