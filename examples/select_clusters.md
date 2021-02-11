@@ -13,10 +13,10 @@
 >>> clusters_with_gene_set = client.select_clusters(where='gene', has=['CASTOR2'], genomic_modality='atac', p_value=0.05)
 >>> assert len(clusters_with_gene_set) > 0
 
->>> clusters_with_gene_set.get_list().get()[0].keys()
+>>> clusters_with_gene_set.get_list()[0].keys()
 dict_keys(['cluster_method', 'cluster_data', 'grouping_name', 'dataset'])
 
->>> clusters_with_gene_set.get_list(values_included=['CASTOR2']).get()[0]['values'].keys()
+>>> clusters_with_gene_set.get_list(values_included=['CASTOR2'])[0]['values'].keys()
 dict_keys(['CASTOR2'])
 
 ```

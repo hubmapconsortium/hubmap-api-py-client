@@ -7,6 +7,7 @@
 - Remove `get_list` from external interface.
 - Distinguish `ResultsSet` from `ResultsList`.
 - Remove `values_type` parameter
+- `ResultsList` supports `[]`
 
 0.0.5 - 2021-02-06
 - Support queries for and by dataset
