@@ -127,5 +127,4 @@ class ResultsList():
             self.handle, self.output_type, limit,
             offset=offset,
             sort_by=self.sort_by,
-            values_type=self.input_type,
             values_included=self.values_included)

@@ -79,7 +79,7 @@ class InternalClient():
 
     def set_detail_evaluation(
             self, set_key: str, set_type: str, limit: int,
-            values_included: List = [], sort_by: str = None, values_type: str = None,
+            values_included: List = [], sort_by: str = None,
             offset: int = 0):
         '''
         This function/API call returns a more detailed version of the set,
@@ -93,8 +93,7 @@ class InternalClient():
             "limit": limit,
             "offset": offset,
             "values_included": values_included,
-            "sort_by": sort_by,
-            "values_type": values_type
+            "sort_by": sort_by
         }
         return self._post_and_get_results(request_url, request_dict)
 
