@@ -36,11 +36,14 @@ Find cells with different criteria, and intersect resulting sets:
 
 # Combine criteria with intersection:
 >>> cells_with_vim_in_datasets = cells_with_vim & cells_in_datasets
+>>> assert len(cells_with_vim_in_datasets) > 10
 
 # Get a list; should run quickly:
->>> cell_list = cells_with_vim_in_datasets.get_list(10)
->>> assert len(cell_list) == 10
->>> assert cell_list[0].keys() == {'cell_id', 'modality', 'dataset', 'organ', 'clusters', 'protein_mean', 'protein_total', 'protein_covar'}
+>>> cell_list = cells_with_vim_in_datasets.get_list()
+
+>>> cells = cell_list.get()
+>>> assert len(cells) == 10
+>>> assert cells[0].keys() == {'cell_id', 'modality', 'dataset', 'organ', 'clusters', 'protein_mean', 'protein_total', 'protein_covar'}
 
 ```
 
