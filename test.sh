@@ -13,6 +13,10 @@ start flake8
 flake8 || die "Try: autopep8 --in-place --aggressive -r ."
 end flake8
 
+start pydoc
+diff <(pydoc hubmap_api_py_client.Client) README-pydoc.txt
+end pydoc
+
 start pytest
 CMD='PYTHONPATH="${PYTHONPATH}:hubmap_api_py_client" pytest --numprocesses auto -vv --doctest-glob="*.md"'
 echo $CMD

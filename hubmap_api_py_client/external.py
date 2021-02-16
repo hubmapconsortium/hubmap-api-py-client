@@ -135,6 +135,7 @@ def _add_method(output_type, ResultsSetSubclass):
             logical_operator=logical_operator,
             ResultsSetSubclass=ResultsSetSubclass)
     )
+    method.__doc__ = 'TODO: Document method'
     setattr(ExternalClient, method_name, method)
 
 

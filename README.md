@@ -47,7 +47,7 @@ Find cells with different criteria, and intersect resulting sets:
 
 ```
 
-[More examples](https://github.com/hubmapconsortium/hubmap-api-py-client/blob/main/examples/)
+[More examples](https://github.com/hubmapconsortium/hubmap-api-py-client/blob/main/examples/) and [documentation](README-pydoc.txt)
 
 Only some types of objects can be retrieved from other types of objects:
 
