@@ -14,7 +14,9 @@ flake8 || die "Try: autopep8 --in-place --aggressive -r ."
 end flake8
 
 start pydoc
-diff <(pydoc hubmap_api_py_client.Client) README-pydoc.txt
+CMD='pydoc hubmap_api_py_client.Client'
+TARGET='README-pydoc.txt'
+diff <($CMD) $TARGET || die "To update: $CMD > $TARGET"
 end pydoc
 
 start pytest
