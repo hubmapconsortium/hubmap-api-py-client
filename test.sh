@@ -14,11 +14,16 @@ flake8 || die "Try: autopep8 --in-place --aggressive -r ."
 end flake8
 
 start pydoc
-for CLASS in Client external.ResultsSet external.ResultsList; do
-  CMD="python -m pydoc hubmap_api_py_client.$CLASS"
-  TARGET="README-$CLASS.txt"
-  diff $TARGET <($CMD) || die "To update: $CMD > $TARGET"
-done
+if ( python --version 2>&1 | grep '3.6' ); then
+  echo 'pydoc on 3.6 has a different output format; skipping...'
+else
+  for CLASS in Client external.ResultsSet external.ResultsList; do
+    echo "Docs up-to-date for $CLASS?"
+    CMD="python -m pydoc hubmap_api_py_client.$CLASS"
+    TARGET="README-$CLASS.txt"
+    diff $TARGET <($CMD) || die "To update: $CMD > $TARGET"
+  done
+fi
 end pydoc
 
 start pytest
