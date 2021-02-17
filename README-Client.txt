@@ -3,6 +3,10 @@ Help on class ExternalClient in hubmap_api_py_client:
 hubmap_api_py_client.Client = class ExternalClient(builtins.object)
  |  hubmap_api_py_client.Client(base_url)
  |  
+ |  The Client provides methods for querying different entity types.
+ |  The methods return ResultSets which can be combined with set operators,
+ |  and then finally evaluated to get the actual data.
+ |  
  |  Methods defined here:
  |  
  |  __init__(self, base_url)
@@ -12,22 +16,22 @@ hubmap_api_py_client.Client = class ExternalClient(builtins.object)
  |      Return repr(self).
  |  
  |  select_cells lambda self, where=None, has=None, genomic_modality=None, p_value=None, logical_operator=None
- |      TODO: Document method
+ |      TODO: document cell
  |  
  |  select_clusters lambda self, where=None, has=None, genomic_modality=None, p_value=None, logical_operator=None
- |      TODO: Document method
+ |      TODO: document cluster
  |  
  |  select_datasets lambda self, where=None, has=None, genomic_modality=None, p_value=None, logical_operator=None
- |      TODO: Document method
+ |      TODO: document dataset
  |  
  |  select_genes lambda self, where=None, has=None, genomic_modality=None, p_value=None, logical_operator=None
- |      TODO: Document method
+ |      TODO: document gene
  |  
  |  select_organs lambda self, where=None, has=None, genomic_modality=None, p_value=None, logical_operator=None
- |      TODO: Document method
+ |      TODO: document organ
  |  
  |  select_proteins lambda self, where=None, has=None, genomic_modality=None, p_value=None, logical_operator=None
- |      TODO: Document method
+ |      TODO: document protein
  |  
  |  ----------------------------------------------------------------------
  |  Data descriptors defined here:

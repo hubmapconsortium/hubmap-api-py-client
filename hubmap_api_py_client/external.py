@@ -4,6 +4,12 @@ _default_limit = 1000
 
 
 class ExternalClient():
+    '''
+    The Client provides methods for querying different entity types.
+    The methods return ResultSets which can be combined with set operators,
+    and then finally evaluated to get the actual data.
+    '''
+
     def __init__(self, base_url):
         self.client = InternalClient(base_url)
 
@@ -27,10 +33,19 @@ class ExternalClient():
 
 
 class ResultsSet():
+    '''
+    Instances of ResultsSet subclasses can be combined with set operators,
+    and then prepared for evaluation by calling get_list(),
+    which returns a ResultsList.
+    '''
     def __init__(
             self, client, handle,
             input_type=None, output_type=None,
             query=None):
+        '''
+        Do not call the constructor directly:
+        Instead, use the select_* methods on Client.
+        '''
         self.client = client
         self.handle = handle
         self.input_type = input_type
@@ -69,9 +84,17 @@ class ResultsSet():
 
 
 class ResultsList():
+    '''
+    Use subscript syntax, ie [start, end], to get data
+    from a ResultsList.
+    '''
     def __init__(
             self, results_set,
             values_included=[], sort_by=None):
+        '''
+        Do not call the constructor directly:
+        Instead use the get_list method of ResultsSet.
+        '''
         self.results_set = results_set
         self.values_included = values_included
         self.sort_by = sort_by
@@ -123,7 +146,7 @@ def _create_subclass(output_type):
     return type(_class_name(output_type), (ResultsSet,), {})
 
 
-def _add_method(output_type, ResultsSetSubclass):
+def _add_method(output_type, ResultsSetSubclass, doc):
     method_name = f'select_{output_type}s'
     method = (
         lambda self, where=None, has=None,
@@ -135,10 +158,17 @@ def _add_method(output_type, ResultsSetSubclass):
             logical_operator=logical_operator,
             ResultsSetSubclass=ResultsSetSubclass)
     )
-    method.__doc__ = 'TODO: Document method'
+    method.__doc__ = doc
     setattr(ExternalClient, method_name, method)
 
 
-for output_type in ['cell', 'organ', 'gene', 'cluster', 'dataset', 'protein']:
+for output_type, doc in {
+    'cell': 'TODO: document cell',
+    'organ': 'TODO: document organ',
+    'gene': 'TODO: document gene',
+    'cluster': 'TODO: document cluster',
+    'dataset': 'TODO: document dataset',
+    'protein': 'TODO: document protein'
+}.items():
     ResultsSetSubclass = _create_subclass(output_type)
-    _add_method(output_type, ResultsSetSubclass)
+    _add_method(output_type, ResultsSetSubclass, doc)
