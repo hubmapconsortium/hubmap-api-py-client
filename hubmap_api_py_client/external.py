@@ -123,7 +123,7 @@ def _create_subclass(output_type):
     return type(_class_name(output_type), (ResultsSet,), {})
 
 
-def _add_method(output_type, ResultsSetSubclass):
+def _add_method(output_type, ResultsSetSubclass, doc):
     method_name = f'select_{output_type}s'
     method = (
         lambda self, where=None, has=None,
@@ -135,10 +135,17 @@ def _add_method(output_type, ResultsSetSubclass):
             logical_operator=logical_operator,
             ResultsSetSubclass=ResultsSetSubclass)
     )
-    method.__doc__ = 'TODO: Document method'
+    method.__doc__ = doc
     setattr(ExternalClient, method_name, method)
 
 
-for output_type in ['cell', 'organ', 'gene', 'cluster', 'dataset', 'protein']:
+for output_type, doc in {
+    'cell': 'TODO: document cell',
+    'organ': 'TODO: document organ',
+    'gene': 'TODO: document gene',
+    'cluster': 'TODO: document cluster',
+    'dataset': 'TODO: document dataset',
+    'protein': 'TODO: document protein'
+}.items():
     ResultsSetSubclass = _create_subclass(output_type)
-    _add_method(output_type, ResultsSetSubclass)
+    _add_method(output_type, ResultsSetSubclass, doc)

@@ -16,7 +16,7 @@ end flake8
 start pydoc
 CMD='python -m pydoc hubmap_api_py_client.Client'
 TARGET='README-pydoc.txt'
-diff <($CMD) $TARGET || die "To update: $CMD > $TARGET"
+diff $TARGET <($CMD) || die "To update: $CMD > $TARGET"
 end pydoc
 
 start pytest
