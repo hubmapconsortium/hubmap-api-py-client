@@ -4,6 +4,12 @@ _default_limit = 1000
 
 
 class ExternalClient():
+    '''
+    The Client provides methods for querying different entity types.
+    The methods return ResultSets which can be combined with set operators,
+    and then finally evaluated to get the actual data.
+    '''
+
     def __init__(self, base_url):
         self.client = InternalClient(base_url)
 
@@ -27,10 +33,19 @@ class ExternalClient():
 
 
 class ResultsSet():
+    '''
+    Instances of ResultsSet subclasses can be combined with set operators,
+    and then prepared for evaluation by calling get_list(),
+    which returns a ResultsList.
+    '''
     def __init__(
             self, client, handle,
             input_type=None, output_type=None,
             query=None):
+        '''
+        Do not call the constructor directly:
+        Instead, use the select_* methods on Client.
+        '''
         self.client = client
         self.handle = handle
         self.input_type = input_type
@@ -69,9 +84,17 @@ class ResultsSet():
 
 
 class ResultsList():
+    '''
+    Use subscript syntax, ie [start, end], to get data
+    from a ResultsList.
+    '''
     def __init__(
             self, results_set,
             values_included=[], sort_by=None):
+        '''
+        Do not call the constructor directly:
+        Instead use the get_list method of ResultsSet.
+        '''
         self.results_set = results_set
         self.values_included = values_included
         self.sort_by = sort_by

@@ -3,6 +3,10 @@ Help on class ExternalClient in hubmap_api_py_client:
 hubmap_api_py_client.Client = class ExternalClient(builtins.object)
  |  hubmap_api_py_client.Client(base_url)
  |  
+ |  The Client provides methods for querying different entity types.
+ |  The methods return ResultSets which can be combined with set operators,
+ |  and then finally evaluated to get the actual data.
+ |  
  |  Methods defined here:
  |  
  |  __init__(self, base_url)

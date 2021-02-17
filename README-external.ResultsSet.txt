@@ -3,12 +3,17 @@ Help on class ResultsSet in hubmap_api_py_client.external:
 hubmap_api_py_client.external.ResultsSet = class ResultsSet(builtins.object)
  |  hubmap_api_py_client.external.ResultsSet(client, handle, input_type=None, output_type=None, query=None)
  |  
+ |  Instances of ResultsSet subclasses can be combined with set operators,
+ |  and then prepared for evaluation by calling get_list(),
+ |  which returns a ResultsList.
+ |  
  |  Methods defined here:
  |  
  |  __and__(self, other_set)
  |  
  |  __init__(self, client, handle, input_type=None, output_type=None, query=None)
- |      Initialize self.  See help(type(self)) for accurate signature.
+ |      Do not call the constructor directly:
+ |      Instead, use the select_* methods on Client.
  |  
  |  __len__(self)
  |  
