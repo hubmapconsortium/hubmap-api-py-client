@@ -77,6 +77,14 @@ class ResultsSet():
             query=self.query)
 
     def get_list(self, values_included=[], sort_by=None):
+        '''
+        Args:
+            values_included (list[str])
+            sort_by (str)
+
+        Returns:
+            ResultsList
+        '''
         return ResultsList(
             results_set=self,
             values_included=values_included,

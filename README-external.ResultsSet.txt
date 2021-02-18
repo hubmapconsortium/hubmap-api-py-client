@@ -25,6 +25,12 @@ hubmap_api_py_client.external.ResultsSet = class ResultsSet(builtins.object)
  |  __sub__(self, other_set)
  |  
  |  get_list(self, values_included=[], sort_by=None)
+ |      Args:
+ |          values_included (list[str])
+ |          sort_by (str)
+ |      
+ |      Returns:
+ |          ResultsList
  |  
  |  ----------------------------------------------------------------------
  |  Data descriptors defined here:
