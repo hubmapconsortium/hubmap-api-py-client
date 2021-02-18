@@ -15,7 +15,7 @@ hubmap_api_py_client.Client = class ExternalClient(builtins.object)
  |  __repr__(self)
  |      Return repr(self).
  |  
- |  select_cells lambda self, where=None, has=None, genomic_modality=None, p_value=None, logical_operator=None
+ |  select_cells lambda self, where=None, has=None, genomic_modality=None, logical_operator=None
  |      Select a set of cells. If no params are provided, selects the set of all cells.
  |      Otherwise, selects a set of cells filtered based on parameters supplied.
  |      
@@ -53,7 +53,7 @@ hubmap_api_py_client.Client = class ExternalClient(builtins.object)
  |      Returns:
  |          ResultsSet
  |  
- |  select_datasets lambda self, where=None, has=None, genomic_modality=None, p_value=None, logical_operator=None
+ |  select_datasets lambda self, where=None, has=None
  |      Select a set of datasets. If no params are provided, selects the set of all datasets.
  |      Otherwise, selects a set of datasets filtered based on parameters supplied.
  |      
@@ -106,7 +106,7 @@ hubmap_api_py_client.Client = class ExternalClient(builtins.object)
  |      Returns:
  |          ResultsSet
  |  
- |  select_proteins lambda self, where=None, has=None, genomic_modality=None, p_value=None, logical_operator=None
+ |  select_proteins lambda self, where=None, has=None
  |      Select a set of proteins. If no params are provided, selects the set of all proteins.
  |      Otherwise, selects a set of proteins filtered based on parameters supplied.
  |      

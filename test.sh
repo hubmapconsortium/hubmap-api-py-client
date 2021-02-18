@@ -20,6 +20,7 @@ else
   for CLASS in Client external.ResultsSet external.ResultsList; do
     echo "Docs up-to-date for $CLASS?"
     CMD="python -m pydoc hubmap_api_py_client.$CLASS"
+    echo "Running: $CMD"
     TARGET="README-$CLASS.txt"
     diff $TARGET <($CMD) || die "To update: $CMD > $TARGET"
   done
