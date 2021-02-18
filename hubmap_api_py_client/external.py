@@ -156,16 +156,29 @@ def _create_subclass(output_type):
 
 def _add_method(output_type, ResultsSetSubclass, doc):
     method_name = f'select_{output_type}s'
-    method = (
-        lambda self, where=None, has=None,
+    lambda_lookup = {
+        'all': lambda self, where=None, has=None,
         genomic_modality=None, p_value=None,
         logical_operator=None:
         self._query(
             input_type=where, output_type=output_type, has=has,
             genomic_modality=genomic_modality, p_value=p_value,
             logical_operator=logical_operator,
-            ResultsSetSubclass=ResultsSetSubclass)
-    )
+            ResultsSetSubclass=ResultsSetSubclass),
+        'no_p': lambda self, where=None, has=None,
+        genomic_modality=None,
+        logical_operator=None:
+        self._query(
+            input_type=where, output_type=output_type, has=has,
+            genomic_modality=genomic_modality,
+            logical_operator=logical_operator,
+            ResultsSetSubclass=ResultsSetSubclass),
+        'where_has': lambda self, where=None, has=None:
+        self._query(
+            input_type=where, output_type=output_type, has=has,
+            ResultsSetSubclass=ResultsSetSubclass),
+    }
+    method = lambda_lookup['all']
     method.__doc__ = doc
     setattr(ExternalClient, method_name, method)
 
