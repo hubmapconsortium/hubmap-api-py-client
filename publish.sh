@@ -21,6 +21,7 @@ rm -rf dist/
 
 python3 setup.py sdist bdist_wheel
 python3 -m twine upload \
+  --verbose \
   --config-file .pypirc \
   --non-interactive \
   dist/*
