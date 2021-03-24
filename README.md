@@ -14,6 +14,9 @@ pip install hubmap-api-py-client
 ```
 
 Find cells with different criteria, and intersect resulting sets:
+```shell
+$ export API_ENDPOINT="https://cells.dev.hubmapconsortium.org/api/
+```
 ```python
 >>> from os import environ
 >>> from hubmap_api_py_client import Client
