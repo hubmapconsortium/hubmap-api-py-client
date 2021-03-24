@@ -1,7 +1,8 @@
 `client.select_cells()`:
 ```python
->>> from hubmap_api_py_client import Client, test_url
->>> client = Client(test_url)
+>>> from os import environ
+>>> from hubmap_api_py_client import Client
+>>> client = Client(environ['API_ENDPOINT'])
 
 >>> all_cells = client.select_cells()
 >>> assert len(all_cells) > 0

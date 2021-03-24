@@ -1,4 +1,5 @@
 0.0.6 - in progress
+- Parameterize api endpoint doctests
 - Move the test endpoint URL into the package, to simplify testing against other endpoints.
 - Only use POST, for simplicity.
 - Use values_included appropriately.

@@ -15,8 +15,9 @@ pip install hubmap-api-py-client
 
 Find cells with different criteria, and intersect resulting sets:
 ```python
->>> from hubmap_api_py_client import Client, test_url
->>> client = Client(test_url)
+>>> from os import environ
+>>> from hubmap_api_py_client import Client
+>>> client = Client(environ['API_ENDPOINT'])
 
 >>> [m for m in dir(client) if m.startswith('select_')]
 ['select_cells', 'select_clusters', 'select_datasets', 'select_genes', 'select_organs', 'select_proteins']
