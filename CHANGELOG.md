@@ -9,6 +9,7 @@
 - Remove `values_type` parameter
 - `ResultsList` supports `[]`
 - Generate pydocs, with accurate kwarg lists..
+- Updating doc tests, adding new query type
 
 0.0.5 - 2021-02-06
 - Support queries for and by dataset

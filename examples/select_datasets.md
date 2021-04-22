@@ -18,7 +18,7 @@
 
 `client.select_datasets(where='cluster', ...)`:
 ```python
->>> cluster_datasets = client.select_datasets(where='cluster', has=['d4493657cde29702c5ed73932da5317c-19'])
+>>> cluster_datasets = client.select_datasets(where='cluster', has=['leiden-UMAP-1ca63edfa35971f475c91d92f4a70cb0-0'])
 >>> assert len(cluster_datasets) > 0
 
 ```

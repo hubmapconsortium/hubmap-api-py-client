@@ -10,7 +10,7 @@
 
 `client.select_clusters(where='gene', ...)`:
 ```python
->>> clusters_with_gene_set = client.select_clusters(where='gene', has=['CASTOR2'], genomic_modality='atac', p_value=0.05)
+>>> clusters_with_gene_set = client.select_clusters(where='gene', has=['CASTOR2'], genomic_modality='rna', p_value=0.05)
 >>> assert len(clusters_with_gene_set) > 0
 
 >>> clusters_with_gene_set.get_list()[0].keys()

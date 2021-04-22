@@ -275,7 +275,7 @@ for output_type, pair in {
         '''
     ),
     'dataset': (
-        'where_has',
+        'no_p',
         '''
         Select a set of datasets. If no params are provided, selects the set of all datasets.
         Otherwise, selects a set of datasets filtered based on parameters supplied.

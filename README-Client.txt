@@ -53,7 +53,7 @@ hubmap_api_py_client.Client = class ExternalClient(builtins.object)
  |      Returns:
  |          ResultsSet
  |  
- |  select_datasets lambda self, where=None, has=None
+ |  select_datasets lambda self, where=None, has=None, genomic_modality=None, logical_operator=None
  |      Select a set of datasets. If no params are provided, selects the set of all datasets.
  |      Otherwise, selects a set of datasets filtered based on parameters supplied.
  |      
