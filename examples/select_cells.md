@@ -26,8 +26,8 @@ dict_keys(['CASTOR2'])
 
 `client.select_cells(where='organ', ...)`:
 ```python
->>> cells_in_kidney = client.select_cells(where='organ', has=['Large Intestine'])
->>> assert len(cells_in_kidney) > 0
+>>> cells_in_li = client.select_cells(where='organ', has=['Large Intestine'])
+>>> assert len(cells_in_li) > 0
 
 ```
 
