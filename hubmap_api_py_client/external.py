@@ -150,10 +150,13 @@ class ResultsList():
 
 
 class ResultsListIterator:
-    def __init__(self, results_list):
+    def __init__(self, results_list, window_size=10):
+        # TODO: window_size should be set as high as the server allows
         self.results_list = results_list
         self.results_list_len = len(results_list)
+        self.window_size = window_size
         self.index = 0
+        self.window = []
         self.is_last_window = False
 
     def _reset_window(self):
@@ -161,8 +164,7 @@ class ResultsListIterator:
             raise StopIteration()
         if self.is_last_window:
             raise StopIteration()
-        window_size = 10  # Coordinate with server to set this to maximum size.
-        top = min(self.index + window_size, self.results_list_len)
+        top = min(self.index + self.window_size, self.results_list_len)
         self.window = self.results_list[self.index:top]
         self.index = top
         self.is_last_window = self.index == self.results_list_len
@@ -170,7 +172,7 @@ class ResultsListIterator:
     def __next__(self):
         if not self.window:
             self._reset_window()
-        return self.window.pop()
+        return self.window.pop(0)
 
 
 def _class_name(output_type):
