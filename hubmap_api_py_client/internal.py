@@ -14,7 +14,8 @@ class InternalClient():
     def hubmap_query(
             self,
             input_type: str, output_type: str, input_set: List[str],
-            genomic_modality: str = None, p_value: float = None, logical_operator: str = None):
+            genomic_modality: str = None, p_value: float = None, logical_operator: str = None,
+            min_cell_percentage: float = None):
         '''
         This function takes query parameters and returns a query set token.
         '''
@@ -24,7 +25,8 @@ class InternalClient():
             'input_set': input_set,
             'genomic_modality': genomic_modality,
             'p_value': p_value,
-            'logical_operator': logical_operator
+            'logical_operator': logical_operator,
+            'min_cell_percentage': min_cell_percentage
         }
         return self._post_and_get_handle(request_url, request_dict)
 

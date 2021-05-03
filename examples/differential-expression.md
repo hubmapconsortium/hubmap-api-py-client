@@ -5,7 +5,7 @@ Find genes differentially expressed by the kidney at significance level 0.05:
 >>> client = Client(environ['API_ENDPOINT'])
 
 >>> li_genes = client.select_genes(where='organ', has=['Large Intestine'], genomic_modality='rna', p_value=0.05)
->>> li_genes_details = kidney_genes.get_list()[0:10]
+>>> li_genes_details = li_genes.get_list()[0:10]
 >>> li_genes_details[0].keys()
 dict_keys(['gene_symbol', 'go_terms'])
 
