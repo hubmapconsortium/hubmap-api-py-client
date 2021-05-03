@@ -14,6 +14,8 @@ hubmap_api_py_client.external.ResultsList = class ResultsList(builtins.object)
  |      Do not call the constructor directly:
  |      Instead use the get_list method of ResultsSet.
  |  
+ |  __iter__(self)
+ |  
  |  __len__(self)
  |  
  |  __repr__(self)
