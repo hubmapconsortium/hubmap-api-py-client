@@ -1,6 +1,7 @@
 ```python
->>> from hubmap_api_py_client import Client, test_url
->>> client = Client(test_url)
+>>> from os import environ
+>>> from hubmap_api_py_client import Client
+>>> client = Client(environ['API_ENDPOINT'])
 
 >>> kidney_genes = client.select_genes(where='organ', has=['Kidney'], genomic_modality='rna', p_value=0.05)
 >>> kidney_cells = client.select_cells(where='organ', has=['Kidney'])
