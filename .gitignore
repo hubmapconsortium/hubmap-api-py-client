@@ -9,3 +9,7 @@ hubmap_api_py_client.egg-info/
 **/__pycache__
 .vscode/
 **/.DS_Store
+
+# Environments
+venv/
+env/
