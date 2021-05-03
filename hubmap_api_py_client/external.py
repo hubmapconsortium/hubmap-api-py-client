@@ -150,7 +150,7 @@ class ResultsList():
 
 
 class ResultsListIterator:
-    def __init__(self, results_list, window_size=10):
+    def __init__(self, results_list, window_size=100000):
         # TODO: window_size should be set as high as the server allows
         self.results_list = results_list
         self.results_list_len = len(results_list)
