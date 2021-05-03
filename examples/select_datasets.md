@@ -24,3 +24,15 @@
 >>> assert len(cluster_datasets) > 0
 
 ```
+
+`client.select_datasets(where='gene', ...)`:
+```python
+>>> gene_datasets = client.select_datasets(where='gene', has=['VIM > 1'], genomic_modality='rna', min_cell_percentage=10.0)
+>>> assert len(cluster_datasets) > 0
+
+```
+
+`client.select_datasets(where='protein', ...)`:
+```python
+>>> protein_datasets = client.select_datasets(where='protein', has=['Ki67 > 10000'], min_cell_percentage=10.0)
+>>> assert len(protein_datasets) > 0

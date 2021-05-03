@@ -10,6 +10,7 @@
 - `ResultsList` supports `[]`
 - Generate pydocs, with accurate kwarg lists..
 - Updating doc tests, adding new query type
+- Add new parameter to enable gene->dataset and protein->dataset queries
 
 0.0.5 - 2021-02-06
 - Support queries for and by dataset
