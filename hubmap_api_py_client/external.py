@@ -132,6 +132,9 @@ class ResultsList():
             return self._get(limit, offset)
         raise TypeError()
 
+    def __iter__(self):
+        return ResultsListIterator(self)
+
     def _get(self, limit, offset):
         if not self.values_included and not self.sort_by:
             return self.results_set.client.set_list_evaluation(
@@ -144,6 +147,32 @@ class ResultsList():
             limit=limit, offset=offset,
             sort_by=self.sort_by,
             values_included=self.values_included)
+
+
+class ResultsListIterator:
+    def __init__(self, results_list, window_size=100000):
+        # TODO: window_size should be set as high as the server allows
+        self.results_list = results_list
+        self.results_list_len = len(results_list)
+        self.window_size = window_size
+        self.index = 0
+        self.window = []
+        self.is_last_window = False
+
+    def _reset_window(self):
+        if self.index == self.results_list_len:
+            raise StopIteration()
+        if self.is_last_window:
+            raise StopIteration()
+        top = min(self.index + self.window_size, self.results_list_len)
+        self.window = self.results_list[self.index:top]
+        self.index = top
+        self.is_last_window = self.index == self.results_list_len
+
+    def __next__(self):
+        if not self.window:
+            self._reset_window()
+        return self.window.pop(0)
 
 
 def _class_name(output_type):
