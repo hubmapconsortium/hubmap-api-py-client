@@ -4,8 +4,8 @@ Providing a list to `has` is the same as using `|` for the union:
 >>> from hubmap_api_py_client import Client
 >>> client = Client(environ['API_ENDPOINT'])
 
->>> a_uuid = '68159e4bd6a2cea1cd66e8f3050cfcb7'
->>> b_uuid = 'e8d642084fc5ec8b5d348ebab96a4b22'
+>>> a_uuid = client.select_datasets().get_list()[0]['uuid']
+>>> b_uuid = client.select_datasets().get_list()[1]['uuid']
 
 >>> a_cells = client.select_cells(where='dataset', has=[a_uuid])
 >>> b_cells = client.select_cells(where='dataset', has=[b_uuid])
@@ -30,9 +30,10 @@ Providing a list to `has` is the same as using `|` for the union:
 
 Intersection and difference are also available:
 ```python
->>> vim_cells = client.select_cells(where='gene', has=['VIM > 0.5'], genomic_modality='rna')
->>> a_b_vim_cells = a_b_cells & vim_cells
->>> a_b_no_vim_cells = a_b_cells - vim_cells
->>> assert len(a_b_vim_cells) + len(a_b_no_vim_cells) == len_a_b_cells
+>>> gene_symbol = client.select_genes().get_list()[10]['gene_symbol']
+>>> gene_cells = client.select_cells(where='gene', has=[f'{gene_symbol} > 0.5'], genomic_modality='rna')
+>>> a_b_gene_cells = a_b_cells & gene_cells
+>>> a_b_no_gene_cells = a_b_cells - gene_cells
+>>> assert len(a_b_gene_cells) + len(a_b_no_gene_cells) == len_a_b_cells
 
 ```

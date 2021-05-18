@@ -11,19 +11,21 @@
 
 `client.select_clusters(where='gene', ...)`:
 ```python
->>> clusters_with_gene_set = client.select_clusters(where='gene', has=['CASTOR2'], genomic_modality='rna', p_value=0.05)
+>>> gene_symbol = client.select_genes().get_list()[0]['gene_symbol']
+>>> clusters_with_gene_set = client.select_clusters(where='gene', has=[gene_symbol], genomic_modality='rna', p_value=0.05)
 >>> assert len(clusters_with_gene_set) > 0
 >>> clusters_with_gene_set.get_list()[0].keys()
 dict_keys(['cluster_method', 'cluster_data', 'grouping_name', 'dataset'])
 
->>> clusters_with_gene_set.get_list(values_included=['CASTOR2'])[0]['values'].keys()
-dict_keys(['CASTOR2'])
+>>> cluster_keys = clusters_with_gene_set.get_list(values_included=[gene_symbol])[0]['values'].keys()
+>>> assert len(cluster_keys) == 1 and gene_symbol in cluster_keys
 
 ```
 
 `client.select_clusters(where='dataset', ...)`:
 ```python
->>> clusters_in_dataset = client.select_clusters(where='dataset', has=['d4493657cde29702c5ed73932da5317c'])
+>>> dataset_uuid = client.select_datasets().get_list()[2]['uuid']
+>>> clusters_in_dataset = client.select_clusters(where='dataset', has=[dataset_uuid])
 >>> assert len(clusters_in_dataset) > 0
 
 ```

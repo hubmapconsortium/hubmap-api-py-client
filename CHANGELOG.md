@@ -1,6 +1,7 @@
 0.0.7 - in progress
 - Support iteration over result sets.
 - Add python environments to gitignore.
+- Running tests on client test server
 
 0.0.6 - 2021-03-24
 - Parameterize api endpoint doctests.
