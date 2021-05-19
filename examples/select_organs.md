@@ -16,7 +16,7 @@
 >>> assert len(organs_with_gene) > 0
 
 >>> gene_keys = organs_with_gene.get_list(values_included=[gene_symbol])[0]['values'].keys()
->>> assert len(gene_keys) == 1 and gene_symbol in gene_keys
+>>> assert list(gene_keys) == [gene_symbol]
 
 ```
 

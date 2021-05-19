@@ -18,7 +18,7 @@
 
 >>> cells_with_gene_details_with_values = cells_with_gene.get_list(values_included=[gene_symbol])
 >>> cells_keys = cells_with_gene_details_with_values[0]['values'].keys()
->>> assert len(cells_keys) == 1 and gene_symbol in cells_keys
+>>> assert list(cells_keys) == [gene_symbol]
 
 >>> gene_symbol = client.select_genes().get_list()[10]['gene_symbol']
 >>> cells_with_gene_atac = client.select_cells(where='gene', has=[gene_symbol], genomic_modality='atac')
@@ -42,7 +42,7 @@
 
 >>> protein_cells_details_with_values = protein_cells.get_list(values_included=[protein_name])[0:10]
 >>> protein_keys = protein_cells_details_with_values[0]['values'].keys()
->>> assert len(protein_keys) == 1 and protein_name in protein_keys
+>>> assert list(protein_keys) == [protein_name]
 
 ```
 

@@ -23,7 +23,7 @@ dict_keys(['gene_symbol', 'go_terms'])
 dict_keys(['gene_symbol', 'go_terms', 'values'])
 
 >>> organ_keys = organ_genes_details_with_values[0]['values'].keys()
->>> assert len(organ_keys) == 1 and organ_name in organ_keys
+>>> assert list(organ_keys) == [organ_name]
 
 ```
 

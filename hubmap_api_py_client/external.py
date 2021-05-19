@@ -207,7 +207,6 @@ def _add_method(output_type, ResultsSetSubclass, args_type, doc):
         self._query(
             input_type=where, output_type=output_type, has=has,
             genomic_modality=genomic_modality,
-            logical_operator=logical_operator,
             min_cell_percentage=min_cell_percentage,
             ResultsSetSubclass=ResultsSetSubclass),
         'where_has': lambda self, where=None, has=None:
