@@ -53,16 +53,19 @@ hubmap_api_py_client.Client = class ExternalClient(builtins.object)
  |      Returns:
  |          ResultsSet
  |  
- |  select_datasets lambda self, where=None, has=None
+ |  select_datasets lambda self, where=None, has=None, genomic_modality=None, logical_operator=None, min_cell_percentage=None
  |      Select a set of datasets. If no params are provided, selects the set of all datasets.
  |      Otherwise, selects a set of datasets filtered based on parameters supplied.
  |      
  |      Args:
  |          where (str): The type of entity for which identifiers are supplied as input to query.
  |              Must be one of ["dataset", "cell", "cluster"].
- |          has (List[str]): A list of entity identifiers (dataset_uuids, etc) supplied as input to
- |              the query.
- |      
+ |          has (List[str]): A list of entity identifiers or expressions (dataset_uuids, etc) supplied as
+ |              input to the query.
+ |          genomic_modality (str): Modality to consider in quantitative queries.
+ |              Required for queries in which "where" is "gene". Must be one of ["rna", "atac"].
+ |          min_cell_percentage (float): Minimum percentage of cells which must satisfy the quantitative
+ |              expression in "has"
  |      Returns:
  |          ResultsSet
  |  

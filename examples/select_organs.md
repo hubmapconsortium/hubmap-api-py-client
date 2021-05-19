@@ -11,19 +11,19 @@
 
 `client.select_organs(where='gene', ...)`:
 ```python
->>> organs_with_gene = client.select_organs(where='gene', has=['CHN2'], genomic_modality='atac', p_value=0.05)
+>>> gene_symbol = client.select_genes().get_list()[10]['gene_symbol']
+>>> organs_with_gene = client.select_organs(where='gene', has=[gene_symbol], genomic_modality='atac', p_value=0.05)
 >>> assert len(organs_with_gene) > 0
 
->>> organs_with_gene.get_list(values_included=['CASTOR2'])[0]['values'].keys()
-dict_keys(['CASTOR2'])
+>>> gene_keys = organs_with_gene.get_list(values_included=[gene_symbol])[0]['values'].keys()
+>>> assert list(gene_keys) == [gene_symbol]
 
 ```
 
 `client.select_organs(where='cell', ...)`:
 ```python
->>> from hubmap_cell_id_gen_py import get_sequencing_cell_id
->>> sequencing_cell_id = get_sequencing_cell_id('210d118a14c8624b6bb9610a9062656e','AAACAACGAAACGTGG')
->>> organs_with_cell = client.select_organs(where='cell', has=[sequencing_cell_id])
+>>> cell_id = client.select_cells().get_list()[0]['cell_id']
+>>> organs_with_cell = client.select_organs(where='cell', has=[cell_id])
 >>> assert len(organs_with_cell) > 0
 
 ```

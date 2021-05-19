@@ -19,12 +19,12 @@ class ExternalClient():
     def _query(
             self,
             input_type=None, output_type=None, has=None,
-            genomic_modality=None, p_value=None, logical_operator=None,
+            genomic_modality=None, p_value=None, logical_operator=None, min_cell_percentage=None,
             ResultsSetSubclass=None):
         if not isinstance(has, list) and input_type is not None:
             raise TypeError(f'"has" parameter must be a list, not {has}')
         handle = self.client.hubmap_query(input_type, output_type, has, genomic_modality,
-                                          p_value, logical_operator)
+                                          p_value, logical_operator, min_cell_percentage)
         return ResultsSetSubclass(
             self.client, handle,
             input_type=input_type, output_type=output_type,
@@ -202,6 +202,13 @@ def _add_method(output_type, ResultsSetSubclass, args_type, doc):
             genomic_modality=genomic_modality,
             logical_operator=logical_operator,
             ResultsSetSubclass=ResultsSetSubclass),
+        'min_cells': lambda self, where=None, has=None,
+            genomic_modality=None, logical_operator=None, min_cell_percentage=None:
+        self._query(
+            input_type=where, output_type=output_type, has=has,
+            genomic_modality=genomic_modality,
+            min_cell_percentage=min_cell_percentage,
+            ResultsSetSubclass=ResultsSetSubclass),
         'where_has': lambda self, where=None, has=None:
         self._query(
             input_type=where, output_type=output_type, has=has,
@@ -304,7 +311,7 @@ for output_type, pair in {
         '''
     ),
     'dataset': (
-        'where_has',
+        'min_cells',
         '''
         Select a set of datasets. If no params are provided, selects the set of all datasets.
         Otherwise, selects a set of datasets filtered based on parameters supplied.
@@ -312,9 +319,12 @@ for output_type, pair in {
         Args:
             where (str): The type of entity for which identifiers are supplied as input to query.
                 Must be one of ["dataset", "cell", "cluster"].
-            has (List[str]): A list of entity identifiers (dataset_uuids, etc) supplied as input to
-                the query.
-
+            has (List[str]): A list of entity identifiers or expressions (dataset_uuids, etc) supplied as
+                input to the query.
+            genomic_modality (str): Modality to consider in quantitative queries.
+                Required for queries in which "where" is "gene". Must be one of ["rna", "atac"].
+            min_cell_percentage (float): Minimum percentage of cells which must satisfy the quantitative
+                expression in "has"
         Returns:
             ResultsSet
         ''',

@@ -25,12 +25,13 @@ $ export API_ENDPOINT='https://cells.dev.hubmapconsortium.org/api/'
 >>> [m for m in dir(client) if m.startswith('select_')]
 ['select_cells', 'select_clusters', 'select_datasets', 'select_genes', 'select_organs', 'select_proteins']
 
->>> cells_with_vim = client.select_cells(where='gene', has=['VIM > 0.5'], genomic_modality='rna')
->>> assert len(cells_with_vim) > 0
+>>> gene_symbol = client.select_genes().get_list()[0]['gene_symbol']
+>>> cells_with_gene = client.select_cells(where='gene', has=[f'{gene_symbol} > 0.5'], genomic_modality='rna')
+>>> assert len(cells_with_gene) > 0
 
 # Select cells from the datasets with the following UUIDs:
->>> dataset_a_uuid = '68159e4bd6a2cea1cd66e8f3050cfcb7'
->>> dataset_b_uuid = 'e8d642084fc5ec8b5d348ebab96a4b22'
+>>> dataset_a_uuid = client.select_datasets().get_list()[0]['uuid']
+>>> dataset_b_uuid = client.select_datasets().get_list()[1]['uuid']
 >>> cells_in_a_len = len(client.select_cells(where='dataset', has=[dataset_a_uuid]))
 >>> cells_in_b_len = len(client.select_cells(where='dataset', has=[dataset_b_uuid]))
 >>> cells_in_datasets = client.select_cells(where='dataset', has=[dataset_a_uuid, dataset_b_uuid])
@@ -39,15 +40,15 @@ $ export API_ENDPOINT='https://cells.dev.hubmapconsortium.org/api/'
 >>> assert cells_in_datasets_len == cells_in_a_len + cells_in_b_len
 
 # Combine criteria with intersection:
->>> cells_with_vim_in_datasets = cells_with_vim & cells_in_datasets
->>> assert len(cells_with_vim_in_datasets) > 10
+>>> cells_with_gene_in_datasets = cells_with_gene & cells_in_datasets
+>>> assert len(cells_with_gene_in_datasets) > 0
 
 # Get a list; should run quickly:
->>> cell_list = cells_with_vim_in_datasets.get_list()
+>>> cell_list = cells_with_gene_in_datasets.get_list()
 
 >>> cells = cell_list[0:10]
->>> assert len(cells) == 10
->>> assert cells[0].keys() == {'cell_id', 'modality', 'dataset', 'organ', 'clusters', 'protein_mean', 'protein_total', 'protein_covar'}
+>>> assert len(cells) > 0
+>>> assert cells[0].keys() == {'cell_id', 'modality', 'dataset', 'organ', 'clusters'}
 
 ```
 

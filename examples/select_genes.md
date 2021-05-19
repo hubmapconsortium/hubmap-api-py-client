@@ -11,18 +11,19 @@
 
 `client.select_genes(where='organ', ...)`:
 ```python
->>> kidney_genes = client.select_genes(where='organ', has=['Kidney'], genomic_modality='rna', p_value=0.05)
+>>> organ_name = client.select_organs().get_list()[1]['grouping_name']
+>>> organ_genes = client.select_genes(where='organ', has=[organ_name], genomic_modality='rna', p_value=0.05)
 
->>> kidney_genes_details = kidney_genes.get_list()
->>> kidney_genes_details[0].keys()
+>>> organ_genes_details = organ_genes.get_list()
+>>> organ_genes_details[0].keys()
 dict_keys(['gene_symbol', 'go_terms'])
 
->>> kidney_genes_details_with_values = kidney_genes.get_list(values_included=['Kidney'])
->>> kidney_genes_details_with_values[0].keys()
+>>> organ_genes_details_with_values = organ_genes.get_list(values_included=[organ_name])
+>>> organ_genes_details_with_values[0].keys()
 dict_keys(['gene_symbol', 'go_terms', 'values'])
 
->>> kidney_genes_details_with_values[0]['values'].keys()
-dict_keys(['Kidney'])
+>>> organ_keys = organ_genes_details_with_values[0]['values'].keys()
+>>> assert list(organ_keys) == [organ_name]
 
 ```
 

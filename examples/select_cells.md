@@ -12,39 +12,44 @@
 
 `client.select_cells(where='gene', ...)`:
 ```python
->>> cells_with_gene = client.select_cells(where='gene', has=['CASTOR2 > 1'], genomic_modality='rna')
+>>> gene_symbol = client.select_genes().get_list()[0]['gene_symbol']
+>>> cells_with_gene = client.select_cells(where='gene', has=[f'{gene_symbol} > 1'], genomic_modality='rna')
 >>> assert len(cells_with_gene) > 0
 
->>> cells_with_gene_details_with_values = cells_with_gene.get_list(values_included=['CASTOR2'])
->>> cells_with_gene_details_with_values[0]['values'].keys()
-dict_keys(['CASTOR2'])
+>>> cells_with_gene_details_with_values = cells_with_gene.get_list(values_included=[gene_symbol])
+>>> cells_keys = cells_with_gene_details_with_values[0]['values'].keys()
+>>> assert list(cells_keys) == [gene_symbol]
 
->>> cells_with_gene_atac = client.select_cells(where='gene', has=['CHN2'], genomic_modality='atac')
+>>> gene_symbol = client.select_genes().get_list()[10]['gene_symbol']
+>>> cells_with_gene_atac = client.select_cells(where='gene', has=[gene_symbol], genomic_modality='atac')
 >>> assert len(cells_with_gene_atac) > 0
 
 ```
 
 `client.select_cells(where='organ', ...)`:
 ```python
->>> cells_in_kidney = client.select_cells(where='organ', has=['Kidney'])
->>> assert len(cells_in_kidney) > 0
+>>> organ_name = client.select_organs().get_list()[0]['grouping_name']
+>>> cells_in_organ = client.select_cells(where='organ', has=[organ_name])
+>>> assert len(cells_in_organ) > 0
 
 ```
 
 `client.select_cells(where='protein', ...)`:
 ```python
->>> ki67_cells = client.select_cells(where='protein', has=['Ki67>5000'])
->>> assert len(ki67_cells) > 0
+>>> protein_name = client.select_proteins().get_list()[0]['protein_id']
+>>> protein_cells = client.select_cells(where='protein', has=[f'{protein_name}>5000'])
+>>> assert len(protein_cells) > 0
 
->>> ki67_cells_details_with_values = ki67_cells.get_list(values_included=['Ki67', 'CD20'])[0:10]
->>> ki67_cells_details_with_values[0]['values'].keys()
-dict_keys(['CD20', 'Ki67'])
+>>> protein_cells_details_with_values = protein_cells.get_list(values_included=[protein_name])[0:10]
+>>> protein_keys = protein_cells_details_with_values[0]['values'].keys()
+>>> assert list(protein_keys) == [protein_name]
 
 ```
 
 `client.select_cells(where='dataset', ...)`:
 ```python
->>> cells_in_dataset = client.select_cells(where='dataset', has=['68159e4bd6a2cea1cd66e8f3050cfcb7'])
+>>> dataset_uuid = client.select_datasets().get_list()[0]['uuid']
+>>> cells_in_dataset = client.select_cells(where='dataset', has=[dataset_uuid])
 >>> assert len(cells_in_dataset) > 0
 
 ```
