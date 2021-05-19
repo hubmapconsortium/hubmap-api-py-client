@@ -18,7 +18,7 @@
 dict_keys(['cluster_method', 'cluster_data', 'grouping_name', 'dataset'])
 
 >>> cluster_keys = clusters_with_gene_set.get_list(values_included=[gene_symbol])[0]['values'].keys()
->>> assert list(cluster_keys) == gene_symbol
+>>> assert list(cluster_keys) == [gene_symbol]
 
 ```
 
