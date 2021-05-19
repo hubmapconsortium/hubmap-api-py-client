@@ -4,8 +4,9 @@ Providing a list to `has` is the same as using `|` for the union:
 >>> from hubmap_api_py_client import Client
 >>> client = Client(environ['API_ENDPOINT'])
 
->>> a_uuid = client.select_datasets().get_list()[0]['uuid']
->>> b_uuid = client.select_datasets().get_list()[1]['uuid']
+>>> datasets = client.select_datasets().get_list()
+>>> a_uuid = datasets[0]['uuid']
+>>> b_uuid = datasets[1]['uuid']
 
 >>> a_cells = client.select_cells(where='dataset', has=[a_uuid])
 >>> b_cells = client.select_cells(where='dataset', has=[b_uuid])
