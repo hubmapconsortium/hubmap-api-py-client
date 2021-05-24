@@ -1,11 +1,15 @@
-0.0.7 - in progress
-- Support iteration over result sets.
-- Add python environments to gitignore.
+## 0.0.9 - in progress
+
+## 0.0.8 - 2021-05-24
 - Updating doc tests, adding new query type
 - Add new parameter to enable gene->dataset and protein->dataset queries
 - Running tests on client test server
 
-0.0.6 - 2021-03-24
+## 0.0.7 - 2021-05-03
+- Support iteration over result sets.
+- Add python environments to gitignore.
+
+## 0.0.6 - 2021-03-24
 - Parameterize api endpoint doctests.
 - Only use POST, for simplicity.
 - Use values_included appropriately.
@@ -17,7 +21,7 @@
 - `ResultsList` supports `[]`
 - Generate pydocs, with accurate kwarg lists..
 
-0.0.5 - 2021-02-06
+## 0.0.5 - 2021-02-06
 - Support queries for and by dataset
 - Support queries for all entities by identifier
 - Examples of query by cluster
@@ -28,7 +32,7 @@
 - Expanding table in readme
 - Fewer preflight checks on requests: These are a maintenance burden.
 
-0.0.4 - 2021-01-11
+## 0.0.4 - 2021-01-11
 - Remove complement magic method, and add difference.
 - Require "has" param to be list, and update examples.
 - Add subtypes of ResultsSet, and check that operands on set operations match.
@@ -39,11 +43,11 @@
 - Improve input validation logic
 - Use slice syntax to get list
 
-0.0.3
+## 0.0.3
 - Change to more fluent SDK: `select_TARGET(where='SOURCE', has='CRITERIA', ...)`
 
-0.0.2
+## 0.0.2
 - OO interface: Fewer details need to be repeated across methods, because they are kept in the object.
 
-0.0.1
+## 0.0.1
 - Basic python interface: methods mirror API hits.
