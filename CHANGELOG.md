@@ -1,9 +1,10 @@
-## 0.0.9 - in progress
-
-## 0.0.8 - 2021-05-24
+## 0.0.9 - 2021-05-25
 - Updating doc tests, adding new query type
 - Add new parameter to enable gene->dataset and protein->dataset queries
 - Running tests on client test server
+
+## 0.0.8 - 2021-05-24
+- Version 8 was skipped
 
 ## 0.0.7 - 2021-05-03
 - Support iteration over result sets.
