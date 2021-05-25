@@ -1,0 +1,77 @@
+::group::flake8
+::endgroup::
+::group::pydoc
+Docs up-to-date for Client?
+Running: python -m pydoc hubmap_api_py_client.Client
+Docs up-to-date for external.ResultsSet?
+Running: python -m pydoc hubmap_api_py_client.external.ResultsSet
+Docs up-to-date for external.ResultsList?
+Running: python -m pydoc hubmap_api_py_client.external.ResultsList
+::endgroup::
+::group::pytest
+PYTHONPATH="${PYTHONPATH}:hubmap_api_py_client" pytest --numprocesses auto -vv --doctest-glob="*.md"
+============================= test session starts ==============================
+platform linux -- Python 3.7.6, pytest-6.2.2, py-1.10.0, pluggy-0.13.1 -- /home/sean/anaconda3/bin/python
+cachedir: .pytest_cache
+hypothesis profile 'default' -> database=DirectoryBasedExampleDatabase('/home/sean/Documents/hubmap-api-py-client/.hypothesis/examples')
+rootdir: /home/sean/Documents/hubmap-api-py-client
+plugins: hypothesis-5.5.4, doctestplus-0.5.0, astropy-header-0.1.2, openfiles-0.4.0, arraydiff-0.3, remotedata-0.3.2, xdist-2.2.1, forked-1.3.0
+gw0 I / gw1 I / gw2 I / gw3 I
+[gw0] linux Python 3.7.6 cwd: /home/sean/Documents/hubmap-api-py-client
+[gw1] linux Python 3.7.6 cwd: /home/sean/Documents/hubmap-api-py-client
+[gw2] linux Python 3.7.6 cwd: /home/sean/Documents/hubmap-api-py-client
+[gw3] linux Python 3.7.6 cwd: /home/sean/Documents/hubmap-api-py-client
+[gw1] Python 3.7.6 (default, Jan  8 2020, 19:59:22)  -- [GCC 7.3.0]
+[gw0] Python 3.7.6 (default, Jan  8 2020, 19:59:22)  -- [GCC 7.3.0]
+[gw2] Python 3.7.6 (default, Jan  8 2020, 19:59:22)  -- [GCC 7.3.0]
+[gw3] Python 3.7.6 (default, Jan  8 2020, 19:59:22)  -- [GCC 7.3.0]
+gw0 [11] / gw1 [11] / gw2 [11] / gw3 [11]
+
+scheduling tests via LoadScheduling
+
+examples/repr.md::repr.md 
+README.md::README.md 
+examples/differential-expression.md::differential-expression.md 
+examples/error-handling.md::error-handling.md 
+[gw2] [  9%] PASSED examples/error-handling.md::error-handling.md 
+[gw0] [ 18%] PASSED examples/differential-expression.md::differential-expression.md 
+examples/select_datasets.md::select_datasets.md 
+examples/select_clusters.md::select_clusters.md 
+[gw3] [ 27%] PASSED examples/repr.md::repr.md 
+examples/select_genes.md::select_genes.md 
+[gw2] [ 36%] PASSED examples/select_datasets.md::select_datasets.md 
+examples/select_organs.md::select_organs.md 
+[gw3] [ 45%] PASSED examples/select_genes.md::select_genes.md 
+examples/set-operations.md::set-operations.md 
+[gw2] [ 54%] PASSED examples/select_organs.md::select_organs.md 
+[gw0] [ 63%] FAILED examples/select_clusters.md::select_clusters.md 
+examples/select_proteins.md::select_proteins.md 
+[gw0] [ 72%] PASSED examples/select_proteins.md::select_proteins.md 
+[gw1] [ 81%] PASSED README.md::README.md 
+examples/select_cells.md::select_cells.md 
+[gw3] [ 90%] PASSED examples/set-operations.md::set-operations.md 
+[gw1] [100%] PASSED examples/select_cells.md::select_cells.md 
+
+=================================== FAILURES ===================================
+_________________________ [doctest] select_clusters.md _________________________
+[gw0] linux -- Python 3.7.6 /home/sean/anaconda3/bin/python
+005 
+006 >>> all_clusters = client.select_clusters()
+007 >>> assert len(all_clusters) > 0
+008 
+009 ```
+010 
+011 `client.select_clusters(where='gene', ...)`:
+012 ```python
+013 >>> clusters_with_gene_set = client.select_clusters(where='gene', has=['CASTOR2'], genomic_modality='rna', p_value=0.05)
+014 >>> assert len(clusters_with_gene_set) > 0
+UNEXPECTED EXCEPTION: AssertionError()
+Traceback (most recent call last):
+  File "/home/sean/anaconda3/lib/python3.7/doctest.py", line 1329, in __run
+    compileflags, 1), test.globs)
+  File "<doctest select_clusters.md[5]>", line 1, in <module>
+AssertionError
+/home/sean/Documents/hubmap-api-py-client/examples/select_clusters.md:14: UnexpectedException
+=========================== short test summary info ============================
+FAILED examples/select_clusters.md::select_clusters.md
+======================== 1 failed, 10 passed in 10.15s =========================
