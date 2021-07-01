@@ -31,6 +31,20 @@ class ExternalClient():
             query=has
         )
 
+    def get_max_value(self, modality=None, var_id=None):
+        """
+        Gets the maximum value for a given modality, or a given gene/protein in a given modality.
+        Args:
+            modality (str): Required. The data modality for which the maximum value will be returned.
+                Must be one of ['atac', 'codex', 'rna'].
+            var_id (str): Optional. A gene_symbol or protein_id.  If provided, the maximum value for that
+                gene or protein in the specified modality will be returned
+
+        Returns:
+            int
+        """
+        return self.client.get_maximum_value(modality, var_id)
+
 
 class ResultsSet():
     '''
