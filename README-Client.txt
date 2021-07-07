@@ -15,6 +15,17 @@ hubmap_api_py_client.Client = class ExternalClient(builtins.object)
  |  __repr__(self)
  |      Return repr(self).
  |  
+ |  get_max_value(self, modality=None, var_id=None)
+ |      Gets the maximum value for a given modality, or a given gene/protein in a given modality.
+ |      Args:
+ |          modality (str): Required. The data modality for which the maximum value will be returned.
+ |              Must be one of ['atac', 'codex', 'rna'].
+ |          var_id (str): Optional. A gene_symbol or protein_id.  If provided, the maximum value for that
+ |              gene or protein in the specified modality will be returned
+ |      
+ |      Returns:
+ |          int
+ |  
  |  select_cells lambda self, where=None, has=None, genomic_modality=None, logical_operator=None
  |      Select a set of cells. If no params are provided, selects the set of all cells.
  |      Otherwise, selects a set of cells filtered based on parameters supplied.

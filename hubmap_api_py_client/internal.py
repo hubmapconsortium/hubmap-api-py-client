@@ -99,11 +99,11 @@ class InternalClient():
         }
         return self._post_and_get_results(request_url, request_dict)
 
-    def get_maximum_value(self, modality:str, var_id:str):
+    def get_maximum_value(self, modality: str, var_id: str):
         request_url = self.base_url + "maxvalue/"
         request_dict = {
-            "modality":modality,
-            "var_id":var_id,
+            "modality": modality,
+            "var_id": var_id,
         }
         return self._post_and_get_value(request_url, request_dict)
 
@@ -120,4 +120,4 @@ class InternalClient():
 
     def _post_and_get_value(self, url, request_dict):
         response = self._post_and_get_results(url, request_dict)
-        return response[0]['maximum_value']
+        return response['maximum_value']

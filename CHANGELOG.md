@@ -1,3 +1,6 @@
+## 0.1.0 - In progress
+- Adding new functionality for getting max value of data type (and optionally gene/protein)
+
 ## 0.0.9 - 2021-05-25
 - Updating doc tests, adding new query type
 - Add new parameter to enable gene->dataset and protein->dataset queries
