@@ -1,4 +1,4 @@
-## 0.1.0 - In progress
+## 0.0.10 - in progress
 - Adding new functionality for getting max value of data type (and optionally gene/protein)
 
 ## 0.0.9 - 2021-05-25
@@ -6,7 +6,7 @@
 - Add new parameter to enable gene->dataset and protein->dataset queries
 - Running tests on client test server
 
-## 0.0.8 - 2021-05-24
+## 0.0.8
 - Version 8 was skipped
 
 ## 0.0.7 - 2021-05-03
