@@ -25,17 +25,6 @@ $ export API_ENDPOINT='https://cells.dev.hubmapconsortium.org/api/'
 >>> [m for m in dir(client) if m.startswith('select_')]
 ['select_cells', 'select_clusters', 'select_datasets', 'select_genes', 'select_organs', 'select_proteins']
 
->>> max_values_dict = {'rna':38.0, 'atac':0.31372055411338806, 'codex':40600.29881656805}
-
->>> max_rna_value = client.get_max_value('rna')
->>> assert max_rna_value == max_values_dict['rna']
-
->>> max_atac_value = client.get_max_value('atac')
->>> assert max_atac_value == max_values_dict['atac']
-
->>> max_codex_value = client.get_max_value('codex')
->>> assert max_codex_value == max_values_dict['codex']
-
 >>> gene_symbol = client.select_genes().get_list()[0]['gene_symbol']
 >>> cells_with_gene = client.select_cells(where='gene', has=[f'{gene_symbol} > 0.5'], genomic_modality='rna')
 >>> assert len(cells_with_gene) > 0
