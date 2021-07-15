@@ -99,6 +99,14 @@ class InternalClient():
         }
         return self._post_and_get_results(request_url, request_dict)
 
+    def get_bounds(self, modality: str, var_id: str):
+        request_url = self.base_url + "bounds/"
+        request_dict = {
+            "modality": modality,
+            "var_id": var_id,
+        }
+        return self._post_and_get_results(request_url, request_dict)
+
     def _post_and_get_results(self, url, request_dict):
         response = requests.post(url, request_dict)
         response_json = response.json()
