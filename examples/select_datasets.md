@@ -44,6 +44,7 @@
 
 `client.select_cells(where='modality', ...)`:
 ```python
->>> datasets_in_modality = client.select_dataset(where='modality', has=['rna'])
+>>> datasets_in_modality = client.select_datasets(where='modality', has=['rna'])
 >>> assert len(datasets_in_modality) > 0
+
 ```

@@ -1,5 +1,6 @@
 ## 0.0.10 - in progress
 - Adding new functionality for getting max value of data type (and optionally gene/protein)
+- Updating documentation and tests to include queries by modality
 
 ## 0.0.9 - 2021-05-25
 - Updating doc tests, adding new query type
