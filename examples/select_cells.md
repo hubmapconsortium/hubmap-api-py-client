@@ -53,3 +53,10 @@
 >>> assert len(cells_in_dataset) > 0
 
 ```
+
+`client.select_cells(where='modality', ...)`:
+```python
+>>> cells_in_modality = client.select_cells(where='modality', has=['codex'])
+>>> assert len(cells_in_modality) > 0
+
+```
