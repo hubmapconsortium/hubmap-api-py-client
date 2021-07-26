@@ -39,3 +39,12 @@
 >>> protein_name = client.select_proteins().get_list()[0]['protein_id']
 >>> protein_datasets = client.select_datasets(where='protein', has=[f'{protein_name} > 5000'], min_cell_percentage=5.0)
 >>> assert len(protein_datasets) > 0
+
+```
+
+`client.select_cells(where='modality', ...)`:
+```python
+>>> datasets_in_modality = client.select_datasets(where='modality', has=['rna'])
+>>> assert len(datasets_in_modality) > 0
+
+```
