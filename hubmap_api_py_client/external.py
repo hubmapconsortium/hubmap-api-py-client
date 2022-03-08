@@ -1,6 +1,6 @@
 from hubmap_api_py_client.internal import InternalClient
 
-_default_limit = 1000
+_default_limit = 100000
 
 
 class ExternalClient():
