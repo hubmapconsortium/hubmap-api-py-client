@@ -6,11 +6,8 @@
 >>> client = Client(environ['API_ENDPOINT'])
 
 >>> rna_bounds = client.get_bounds('rna')
->>> print(rna_bounds)
 >>> atac_bounds = client.get_bounds('atac')
->>> print(atac_bounds)
 >>> codex_bounds = client.get_bounds('codex')
->>> print(codex_bounds)
 
 >>> rna_bounds.keys()
 dict_keys(['minimum_value', 'maximum_value'])
