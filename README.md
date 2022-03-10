@@ -25,7 +25,7 @@ $ export API_ENDPOINT='https://cells.dev.hubmapconsortium.org/api/'
 >>> [m for m in dir(client) if m.startswith('select_')]
 ['select_cells', 'select_clusters', 'select_datasets', 'select_genes', 'select_organs', 'select_proteins']
 
->>> gene_symbol = client.select_genes().get_list()[0]['gene_symbol']
+>>> gene_symbol = client.select_genes(where="modality", has=["rna"]).get_list()[0]['gene_symbol']
 >>> cells_with_gene = client.select_cells(where='gene', has=[f'{gene_symbol} > 0.5'], genomic_modality='rna')
 >>> assert len(cells_with_gene) > 0
 
@@ -66,7 +66,7 @@ Only some types of objects can be retrieved from other types of objects:
 | [`select_cells()`](https://github.com/hubmapconsortium/hubmap-api-py-client/blob/main/examples/select_cells.md)                                                                                                              | ✓         | ✓         |           | ✓         | ✓         | ✓         | ✓         | ✓         |
 | [`select_clusters()`](https://github.com/hubmapconsortium/hubmap-api-py-client/blob/main/examples/select_clusters.md)                                                                                                              | ✓         |           | ✓         | ✓         | ✓ ✩       | ✩         | ✩         |           |
 | [`select_datasets()`](https://github.com/hubmapconsortium/hubmap-api-py-client/blob/main/examples/select_datasets.md)| ✓         | ✓         | ✓         | ✓         |           |✶          |           | ✓         |
-| [`select_genes()`](https://github.com/hubmapconsortium/hubmap-api-py-client/blob/main/examples/select_genes.md)                                                                                                              | ✓         |           | ✓ ✩       |           | ✓         | ✓ ✩       | ✩         |           |
+| [`select_genes()`](https://github.com/hubmapconsortium/hubmap-api-py-client/blob/main/examples/select_genes.md)                                                                                                              | ✓         |           | ✓ ✩       |           | ✓         | ✓ ✩       | ✩         |           | 
 | [`select_organs()`](https://github.com/hubmapconsortium/hubmap-api-py-client/blob/main/examples/select_organs.md)                                                                                                              | ✓         | ✓         | ✩         | ✶         | ✓ ✩       | ✓         | ✩         |           |
 | [`select_proteins()`](https://github.com/hubmapconsortium/hubmap-api-py-client/blob/main/examples/select_organs.md)                                                                                                          | ✓         |           | ✩         |           | ✩         | ✩         |           |           |
 

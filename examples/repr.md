@@ -7,9 +7,9 @@
 >>> from hubmap_api_py_client import Client
 >>> client = Client(environ['API_ENDPOINT'])
 >>> client
-<Client base_url=https://cells-test.cmu.hubmapconsortium.org/api/>
+<Client base_url=https://cells.api.hubmapconsortium.org/api/>
 
->>> gene_symbol = client.select_genes().get_list()[10]['gene_symbol']
+>>> gene_symbol = client.select_genes(where="modality", has=["rna"]).get_list()[0]['gene_symbol']
 >>> cells_set = client.select_cells(where='gene', has=[f"{gene_symbol}>0.5"], genomic_modality='rna')
 >>> type(cells_set)
 <class 'hubmap_api_py_client.external.CellResultsSet'>

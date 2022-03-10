@@ -11,8 +11,8 @@
 
 `client.select_organs(where='gene', ...)`:
 ```python
->>> gene_symbol = client.select_genes().get_list()[10]['gene_symbol']
->>> organs_with_gene = client.select_organs(where='gene', has=[gene_symbol], genomic_modality='atac', p_value=0.05)
+>>> gene_symbol = client.select_genes(where="modality", has=["atac"]).get_list()[0]['gene_symbol']
+>>> organs_with_gene = client.select_organs(where='gene', has=[gene_symbol], genomic_modality='atac', p_value=1.0)
 >>> assert len(organs_with_gene) > 0
 
 >>> gene_keys = organs_with_gene.get_list(values_included=[gene_symbol])[0]['values'].keys()
