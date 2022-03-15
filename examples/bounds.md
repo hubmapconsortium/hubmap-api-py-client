@@ -21,6 +21,8 @@ dict_keys(['minimum_value', 'maximum_value'])
 >>> min_codex_value = codex_bounds['minimum_value']
 
 
->>> assert max_codex_value > min_codex_value and max_rna_value > min_rna_value and max_atac_value > min_atac_value
+>>> assert max_codex_value > min_codex_value
+>>> assert max_rna_value > min_rna_value
+>>> assert max_atac_value > min_atac_value
 
 ```
