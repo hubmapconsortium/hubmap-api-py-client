@@ -5,9 +5,6 @@
 
 >>> from os import environ
 >>> from hubmap_api_py_client import Client
->>> client = Client(environ['API_ENDPOINT'])
->>> client
-<Client base_url=https://cells.api.hubmapconsortium.org/api/>
 
 >>> gene_symbol = client.select_genes(where="modality", has=["rna"]).get_list()[0]['gene_symbol']
 >>> cells_set = client.select_cells(where='gene', has=[f"{gene_symbol}>0.5"], genomic_modality='rna')
