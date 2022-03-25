@@ -20,7 +20,8 @@
 
 `client.select_datasets(where='cluster', ...)`:
 ```python
->>> cluster_name = client.select_clusters().get_list()[30]['grouping_name']
+>>> dataset = client.select_datasets().get_list()[0]['uuid']
+>>> cluster_name = client.select_clusters(where='dataset', has=[dataset]).get_list()[0]['grouping_name']
 >>> cluster_datasets = client.select_datasets(where='cluster', has=[cluster_name])
 >>> assert len(cluster_datasets) > 0
 

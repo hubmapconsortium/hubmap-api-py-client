@@ -30,8 +30,8 @@ $ export API_ENDPOINT='https://cells.dev.hubmapconsortium.org/api/'
 >>> assert len(cells_with_gene) > 0
 
 # Select cells from the datasets with the following UUIDs:
->>> dataset_a_uuid = client.select_datasets().get_list()[0]['uuid']
->>> dataset_b_uuid = client.select_datasets().get_list()[1]['uuid']
+>>> dataset_a_uuid = client.select_datasets(where="modality", has=["rna"]).get_list()[0]['uuid']
+>>> dataset_b_uuid = client.select_datasets(where="modality", has=["rna"]).get_list()[1]['uuid']
 >>> cells_in_a_len = len(client.select_cells(where='dataset', has=[dataset_a_uuid]))
 >>> cells_in_b_len = len(client.select_cells(where='dataset', has=[dataset_b_uuid]))
 >>> cells_in_datasets = client.select_cells(where='dataset', has=[dataset_a_uuid, dataset_b_uuid])
