@@ -14,9 +14,7 @@ pip install hubmap-api-py-client
 ```
 
 Find cells with different criteria, and intersect resulting sets:
-```shell
-$ export API_ENDPOINT='https://cells.dev.hubmapconsortium.org/api/'
-```
+
 ```python
 >>> from os import environ
 >>> from hubmap_api_py_client import Client
@@ -48,7 +46,7 @@ $ export API_ENDPOINT='https://cells.dev.hubmapconsortium.org/api/'
 
 >>> cells = cell_list[0:10]
 >>> assert len(cells) > 0
->>> assert cells[0].keys() == {'cell_id', 'modality', 'dataset', 'organ', 'clusters'}
+>>> assert cells[0].keys() == {'cell_id', 'modality', 'dataset', 'organ', 'cell_type' ,'clusters'}
 
 ```
 
