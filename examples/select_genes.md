@@ -11,8 +11,11 @@
 
 `client.select_genes(where='organ', ...)`:
 ```python
->>> organ_name = client.select_organs().get_list()[1]['grouping_name']
->>> organ_genes = client.select_genes(where='organ', has=[organ_name], genomic_modality='rna', p_value=0.05)
+>>> gene_symbol = client.select_genes(where="modality", has=["rna"]).get_list()[0]['gene_symbol']
+>>> organs_with_gene = client.select_organs(where='gene', has=[gene_symbol], genomic_modality='rna', p_value=1.0)
+>>> organs_with_gene_details = organs_with_gene.get_list()[0:10]
+>>> organ_name = organs_with_gene_details[0]['grouping_name']
+>>> organ_genes = client.select_genes(where='organ', has=[organ_name], genomic_modality='rna', p_value=1.0)
 
 >>> organ_genes_details = organ_genes.get_list()
 >>> organ_genes_details[0].keys()

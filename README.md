@@ -14,9 +14,7 @@ pip install hubmap-api-py-client
 ```
 
 Find cells with different criteria, and intersect resulting sets:
-```shell
-$ export API_ENDPOINT='https://cells.dev.hubmapconsortium.org/api/'
-```
+
 ```python
 >>> from os import environ
 >>> from hubmap_api_py_client import Client
@@ -25,13 +23,13 @@ $ export API_ENDPOINT='https://cells.dev.hubmapconsortium.org/api/'
 >>> [m for m in dir(client) if m.startswith('select_')]
 ['select_cells', 'select_clusters', 'select_datasets', 'select_genes', 'select_organs', 'select_proteins']
 
->>> gene_symbol = client.select_genes().get_list()[0]['gene_symbol']
+>>> gene_symbol = client.select_genes(where="modality", has=["rna"]).get_list()[0]['gene_symbol']
 >>> cells_with_gene = client.select_cells(where='gene', has=[f'{gene_symbol} > 0.5'], genomic_modality='rna')
 >>> assert len(cells_with_gene) > 0
 
 # Select cells from the datasets with the following UUIDs:
->>> dataset_a_uuid = client.select_datasets().get_list()[0]['uuid']
->>> dataset_b_uuid = client.select_datasets().get_list()[1]['uuid']
+>>> dataset_a_uuid = client.select_datasets(where="modality", has=["rna"]).get_list()[0]['uuid']
+>>> dataset_b_uuid = client.select_datasets(where="modality", has=["rna"]).get_list()[1]['uuid']
 >>> cells_in_a_len = len(client.select_cells(where='dataset', has=[dataset_a_uuid]))
 >>> cells_in_b_len = len(client.select_cells(where='dataset', has=[dataset_b_uuid]))
 >>> cells_in_datasets = client.select_cells(where='dataset', has=[dataset_a_uuid, dataset_b_uuid])
@@ -48,7 +46,7 @@ $ export API_ENDPOINT='https://cells.dev.hubmapconsortium.org/api/'
 
 >>> cells = cell_list[0:10]
 >>> assert len(cells) > 0
->>> assert cells[0].keys() == {'cell_id', 'modality', 'dataset', 'organ', 'clusters'}
+>>> assert cells[0].keys() == {'cell_id', 'modality', 'dataset', 'organ', 'cell_type' ,'clusters'}
 
 ```
 
