@@ -6,7 +6,7 @@ Find genes differentially expressed by the kidney at significance level 0.05:
 >>> client = Client(environ['API_ENDPOINT'])
 
 >>> modality = 'atac'
->>> gene_symbol = client.select_genes(where='modality', has=[modality]).get_list()[10]['gene_symbol']
+>>> gene_symbol = client.select_genes(where='modality', has=[modality]).get_list()[0]['gene_symbol']
 >>> organs_with_gene = client.select_organs(where='gene', has=[gene_symbol], genomic_modality=modality, p_value=1.0)
 >>> organs_with_gene_details = organs_with_gene.get_list()[0:10]
 >>> organs_with_gene_details[0].keys()

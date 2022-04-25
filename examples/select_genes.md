@@ -32,6 +32,10 @@ dict_keys(['gene_symbol', 'go_terms', 'values'])
 
 `client.select_genes(where='cluster', ...)`:
 ```python
-TODO
+>>> modality = "rna"
+>>> rna_dataset = client.select_datasets(where="modality", has=[modality]).get_list()[0]["uuid"]
+>>> rna_cluster = client.select_clusters(where="dataset", has=[rna_dataset]).get_list()[0]["grouping_name"]
+>>> rna_cluster_genes = client.select_genes(where="cluster",has=[rna_cluster], genomic_modality=modality, p_value=1.0)
+>>> assert len(rna_cluster_genes) > 0
+
 ```
-Not sure what `has` value would work. [Filed issue](https://github.com/hubmapconsortium/hubmap-api-py-client/issues/16)
