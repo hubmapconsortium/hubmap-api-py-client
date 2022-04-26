@@ -22,6 +22,8 @@ dict_keys(['cluster_method', 'cluster_data', 'grouping_name', 'dataset'])
 
 ```
 
+Note: 'grouping_name' is used to refer to identifiers for different groupings of cells including organs and clusters
+
 `client.select_clusters(where='dataset', ...)`:
 ```python
 >>> dataset_uuid = client.select_datasets().get_list()[2]['uuid']

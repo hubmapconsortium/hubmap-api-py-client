@@ -14,6 +14,9 @@ dict_keys(['grouping_name'])
 
 ```
 
+Note: 'grouping_name' is used to refer to identifiers for different groupings of cells including organs and clusters
+
+
 Find genes differentially expressed by the organ at significance level 1.0:
 
 ```python
