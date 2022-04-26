@@ -20,6 +20,9 @@
 >>> cells_keys = cells_with_gene_details_with_values[0]['values'].keys()
 >>> assert list(cells_keys) == [gene_symbol]
 
+>>> gene_symbol = client.select_genes(where="modality", has=["atac"]).get_list()[0]['gene_symbol']
+>>> cells_with_gene_atac = client.select_cells(where='gene', has=[gene_symbol], genomic_modality='atac')
+>>> assert len(cells_with_gene_atac) > 0
 
 ```
 
