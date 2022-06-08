@@ -27,11 +27,19 @@ else
 fi
 end pydoc
 
-start pytest
+start nbtests
+# --nbval does not work with --numprocesses because each cell is evaluated separately.
+# Maybe there's some other way to parallelize tests?
+CMD='API_ENDPOINT="https://cells.api.hubmapconsortium.org/api/" pytest --nbval'
+echo $CMD
+eval $CMD
+end nbtests
+
+start doctests
 CMD='API_ENDPOINT="https://cells.api.hubmapconsortium.org/api/" PYTHONPATH="${PYTHONPATH}:hubmap_api_py_client" pytest --numprocesses auto -vv --doctest-glob="*.md"'
 echo $CMD
 eval $CMD
-end pytest
+end doctests
 
 start changelog
 if [ "$TRAVIS_BRANCH" != 'main' ]; then
