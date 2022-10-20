@@ -24,6 +24,6 @@ Find genes differentially expressed by the organ at significance level 1.0:
 >>> organ_genes = client.select_genes(where='organ', has=[organ_name], genomic_modality='atac', p_value=1.0)
 >>> organ_genes_details = organ_genes.get_list()[0:10]
 >>> organ_genes_details[0].keys()
-dict_keys(['gene_symbol', 'go_terms'])
+dict_keys(['gene_symbol', 'go_terms', 'summary'])
 
 ```

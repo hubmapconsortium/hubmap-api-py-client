@@ -30,7 +30,7 @@
 `client.select_datasets(where='gene', ...)`:
 ```python
 >>> gene_symbol = client.select_genes(where="modality",has=["rna"]).get_list()[0]['gene_symbol']
->>> gene_datasets = client.select_datasets(where='gene', has=[f'{gene_symbol} > 1'], genomic_modality='rna', min_cell_percentage=5.0)
+>>> gene_datasets = client.select_datasets(where='gene', has=[f'{gene_symbol} > 1'], genomic_modality='rna', min_cell_percentage=0.0)
 >>> assert len(gene_datasets) > 0
 
 ```

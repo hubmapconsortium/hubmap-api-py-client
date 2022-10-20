@@ -19,11 +19,11 @@
 
 >>> organ_genes_details = organ_genes.get_list()
 >>> organ_genes_details[0].keys()
-dict_keys(['gene_symbol', 'go_terms'])
+dict_keys(['gene_symbol', 'go_terms', 'summary'])
 
 >>> organ_genes_details_with_values = organ_genes.get_list(values_included=[organ_name])
 >>> organ_genes_details_with_values[0].keys()
-dict_keys(['gene_symbol', 'go_terms', 'values'])
+dict_keys(['gene_symbol', 'go_terms', 'summary', 'values'])
 
 >>> organ_keys = organ_genes_details_with_values[0]['values'].keys()
 >>> assert list(organ_keys) == [organ_name]
