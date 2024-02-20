@@ -60,3 +60,11 @@
 >>> assert len(cells_in_modality) > 0
 
 ```
+
+`client.select_cells(where='celltype', ...)`:
+```python
+>>> cell_type = client.select_celltypes().get_list()[0]['grouping_name']
+>>> cells_with_celltype = client.select_cells(where='celltype', has=[cell_type])
+>>> assert len(cells_with_celltype) > 0
+
+```

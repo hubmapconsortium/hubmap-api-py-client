@@ -21,7 +21,7 @@ Find cells with different criteria, and intersect resulting sets:
 >>> client = Client(environ['API_ENDPOINT'])
 
 >>> [m for m in dir(client) if m.startswith('select_')]
-['select_cells', 'select_clusters', 'select_datasets', 'select_genes', 'select_organs', 'select_proteins']
+['select_cells', 'select_celltypes', 'select_clusters', 'select_datasets', 'select_genes', 'select_organs', 'select_proteins']
 
 >>> gene_symbol = client.select_genes(where="modality", has=["rna"]).get_list()[0]['gene_symbol']
 >>> cells_with_gene = client.select_cells(where='gene', has=[f'{gene_symbol} > 0.5'], genomic_modality='rna')

@@ -49,3 +49,11 @@
 >>> assert len(datasets_in_modality) > 0
 
 ```
+
+`client.select_datasets(where='celltype', ...)`:
+```python
+>>> cell_type = client.select_celltypes().get_list()[0]['grouping_name']
+>>> datasets_with_celltype = client.select_datasets(where='celltype', has=[cell_type])
+>>> assert len(datasets_with_celltype) > 0
+
+```
