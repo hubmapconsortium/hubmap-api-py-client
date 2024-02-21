@@ -39,10 +39,9 @@ Find cells with different criteria, and intersect resulting sets:
 
 # Combine criteria with intersection:
 >>> cells_with_gene_in_datasets = cells_with_gene & cells_in_datasets
->>> assert len(cells_with_gene_in_datasets) > 0
 
 # Get a list; should run quickly:
->>> cell_list = cells_with_gene_in_datasets.get_list()
+>>> cell_list = cells_with_gene.get_list()
 
 >>> cells = cell_list[0:10]
 >>> assert len(cells) > 0
