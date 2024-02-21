@@ -28,7 +28,7 @@ fi
 end pydoc
 
 start pytest
-CMD='API_ENDPOINT="https://gateway-test.cmu.hubmapconsortium.org/api/" PYTHONPATH="${PYTHONPATH}:hubmap_api_py_client" pytest --numprocesses auto -vv --doctest-glob="*.md"'
+CMD='API_ENDPOINT="cells.api.hubmapconsortium.org/api/" PYTHONPATH="${PYTHONPATH}:hubmap_api_py_client" pytest --numprocesses auto -vv --doctest-glob="*.md"'
 echo $CMD
 eval $CMD
 end pytest
