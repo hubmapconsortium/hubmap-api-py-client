@@ -14,24 +14,22 @@ pip install hubmap-api-py-client
 ```
 
 Find cells with different criteria, and intersect resulting sets:
-```shell
-$ export API_ENDPOINT='https://cells.dev.hubmapconsortium.org/api/'
-```
+
 ```python
 >>> from os import environ
 >>> from hubmap_api_py_client import Client
 >>> client = Client(environ['API_ENDPOINT'])
 
 >>> [m for m in dir(client) if m.startswith('select_')]
-['select_cells', 'select_clusters', 'select_datasets', 'select_genes', 'select_organs', 'select_proteins']
+['select_cells', 'select_celltypes', 'select_clusters', 'select_datasets', 'select_genes', 'select_organs', 'select_proteins']
 
->>> gene_symbol = client.select_genes().get_list()[0]['gene_symbol']
+>>> gene_symbol = client.select_genes(where="modality", has=["rna"]).get_list()[0]['gene_symbol']
 >>> cells_with_gene = client.select_cells(where='gene', has=[f'{gene_symbol} > 0.5'], genomic_modality='rna')
 >>> assert len(cells_with_gene) > 0
 
 # Select cells from the datasets with the following UUIDs:
->>> dataset_a_uuid = client.select_datasets().get_list()[0]['uuid']
->>> dataset_b_uuid = client.select_datasets().get_list()[1]['uuid']
+>>> dataset_a_uuid = client.select_datasets(where="gene", has=[f'{gene_symbol} > 1'], genomic_modality="rna", min_cell_percentage=0.0).get_list()[0]['uuid']
+>>> dataset_b_uuid = client.select_datasets(where="gene", has=[f'{gene_symbol} > 1'], genomic_modality="rna", min_cell_percentage=0.0).get_list()[1]['uuid']
 >>> cells_in_a_len = len(client.select_cells(where='dataset', has=[dataset_a_uuid]))
 >>> cells_in_b_len = len(client.select_cells(where='dataset', has=[dataset_b_uuid]))
 >>> cells_in_datasets = client.select_cells(where='dataset', has=[dataset_a_uuid, dataset_b_uuid])
@@ -41,14 +39,13 @@ $ export API_ENDPOINT='https://cells.dev.hubmapconsortium.org/api/'
 
 # Combine criteria with intersection:
 >>> cells_with_gene_in_datasets = cells_with_gene & cells_in_datasets
->>> assert len(cells_with_gene_in_datasets) > 0
 
 # Get a list; should run quickly:
->>> cell_list = cells_with_gene_in_datasets.get_list()
+>>> cell_list = cells_with_gene.get_list()
 
 >>> cells = cell_list[0:10]
 >>> assert len(cells) > 0
->>> assert cells[0].keys() == {'cell_id', 'modality', 'dataset', 'organ', 'clusters'}
+>>> assert cells[0].keys() == {'cell_id', 'modality', 'dataset', 'organ', 'cell_type' ,'clusters'}
 
 ```
 
@@ -61,14 +58,16 @@ More documentation:
 
 Only some types of objects can be retrieved from other types of objects:
 
-| `where=...`       | None    | `cell`    | `cluster` | `dataset` | `gene`    | `organ`   | `protein` | `modality` |
-| ----------------- | --------- | --------- | --------- | --------- | --------- | --------- | --------- | --------- |
-| [`select_cells()`](https://github.com/hubmapconsortium/hubmap-api-py-client/blob/main/examples/select_cells.md)                                                                                                              | ✓         | ✓         |           | ✓         | ✓         | ✓         | ✓         | ✓         |
-| [`select_clusters()`](https://github.com/hubmapconsortium/hubmap-api-py-client/blob/main/examples/select_clusters.md)                                                                                                              | ✓         |           | ✓         | ✓         | ✓ ✩       | ✩         | ✩         |           |
-| [`select_datasets()`](https://github.com/hubmapconsortium/hubmap-api-py-client/blob/main/examples/select_datasets.md)| ✓         | ✓         | ✓         | ✓         |           |✶          |           | ✓         |
-| [`select_genes()`](https://github.com/hubmapconsortium/hubmap-api-py-client/blob/main/examples/select_genes.md)                                                                                                              | ✓         |           | ✓ ✩       |           | ✓         | ✓ ✩       | ✩         |           |
-| [`select_organs()`](https://github.com/hubmapconsortium/hubmap-api-py-client/blob/main/examples/select_organs.md)                                                                                                              | ✓         | ✓         | ✩         | ✶         | ✓ ✩       | ✓         | ✩         |           |
-| [`select_proteins()`](https://github.com/hubmapconsortium/hubmap-api-py-client/blob/main/examples/select_organs.md)                                                                                                          | ✓         |           | ✩         |           | ✩         | ✩         |           |           |
+| `where=...`                                                                                                             | None    | `cell`    | `cluster` | `dataset` | `gene`    | `organ`  | `protein` | `modality` | `celltype` |
+|-------------------------------------------------------------------------------------------------------------------------| --------- | --------- | -------- | -------- | --------- | -------- | --------- | --------- | --------- |
+| [`select_cells()`](https://github.com/hubmapconsortium/hubmap-api-py-client/blob/main/examples/select_cells.md)         | ✓         | ✓         |          | ✓        | ✓         | ✓        | ✓         | ✓         | ✓       |
+| [`select_clusters()`](https://github.com/hubmapconsortium/hubmap-api-py-client/blob/main/examples/select_clusters.md)   | ✓         |           | ✓        | ✓        | ✓ ✩       | ✩        | ✩         |           | ✓       |
+| [`select_datasets()`](https://github.com/hubmapconsortium/hubmap-api-py-client/blob/main/examples/select_datasets.md)   | ✓         | ✓         | ✓        | ✓        |           |✶         |           | ✓         | ✓       |
+| [`select_genes()`](https://github.com/hubmapconsortium/hubmap-api-py-client/blob/main/examples/select_genes.md)         | ✓         |           | ✓ ✩      |          | ✓         | ✓ ✩      | ✩         |           |         |
+| [`select_organs()`](https://github.com/hubmapconsortium/hubmap-api-py-client/blob/main/examples/select_organs.md)       | ✓         | ✓         | ✩        | ✶        | ✓ ✩       | ✓        | ✩         |           | ✓       |
+| [`select_proteins()`](https://github.com/hubmapconsortium/hubmap-api-py-client/blob/main/examples/select_organs.md)     | ✓         |           | ✩        |          | ✩         | ✩        |           |           |         |
+| [`select_celltypes()`](https://github.com/hubmapconsortium/hubmap-api-py-client/blob/main/examples/select_celltypes.md) | ✓         | ✓         | ✓         | ✓         | ✩         | ✓         |           |           | ✓       |
+
 
 - "✓" = Supported by Cells API, and this client.
 - "✶" = Supported by Entities API; support in this client is [on the roadmap](https://github.com/hubmapconsortium/hubmap-api-py-client/issues/25).

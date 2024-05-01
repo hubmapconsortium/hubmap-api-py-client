@@ -343,6 +343,23 @@ for output_type, pair in {
             ResultsSet
         ''',
     ),
+
+    'celltype': (
+        'where_has',
+        '''
+        Select a set of cell types. If no params are provided, selects the set of all cell types.
+        Otherwise, selects a set of cell types filtered based on parameters supplied.
+
+        Args:
+            where (str): The type of entity for which identifiers are supplied as input to query
+                Must be one of ["celltype", "dataset", "organ"].
+            has (List[str]): A list of entity identifiers supplied as input to the query.
+
+        Returns:
+            ResultsSet
+        '''
+    ),
+
     'protein': (
         'where_has',
         '''
@@ -358,6 +375,7 @@ for output_type, pair in {
             ResultsSet
         '''
     )
+
 }.items():
     args_type, doc = pair
     ResultsSetSubclass = _create_subclass(output_type)

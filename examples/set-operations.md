@@ -31,7 +31,7 @@ Providing a list to `has` is the same as using `|` for the union:
 
 Intersection and difference are also available:
 ```python
->>> gene_symbol = client.select_genes().get_list()[10]['gene_symbol']
+>>> gene_symbol = client.select_genes(where="modality", has=["rna"]).get_list()[0]['gene_symbol']
 >>> gene_cells = client.select_cells(where='gene', has=[f'{gene_symbol} > 0.5'], genomic_modality='rna')
 >>> a_b_gene_cells = a_b_cells & gene_cells
 >>> a_b_no_gene_cells = a_b_cells - gene_cells

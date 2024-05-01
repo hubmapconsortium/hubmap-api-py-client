@@ -11,8 +11,8 @@
 
 `client.select_clusters(where='gene', ...)`:
 ```python
->>> gene_symbol = client.select_genes().get_list()[0]['gene_symbol']
->>> clusters_with_gene_set = client.select_clusters(where='gene', has=[gene_symbol], genomic_modality='rna', p_value=0.05)
+>>> gene_symbol = client.select_genes(where="modality", has=["rna"]).get_list()[0]['gene_symbol']
+>>> clusters_with_gene_set = client.select_clusters(where='gene', has=[gene_symbol], genomic_modality='rna', p_value=1.0)
 >>> assert len(clusters_with_gene_set) > 0
 >>> clusters_with_gene_set.get_list()[0].keys()
 dict_keys(['cluster_method', 'cluster_data', 'grouping_name', 'dataset'])
@@ -21,6 +21,8 @@ dict_keys(['cluster_method', 'cluster_data', 'grouping_name', 'dataset'])
 >>> assert list(cluster_keys) == [gene_symbol]
 
 ```
+
+Note: 'grouping_name' is used to refer to identifiers for different groupings of cells including organs and clusters
 
 `client.select_clusters(where='dataset', ...)`:
 ```python

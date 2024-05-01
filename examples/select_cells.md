@@ -12,7 +12,7 @@
 
 `client.select_cells(where='gene', ...)`:
 ```python
->>> gene_symbol = client.select_genes().get_list()[0]['gene_symbol']
+>>> gene_symbol = client.select_genes(where="modality", has=["rna"]).get_list()[0]['gene_symbol']
 >>> cells_with_gene = client.select_cells(where='gene', has=[f'{gene_symbol} > 1'], genomic_modality='rna')
 >>> assert len(cells_with_gene) > 0
 
@@ -20,7 +20,7 @@
 >>> cells_keys = cells_with_gene_details_with_values[0]['values'].keys()
 >>> assert list(cells_keys) == [gene_symbol]
 
->>> gene_symbol = client.select_genes().get_list()[10]['gene_symbol']
+>>> gene_symbol = client.select_genes(where="modality", has=["atac"]).get_list()[0]['gene_symbol']
 >>> cells_with_gene_atac = client.select_cells(where='gene', has=[gene_symbol], genomic_modality='atac')
 >>> assert len(cells_with_gene_atac) > 0
 
@@ -58,5 +58,13 @@
 ```python
 >>> cells_in_modality = client.select_cells(where='modality', has=['codex'])
 >>> assert len(cells_in_modality) > 0
+
+```
+
+`client.select_cells(where='celltype', ...)`:
+```python
+>>> cell_type = client.select_celltypes().get_list()[0]['grouping_name']
+>>> cells_with_celltype = client.select_cells(where='celltype', has=[cell_type])
+>>> assert len(cells_with_celltype) > 0
 
 ```

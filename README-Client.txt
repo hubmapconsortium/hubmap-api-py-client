@@ -44,6 +44,18 @@ hubmap_api_py_client.Client = class ExternalClient(builtins.object)
  |      Returns:
  |          ResultsSet
  |  
+ |  select_celltypes lambda self, where=None, has=None
+ |      Select a set of cell types. If no params are provided, selects the set of all cell types.
+ |      Otherwise, selects a set of cell types filtered based on parameters supplied.
+ |      
+ |      Args:
+ |          where (str): The type of entity for which identifiers are supplied as input to query
+ |              Must be one of ["celltype", "dataset", "organ"].
+ |          has (List[str]): A list of entity identifiers supplied as input to the query.
+ |      
+ |      Returns:
+ |          ResultsSet
+ |  
  |  select_clusters lambda self, where=None, has=None, genomic_modality=None, p_value=None, logical_operator=None
  |      Select a set of clusters. If no params are provided, selects the set of all clusters.
  |      Otherwise, selects a set of clusters filtered based on parameters supplied.
