@@ -27,6 +27,6 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     # Keep in sync with .travis.yml:
-    python_requires='>=3.6',
+    python_requires='>=3.8',
     # f-strings aren't available in 3.5.
 )

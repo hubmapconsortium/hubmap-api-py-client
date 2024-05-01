@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.6, 3.8] # Keep in sync with setup.py
+        python-version: [3.8] # Keep in sync with setup.py
         requirements: [requirements.txt, requirements-lower-bound.txt]
 
     steps:
