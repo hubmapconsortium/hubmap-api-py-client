@@ -1,4 +1,7 @@
-## 0.0.10 - in progress
+## 0.0.11
+- Adding support for cell type queries
+
+## 0.0.10
 - Adding new functionality for getting max value of data type (and optionally gene/protein)
 - Updating documentation and tests to include queries by modality
 - Updating doc tests for greater independence from index version
